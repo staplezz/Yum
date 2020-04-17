@@ -8,10 +8,204 @@
 	    <!-- Bootstrap CSS -->
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-	    <title>Hello, world!</title>
+	    <!-- Style CSS para lo demás -->
+	    <link rel="stylesheet" type="text/css" href="../CSS/style.css">
+
+	    <title>Administración Yum</title>
+	    <!-- Icono del título de la página -->
+        <link rel = "icon" href = "../Icons/admin-icon.svg" type = "image/x-icon"> 
 	</head>
 	<body>
-		<h1>Hello, world!</h1>
+		<!-- Modal para agregar un registro -->
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLongTitle">Editar Alimento</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        ...
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
+		<!-- Barra de navegación -->
+		<nav class="navbar navbar-expand-lg navbar-dark" id="top-bar">
+			<div class="navbar-brand">
+				<img src="../Icons/admin.svg" width="40" height="40" class="" alt="">
+  				<a class="navbar-brand text-white">Administración Yum</a>
+			</div>
+  			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		    <div class="navbar-nav">
+		      <a class="nav-item nav-link" href="#" id="nav-select">Alimentos</a>
+		      <a class="nav-item nav-link" href="#">Órdenes</a>
+		      <a class="nav-item nav-link" href="#">Menú</a>
+		      <a class="nav-item nav-link" href="#">Repartidores</a>
+		    </div>
+		  </div>
+				<div class="navbar-brand" id="cerrar-sesion">
+					<a class="nav-item" href="#">Cerrar Sesión</a>
+					<img src="../Icons/cerrar-sesion.svg" width="40" height="40" class="ml-3" alt="">
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="	Toggle navigation">
+  					<span class="navbar-toggler-icon"></span>
+  					</button>
+  				</div>
+		</nav>
+
+		<h1 class="text-center">Lista de Alimentos</h1>
+
+		<!-- Menú de edición de alimentos -->
+			<div class="container py-2 min-vw-50">
+				
+				<div class="row py-1 justify-content-center" id="menu-CRUD">
+					<div class="col-">
+						<img src="../Icons/editar.svg" width="30" height="30" class="ml-3" alt="">
+						<button type="button" class="btn btn-primary" data-toggle="modal" 
+						data-target="#exampleModalCenter">Editar</button>
+					</div>
+					<div class="col-">
+						<img src="../Icons/borrar.svg" width="30" height="30" class="ml-3" alt="">
+						<button type="button" class="btn btn-danger">Borrar</button>
+					</div>
+					<div class="col-">
+						<img src="../Icons/anadir.svg" width="30" height="30" class="ml-3" alt="">
+						<button type="button" class="btn btn-primary">Agregar</button>
+					</div>
+				</div>
+			</div>
+		<!--
+		<div class="container-fluid w-50 mx-auto">
+		-->
+		<table class="table w-50 mx-auto table-striped table-bordered">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">First</th>
+		      <th scope="col">Last</th>
+		      <th scope="col">Handle</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th scope="row">1</th>
+		      <td>Mark</td>
+		      <td>Otto</td>
+		      <td>@mdo</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">2</th>
+		      <td>Jacob</td>
+		      <td>Thornton</td>
+		      <td>@fat</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Larry</td>
+		      <td>the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		  </tbody>
+		</table>
+		<!-- </div> -->
 
 	    <!-- Optional JavaScript -->
 	    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
