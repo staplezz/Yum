@@ -17,6 +17,9 @@
 		.title{
 			margin-top: 70px;
 		}
+		.final{
+			margin-bottom: 60px;
+		}
 	</style>
 	<meta charset="ISO-8859-1">
 	<title>Menú</title>
@@ -28,7 +31,7 @@
 	<!-- Barra de navegación -->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="top-bar">
 			<div class="navbar-brand">
-				<img src="C:/Users/Alma/eclipse-workspace/crud-menu/WebContent/Icons/admin.svg" width="40" height="40" class="" alt="">
+				<img src="${pageContext.request.contextPath}/Icons/admin.svg" width="40" height="40" class="" alt="">
   				<a class="navbar-brand text-white">Administración Yum</a>
 			</div>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -59,22 +62,21 @@
 	    <div class="col-sm-3 col-md-3 col-lg-3 offset-sm-6 offset-md-6 offset-lg-6">
 	      <div class="accordion">
 	        <div class="card">
-	          <div class="card-header">
-	          	Agregar categoría
-	            <a href="adminMenu?action=nuevaCategoria">
-	              <img class="icon" src="${pageContext.request.contextPath}/Icons/anadir.svg"  class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
-	            </a>
-	          </div>
+	        	
+		         	 <button type="button" class="btn btn-outline-info" onclick="window.location.href='adminMenu?action=nuevaCategoria';">
+		          		Agregar categoría
+		             	 <img class="icon" src="${pageContext.request.contextPath}/Icons/anadir.svg"  class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
+		          	 </button>
+	          	
 	        </div>
 	      </div>
 	    </div>
 	    <div class="col-sm-3 col-md-3 col-lg-3">
 	   		<div class="card">
-		      	<div class="card-header">
-		      		<button  type="button" class="btn btn-outline-info" data-toggle="collapse" data-target="#buscar">
-		      			Buscar por categoría.
-		      		</button>
-		      	</div>
+		      	<button  type="button" class="btn btn-outline-info" data-toggle="collapse" data-target="#buscar">
+		      		Buscar por categoría.
+		      		<img class="icon" src="${pageContext.request.contextPath}/Icons/editar.svg"  class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
+		  		</button>
 		      	<div id="buscar"class="collapse">
 		      		<div class="card-body">
 		      			<form action ="adminMenu?action=buscarPorCategoria" method= "post" >
@@ -89,7 +91,7 @@
 	    </div>
 	  </div>
 	</div>
-	<div class="container">
+	<div class="container final">
 		<table class="table table-image w-55 mx-auto table-striped table-bordered lg-8">
 			<thead class="thead-dark">
 				<tr>
@@ -124,36 +126,21 @@
 			</tbody>
 		</table>
 	</div>
-	<!-- Footer -->
-	<footer class="page-footer font-small  bg-dark pt-3">
-	
-	  <!-- Footer Elements -->
-	  <div class="container">
-	
-	    <!-- Call to action -->
-	    <ul class="list-unstyled list-inline text-center py-2">
-	      <li class="list-inline-item">
-	        <h5 class="mb-1">Registrarse</h5>
-	      </li>
-	      <li class="list-inline-item">
-	      	<button type="button" class="btn btn-outline-info btn-rounded">
-	    		<a href="#registrarse">Sign up! </a>
-	      	</button>
-	      </li>
-	    </ul>	
-	  </div>
-	  <!-- Footer Elements -->
-	
-	  <!-- Copyright -->
-	  <div class="footer-copyright text-center py-2">© 2020 Copyright:
-	    <a href="#"> 
-	  	  Eff;cient organization
-	  	  <img class="icon" src="${pageContext.request.contextPath}/Icons/Logo.svg"  class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
-	    </a>
-	  </div>
-	  <!-- Copyright -->
-	
+		<!-- Footer -->
+	<footer class="page-footer font-small  pt-1 footer fixed-bottom footer">
+		
+		  <!-- Footer Elements -->
+		
+		  <!-- Copyright -->
+		  <div class="footer-copyright text-center py-2">2020 Copyright:
+		    <a href="#"> 
+		  	  Eff;cient organization
+		  	  <img class="icon" src="${pageContext.request.contextPath}/Icons/Logo.svg"  class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
+		    </a>
+		  </div>
+		  <!-- Copyright -->
+		
 	</footer>
-<!-- Footer -->
+		<!-- Footer -->
 </body>
 </html>

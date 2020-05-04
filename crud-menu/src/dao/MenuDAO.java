@@ -87,6 +87,20 @@ public class MenuDAO {
 		return rowEliminar;
 		
 	}
+	
+	//Eliminar alimentos de categoría 
+	public boolean eliminarAlimentosCategoria(int idAlimento)throws SQLException{
+		boolean rowActualizar = false;
+		String sql = "UPDATE alimento SET idCategoria = 100 WHERE idAlimento = ?";
+		con.conectar();
+		connection = con.getJdbcConnection();
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, idAlimento);
+		rowActualizar = statement.executeUpdate()>0;
+		statement.close();
+		con.desconectar();
+		return rowActualizar;
+	}
 	//Agregar alimentos a la categoría 
 	
 	public boolean agregarAlimento(int idAlimento, int idCategoria)throws SQLException{

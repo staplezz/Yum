@@ -76,6 +76,8 @@ public class AdminMenu extends HttpServlet {
 			case "eliminarCategoria": 
 				eliminarCategoria(request, response); 
 				break; 
+			case "eliminarAlimentoCategoria":
+				eliminarAlimentoCategoria(request, response);
 			case "mostrarMenu": 
 				mostrarMenu(request,response);
 				break;
@@ -104,6 +106,7 @@ public class AdminMenu extends HttpServlet {
 	private void mostrarCategoria(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/mostrarCategoria.jsp"); 
 		String nombre = request.getParameter("nombre"); 
+		System.out.println("AQUII"+ nombre);
 		Categoria categoria = menuDAO.mostrarCategoriaNombre(nombre);
 		request.setAttribute("categoria", categoria);
 		dispatcher.forward(request, response);
@@ -170,5 +173,13 @@ public class AdminMenu extends HttpServlet {
 		request.setAttribute("lista", menu);
 		dispatcher.forward(request,response);
 	}
-
+	
+	private void eliminarAlimentoCategoria(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/editar.jsp"); 
+		int idAlimento= Integer.parseInt(request.getParameter("idAlimento"));
+		Categoria categoria = menuDAO.mostrarCategoriaId(Integer.parseInt(request.getParameter("idCategoria")));
+		menuDAO.eliminarAlimentosCategoria(idAlimento);
+		request.setAttribute("categoria", categoria);
+		dispatcher.forward(request, response);
+	}
 }

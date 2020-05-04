@@ -18,7 +18,10 @@
 #menu-CRUD {
 	color: black;
 }
-
+.footer{
+	width:100%;
+	background-color:white;
+}
 .table-image {
   td, th,img{
     vertical-align: middle;
