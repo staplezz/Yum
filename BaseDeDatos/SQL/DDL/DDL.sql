@@ -94,6 +94,7 @@ CREATE TABLE `Carrito`(
 CREATE TABLE `AlimentosCarrito`(
 	`idCarrito` int NOT NULL,
 	`idAlimento` int NOT NULL,
+	`cantidad` int NOT NULL,
 	FOREIGN KEY(`idCarrito`) REFERENCES `Carrito` (`idCarrito`),
  	FOREIGN KEY(`idAlimento`) REFERENCES `Alimento` (`idAlimento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
