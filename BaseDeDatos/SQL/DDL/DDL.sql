@@ -47,6 +47,15 @@ CREATE TABLE `Cliente`(
 	FOREIGN KEY (`idPersona`) REFERENCES `Persona` (`idPersona`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
+/* Tabla para representar las direcciones de un cliente en el sistema,
+un cliente puede tener varias direcciones */
+CREATE TABLE `DireccionesCLiente`(
+	`idCliente` int NOT NULL,
+    `direccion` varchar(200) NOT NULL,
+    PRIMARY KEY (`idCliente`, `direccion`),
+    FOREIGN KEY (`idCliente`) REFERENCES `Cliente` (`idCliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 /* Tabla para representar a un repartidor dentro del sistema. */
 CREATE TABLE `Repartidor`(
 	`idRepartidor` int NOT NULL AUTO_INCREMENT,
@@ -93,8 +102,8 @@ CREATE TABLE `AlimentosCarrito`(
 CREATE TABLE `Orden`(
     `idOrden` int NOT NULL AUTO_INCREMENT,
     `fecha` date NOT NULL,
-    `estado` tinyint NOT NULL CHECK (`estado` > 0 AND `estado` < 5) DEFAULT 0,
-    `calificacion` tinyint NOT NULL CHECK (`calificacion` >= 1 AND `calificacion` <= 5),
+    `estado` tinyint NOT NULL,
+    `calificacion` tinyint ,
     `idCliente` int NOT NULL,
     `idCarrito` int NOT NULL,
     `idRepartidor` int NOT NULL,
