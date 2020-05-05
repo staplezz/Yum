@@ -59,6 +59,25 @@ public class ModificadorCliente extends HttpServlet {
 			case "principalCliente": 
 				principalCliente(request, response);
 				break;
+			case "showEditarCliente": 
+				mostrarEditarCliente(request, response); 
+				break; 
+			case "editarCliente": 
+				editarCliente(request, response); 
+				break;
+			case "mostrarDirecciones": 
+				mostrarDireccionesCliente(request, response); 
+				break; 
+			case "mostrarEditarDireccion": 
+				mostrarEditarDireccion(request, response); 
+				break; 
+			case "editarDireccion": 
+				editarDireccionCliente(request, response); 
+				break; 
+			case "eliminarDireccion": 
+				eliminarDireccionCliente(request, response);
+				break;
+				
 			default: 
 				break;
 			}
@@ -82,7 +101,7 @@ public class ModificadorCliente extends HttpServlet {
 	}
 	
 	private void agregarCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		String nombre = request.getParameter("nombre"); 
 		String apePat = request.getParameter("apePat"); 
 		String apeMat = request.getParameter("apeMat");
@@ -119,8 +138,77 @@ public class ModificadorCliente extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
+	private void mostrarEditarCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/editarCliente.jsp");
+		Cliente cliente = clienteDAO.mostrarClienteId(Integer.parseInt(request.getParameter("idCliente")));
+		request.setAttribute("cliente", cliente);
+		dispatcher.forward(request, response);
+	}
+	
+	private void editarCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		String nombre = request.getParameter("nombre"); 
+		String apePat = request.getParameter("apePat"); 
+		String apeMat = request.getParameter("apeMat");
+		String email  = request.getParameter("email"); 
+		String password = request.getParameter("password"); 
+		String telefono  = request.getParameter("telefono");
+		
+		Cliente cliente = new Cliente(nombre, apePat, apeMat, email, telefono,password);
+		
+		clienteDAO.editarCliente(cliente);
+		
+		mostrarEditarCliente(request,response);
+	}
+	
+	private void mostrarDireccionesCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/direccionesCliente.jsp");
+		List<Direccion> direcciones = clienteDAO.mostrarDireccionesCliente(Integer.parseInt(request.getParameter("idCliente")));
+		request.setAttribute("direcciones", direcciones);
+		dispatcher.forward(request, response);
+	}
+	
+	private void mostrarEditarDireccion(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/editarDireccion.jsp");
+		Direccion direccion = clienteDAO.mostrarDireccionId(Integer.parseInt(request.getParameter("idDireccion")));
+		request.setAttribute("direccion", direccion);
+		dispatcher.forward(request, response);
+	}
+	private void editarDireccionCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		int idDireccion = Integer.parseInt(request.getParameter("idDireccion"));
+		String delegacion = request.getParameter("delegacion"); 
+		String colonia = request.getParameter("colonia"); 
+		String calle = request.getParameter("calle"); 
+		
+		Direccion direccion = new Direccion(delegacion, colonia, calle);
+		direccion.setIdDireccion(idDireccion);
+		
+		if (request.getParameter("numInt") != null) {
+			int numInterior = Integer.parseInt(request.getParameter("numInt"));
+			direccion.setNumInterior(numInterior);
+		}
+			
+		
+		if (request.getParameter("numExt") != null) {
+			int numExterior = Integer.parseInt(request.getParameter("numExt"));
+			direccion.setNumExterior(numExterior);
+
+		}
+		
+		clienteDAO.editarDireccion(direccion);
+		mostrarEditarDireccion(request, response);
+	}
+	
+	
+	private void eliminarDireccionCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		int idDireccion = Integer.parseInt(request.getParameter("idDireccion"));
+		
+		clienteDAO.eliminarDireccion(idDireccion); 
+		
+		mostrarDireccionesCliente(request, response);
+	}
+	
 	private void principalCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/jsp/index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		dispatcher.forward(request, response);
 	}
 

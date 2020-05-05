@@ -13,7 +13,7 @@
 	<ul>
 		<li><a href ="adminMenu?action=mostrarMenu">Mostrar menú</a> </li>
 		<li><a href= "modificadorCliente?action=registraCliente">Registrar cliente</a>
-		<li><a href= "adminMenu?action=showEditar">Editar categoría</a>
+		<li><a href= "modificadorCliente?action=mostrarEditarCliente">Editar cliente</a>
 		<li><a href= "adminMenu?action=nuevaCategoria">Añadir categoría</a>
 	</ul>
 </body>
