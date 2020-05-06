@@ -28,48 +28,83 @@
 <body>
 
 	<div class="container">
-			<h1 class="text-center title">Modificar información</h1>
+			<h1 class="text-center title">Modifica tu perfil, ${cliente.getNombre()}</h1>
 	</div>
-	<div class="container">
+		<div class="container" >
+	  <div class="row">
+	    <div class="col-sm-3 col-md-3 col-lg-3 offset-sm-9 offset-md-9 offset-lg-9">
+	      <div class="accordion">
+	        <div class="card">
+	        	
+		         	 <button type="button" class="btn btn-outline-info" onclick="window.location.href='modificadorCliente?action=mostrarDirecciones&idCliente=<c:out value="${cliente.getIdCliente()}"/>';">
+		          		Editar direcciones
+		             	 <img class="icon" src="${pageContext.request.contextPath}/Icons/editar.svg"  class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
+		          	 </button>
+	          	
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="container final">
 		<div class="row">
 			<div class= "col-sm-6 col-md-6 col-lg-6  offset-sm-3 offset-md-3 offset-lg-3">
-				<form action = "modificadorCliente?action=agregaCliente" method="post" class="final">
+				<form action = "modificadorCliente?action=editarCliente&idC=<c:out value="${cliente.getIdCliente()}"/>&idP=<c:out value="${cliente.getIdPersona()}"/>" method="post" class="final">
 					<table class="table w-55 mx-auto lg-8">
-			
+						
 						<tr>
 							<td>Nombre:</td>
-							<td><input type="text" name="nombre"required placeholder="Nombre" class="form-control"></td>
+							<td><input type="text" name="nombre"required placeholder="Nombre" value = "<c:out value="${cliente.getNombre()}"></c:out>" class="form-control"></td>
 						</tr>
 			
 						<tr>
 							<td>Apellido Paterno:</td>
-							<td><input type="text" name="apePat" required placeholder="Apellido paterno" class="form-control"></td>
+							<td><input type="text" name="apePat" required placeholder="Apellido paterno" value = "<c:out value="${cliente.getApellidoPaterno()}"></c:out>"  class="form-control"></td>
 						</tr>
 			
 						<tr>
 							<td>Apellido Materno:</td>
-							<td><input type="text" name="apeMat" required placeholder="Apellido materno" class="form-control"></td>
+							<td><input type="text" name="apeMat" required placeholder="Apellido materno" value = "<c:out value="${cliente.getApellidoMaterno()}"></c:out>" class="form-control"></td>
 						</tr>
 			
 						<tr>
 							<td>Correo electronico:</td>
-							<td><input type="text" name="email" required placeholder="Correo electrónico" class="form-control"></td>
+							<td><input type="text" name="email" required placeholder="Correo electrónico"  value = "<c:out value="${cliente.getNombre()}"></c:out>" class="form-control" disabled></td>
 						</tr>
 			
 						<tr>
 							<td>Contraseña:</td>
-							<td><input type="password" name="password" required placeholder="Contraseña" class="form-control"></td>
+							<td><input type="password" name="password" required placeholder="Contraseña" value = "<c:out value="${cliente.getPassword()}"></c:out>" class="form-control"></td>
 						</tr>
 			
 						<tr>
 							<td>Teléfono:</td>
-							<td><input type="text" name="telefono" required placeholder="Teléfono" class="form-control"></td>
+							<td><input type="text" name="telefono" required placeholder="Teléfono" value = "<c:out value="${cliente.getTelefono()}"></c:out>" class="form-control"></td>
+						</tr>
+						<tr>
+							<td><input type="submit" name="submit" value="Guadar"></td>
+							<td></td>
 						</tr>
 					</table>
 				</form>
 			</div>
 		</div>
 	</div>
-	
+		<!-- Footer -->
+	<footer class="page-footer font-small  pt-1 footer fixed-bottom footer">
+		
+		  <!-- Footer Elements -->
+		
+		  <!-- Copyright -->
+		  <div class="footer-copyright text-center py-2">2020 Copyright:
+		    <a href="#"> 
+		  	  Eff;cient organization
+		  	  <img class="icon" src="${pageContext.request.contextPath}/Icons/Logo.svg"  class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
+		    </a>
+		  </div>
+		  <!-- Copyright -->
+		
+	</footer>
+		<!-- Footer -->
 </body>
 </html>

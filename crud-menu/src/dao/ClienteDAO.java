@@ -156,7 +156,7 @@ public class ClienteDAO {
 		statement.setString(2, cliente.getApellidoPaterno());
 		statement.setString(3, cliente.getApellidoMaterno());
 		statement.setString(4, cliente.getPassword());
-		statement.setDouble(5, cliente.getIdPersona());
+		statement.setInt(5, cliente.getIdPersona());
 		
 		rowActualizar = statement.executeUpdate() > 0; 
 		
@@ -186,25 +186,31 @@ public class ClienteDAO {
 	
 	public Cliente mostrarClienteId(int idCliente)throws SQLException {
 		Cliente cliente = null;
-		String sql = "SELECT nombre, apellidoPaterno, apellidoMaterno, correoElectronico, telefono, password FROM cliente join persona"; 
-		sql += "WHERE idCliente=? and persona.idPersona = cliente.idPersona";
-		
+		String sql = "SELECT nombre, apellidoPaterno, apellidoMaterno, correoElectronico, telefono, password, cliente.idPersona as idPersona FROM cliente join persona"; 
+		sql += " WHERE idCliente=? and persona.idPersona = cliente.idPersona";
 		con.conectar();
 		connection = con.getJdbcConnection(); 
+		System.out.println("TRIPLEEE"+idCliente);
+		System.out.println(sql);
 		PreparedStatement statement = connection.prepareStatement(sql); 
 		statement.setInt(1, idCliente);
 		ResultSet res = statement.executeQuery(); 
 		
-		while(res.next()) {
+		
+		if(res.next()) {
+			System.out.println("PASA"+res.getString("nombre"));
 			String nombre = res.getString("nombre");
 			String apePat = res.getString("apellidoPaterno"); 
 			String apeMat = res.getString("apellidoMaterno"); 
 			String email  = res.getString("correoElectronico");
 			String tel    = res.getString("telefono"); 
 			String pass   = res.getString("password"); 
+			int idPersona = res.getInt("idPersona");
 			
+			System.out.println("NOMBRE"+nombre);
 			cliente = new Cliente(nombre, apePat, apeMat, email, tel, pass);
 			cliente.setIdCliente(idCliente);
+			cliente.setIdPersona(idPersona);
 		}
 		statement.close(); 
 		con.desconectar();
@@ -229,16 +235,19 @@ public class ClienteDAO {
 			String delegacion = res.getString("delegacion");
 			String colonia    = res.getString("colonia"); 
 			String calle 	  = res.getString("calle"); 
+			int numExterior   = res.getInt("num_exterior");
+			int numInterior   = res.getInt("num_interior");
 			
 			direccion = new Direccion(delegacion, colonia, calle); 
 			direccion.setIdDireccion(idDireccion);
 			
-			if(res.getInt("num_interior") != -1) {
-				direccion.setNumInterior(res.getInt("num_interior"));
+			System.out.println("EXTERIOR"+(numExterior != -1));
+			if(numInterior != -1) {
+				direccion.setNumInterior(numInterior);
 			}
 			
-			if(res.getInt("num_exterior") != -1) {
-				direccion.setNumInterior(res.getInt("num_exterior"));
+			if(numExterior != -1) {
+				direccion.setNumExterior(numExterior);
 			}
 			direcciones.add(direccion);
 		}
@@ -250,7 +259,7 @@ public class ClienteDAO {
 	
 	public Direccion mostrarDireccionId(int idDireccion) throws SQLException {
 		Direccion direccion = null; 
-		String sql = "SELECT delegacion, colonia, calle, num_interior, num_exterior "; 
+		String sql = "SELECT delegacion, colonia, calle, num_interior, num_exterior FROM direccion "; 
 		sql += "WHERE idDireccion = ?"; 
 		
 		con.conectar();
@@ -265,16 +274,18 @@ public class ClienteDAO {
 			String delegacion = res.getString("delegacion"); 
 			String colonia = res.getString("colonia"); 
 			String calle   = res.getString("calle"); 
+			int numInterior = res.getInt("num_interior");
+			int numExterior = res.getInt("num_exterior");
 			
 			direccion = new Direccion(delegacion, colonia, calle); 
 			direccion.setIdDireccion(idDireccion);
 			
-			if(res.getInt("num_interior") != -1) {
-				direccion.setNumInterior(res.getInt("num_interior"));
+			if(numInterior != -1) {
+				direccion.setNumInterior(numInterior);
 			}
 			
-			if(res.getInt("num_exterior") != -1) {
-				direccion.setNumInterior(res.getInt("num_exterior"));
+			if(numExterior != -1) {
+				direccion.setNumInterior(numExterior);
 			}
 		}
 		
@@ -287,12 +298,14 @@ public class ClienteDAO {
 	
 	public boolean editarDireccion(Direccion direccion)throws SQLException{
 		boolean rowEditar = false; 
-		String sql = "UPDATE direccion SET delegacion = ?, colonia = ?, calle = ?, num_interior?, num_exterior? ";
+		String sql = "UPDATE direccion SET delegacion = ?, colonia = ?, calle = ?, num_interior=?, num_exterior=? ";
 		sql += "WHERE idDireccion = ?";
-		
+		System.out.println("EDITAR DIRECCION"+ direccion.getIdDireccion());
 		con.conectar();
 		connection = con.getJdbcConnection(); 
+		System.out.println("PF"+sql);
 		PreparedStatement statement = connection.prepareStatement(sql); 
+		
 		statement.setString(1, direccion.getDelegacion());
 		statement.setString(2, direccion.getColonia());
 		statement.setString(3, direccion.getCalle());
@@ -300,7 +313,10 @@ public class ClienteDAO {
 		statement.setInt(5, direccion.getNumExterior());
 		statement.setInt(6, direccion.getIdDireccion());
 		
+		System.out.println(statement);
 		rowEditar = statement.executeUpdate() > 0; 
+		System.out.println("AQUUII"+rowEditar);
+		
 		statement.close();
 		con.desconectar();
 		
