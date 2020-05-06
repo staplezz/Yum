@@ -1,0 +1,194 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import modelo.Alimento;
+import modelo.Conexion;
+
+public class AlimentoDAO {
+	private Conexion con;
+	private Connection connection;
+	//Nos dice si ya existe una categoria haciendo referencia al id de esa categor�a.
+	private int categoriaId;
+
+	public AlimentoDAO(String jdbcURL, String jdbcUsername, String jdbcPassword) throws SQLException {
+		System.out.println(jdbcURL);
+		con = new Conexion(jdbcURL, jdbcUsername, jdbcPassword);
+		// Por defecto la categoria es 0, es decir, no existe.
+		this.categoriaId = 0;
+	}
+	
+	/*
+	 * inserta un alimento en la base de datos.
+	 */
+	public boolean insertaAlimento(Alimento alimento) throws SQLException {
+		// Primero vemos si ya existe la categoria del alimento, si no
+		// la insertamos.
+		existeCategoria(alimento.getCategoria());
+		
+		String sql = "INSERT INTO Alimento (nombre, precio, descripcion, idCategoria) VALUES (?,?,?,?)";
+		con.conectar();
+		connection = con.getJdbcConnection();
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, alimento.getNombre());
+		statement.setDouble(2, alimento.getPrecio());
+		statement.setString(3, alimento.getDescripcion());
+		statement.setInt(4, categoriaId);
+		
+		boolean rowInserted = statement.executeUpdate() > 0;
+		statement.close();
+		con.desconectar();
+		if(rowInserted) {
+			System.out.println("ALimento insertado");
+		}
+		return rowInserted;
+	}
+	
+	/* M�todo auxiliar que nos dice si ya existe una categor�a
+	 * de alimentos en la BDD. Si ya existe, solo la almacenamos en
+	 * la variable global, si no, entonces la insertamos a la BDD 
+	 * y almacenamos en la variable global.
+	 */
+	public Boolean existeCategoria(String categoria) throws SQLException{
+		//Consulta.
+		System.out.println("nombre categoria" + categoria);
+		String consulta = "SELECT idCategoria FROM Categoria WHERE nombre= ? ";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(consulta);
+		statement.setString(1, categoria);
+		
+		ResultSet res = statement.executeQuery();
+		
+		if(res.next()) {
+			//res.beforeFirst();
+			//Ya existe categoria, entonces almacenamos el id.
+			categoriaId = res.getInt("idCategoria");
+			con.desconectar();
+			statement.close();
+			return true;
+		} else {
+			//No existe la categor�a, entonces la insertamos.
+			categoriaId = insertaCategoria(categoria);
+			statement.close();
+			return false;
+		}
+		
+	}
+	
+	// M�todo auxiliar que inserta una cateogor�a en la BDD
+	// y regresa el nuevo id de la categor�a.
+	public int insertaCategoria(String nuevaCategoria) throws SQLException {
+		/* Revisamos si ya hay una conexi�n.
+		if (con.getJdbcConnection().isClosed()) {
+			con.conectar();
+			connection = con.getJdbcConnection();
+		} */
+		
+		String insert = "INSERT INTO Categoria (nombre) VALUES (\'" + nuevaCategoria + "\')";
+		Statement statement = connection.createStatement();
+		//statement.setString(1, nuevaCategoria);
+		int affectedRows = statement.executeUpdate(insert, Statement.RETURN_GENERATED_KEYS);
+		
+		if(affectedRows == 0) {
+			throw new SQLException("NO se pudo insertar categoria.");
+		} else {
+			System.out.println("Categoria insertada.");
+		}
+		
+		ResultSet res = statement.getGeneratedKeys();
+		System.out.println(res);
+		
+		if (res.next()) {
+			//Almacenamos el id.
+		    categoriaId = res.getInt(1);
+		    con.desconectar();
+		    statement.close();
+		    return categoriaId;
+		}
+		return categoriaId;
+	}
+	
+	/*
+	 * M�todo que muestra todos los alimentos de la BDD y los regresa en una lista
+	 * de alimentos.
+	 */
+	public List<Alimento> listarAlimentos() throws SQLException {
+		List<Alimento> listaAlimentos = new ArrayList<Alimento>();
+		
+		//Consulta para obtener los alimentos con su categor�a.
+		String sql = "SELECT idAlimento, a.Nombre Nombre, Precio, Descripcion, b.Nombre Catnombre FROM Alimento a INNER JOIN Categoria b ON a.idCategoria = b.idCategoria";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		Statement statement = connection.createStatement();
+		ResultSet resultSet = statement.executeQuery(sql);
+		
+		while(resultSet.next()) {
+			int id = resultSet.getInt("idAlimento");
+			String nombre = resultSet.getString("Nombre");
+			float precio = resultSet.getFloat("Precio");
+			String descripcion = resultSet.getString("Descripcion");
+			String categoria = resultSet.getString("Catnombre");
+			
+			Alimento alimento = new Alimento(id, nombre, precio, descripcion, categoria);
+			listaAlimentos.add(alimento);
+		}
+		con.desconectar();
+		return listaAlimentos;
+	}
+	
+	/* 
+	 * Método que actualiza un alimento de la BDD.
+	 */
+	public boolean actualizaAlimento(Alimento alimento) throws SQLException {
+		boolean rowActualizar = false;
+		//Obtenemos el id de la categoria.
+		existeCategoria(alimento.getCategoria());
+		System.out.println("Encontré categoria");
+		
+		String sql = "UPDATE Alimento SET idAlimento=?, nombre=?, precio=?, descripcion=?, idcategoria=? WHERE idalimento=?";
+		con.conectar();
+		connection=con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, alimento.getId());
+		statement.setString(2, alimento.getNombre());
+		statement.setDouble(3, alimento.getPrecio());
+		statement.setString(4, alimento.getDescripcion());
+		statement.setInt(5, categoriaId);
+		statement.setInt(6, alimento.getId());
+
+		rowActualizar = statement.executeUpdate() > 0;
+		System.out.println("Pude actualizar");
+		statement.close();
+		con.desconectar();
+		return rowActualizar;
+	}
+	
+	//eliminar
+		public boolean eliminaAlimento(int idAlimento) throws SQLException {
+			boolean rowEliminar = false;
+			String sql = "DELETE FROM Alimento WHERE idalimento=?";
+			con.conectar();
+			connection = con.getJdbcConnection();
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idAlimento);
+
+			rowEliminar = statement.executeUpdate() > 0;
+			statement.close();
+			con.desconectar();
+
+			return rowEliminar;
+		}
+}
