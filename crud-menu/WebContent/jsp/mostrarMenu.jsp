@@ -47,7 +47,7 @@ No se ha podido iniciar sesión<br/>
 				      <a class="nav-item nav-link" href="#" id="nav-select">Órdenes</a>
 				      <a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
 				      <a class="nav-item nav-link" href="#" >Alimentos</a>
-				      <a class="nav-item nav-link" href="#">Repartidores</a>
+				      <a class="nav-item nav-link" id="nav-select" href="modificadorRepartidor?action=mostrar">Repartidores</a>
 			      </div>
 		      </div>
 			<div class="navbar-brand" id="cerrar-sesion">
