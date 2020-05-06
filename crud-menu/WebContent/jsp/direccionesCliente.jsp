@@ -12,18 +12,62 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-	<!-- Style CSS para lo demás -->
+	<!-- Style CSS para lo demÃ¡s -->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style.css">
 	<style type="text/css">
 		.title{
 			margin-top: 70px;
 		}
 	</style>
-	<title>Categoría</title>
-	<!-- Icono del título de la página -->
+	<title>CategorÃ­a</title>
+	<!-- Icono del tÃ­tulo de la pÃ¡gina -->
     <link rel = "icon" href = "${pageContext.request.contextPath}/Icons/admin-icon.svg" type = "image/x-icon"> 
 </head>
 <body>
+		<!-- Barra de navegaciï¿½n -->
+	<nav class="navbar navbar-expand-lg navbar-dark" style = "background-color: #28536B">
+		<a class="navbar-brand mr-5" href="#">
+    	<img src="${pageContext.request.contextPath}/Icons/bear.svg" width="35" height="35" class="d-inline-block align-top mr-2" alt="">
+    	Yum
+  		</a>
+  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#barraNavegacion" aria-controls="barraNavegacion" aria-expanded="true" aria-label="Toggle navigation">
+	   		<span class="navbar-toggler-icon"></span>
+	  	</button>
+	  	
+	  	  <div class="collapse navbar-collapse" id="barraNavegacion">
+		    <ul class="navbar-nav mr-auto">
+		    	<li>
+		    		<img src="${pageContext.request.contextPath}/Icons/menu.svg" width="35" height="35" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item active">
+		        <a class="nav-link mr-3" href="#">MenÃº <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li>
+		    		<img src="${pageContext.request.contextPath}/Icons/orden.svg" width="40" height="40" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item">
+		        <a class="nav-link mr-3" href="#">Ã“rdenes</a>
+		      </li>
+		      <li>
+		    		<img src="${pageContext.request.contextPath}/Icons/carro.svg" width="35" height="35" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item mr-3">
+		        <a class="nav-link" href="#">Carrito</a>
+		      </li>
+		      <li>
+		    		<img src="${pageContext.request.contextPath}/Icons/orden.svg" width="40" height="40" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">Cuenta</a>
+		      </li>
+		    </ul>
+		    <span class="navbar-text">
+		    	<img src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg" width="30" height="30" class="d-inline-block align-top mr-2" alt="cerrar sesiï¿½n">
+		      <a href="./../crud-menu/logout.jsp">Cerrar SesiÃ³n</a>
+		    </span>
+		  </div>
+	</nav>
+	
 	<div class="container">
 		<h1 class="text-center title">Tus direcciones guardadas :</h1>
 	</div>
@@ -32,11 +76,11 @@
 		<table class="table table-image w-55 mx-auto table-striped table-bordered lg-8">
 			<thead class="thead-dark">
 				<tr>
-					<td>Delegación</td>
+					<td>DelegaciÃ³n</td>
 					<td>Colonia</td>
 					<td>Calle</td>
-					<td>Número exterior</td>
-					<td colspan=2>Configuración</td>
+					<td>NÃºmero exterior</td>
+					<td colspan=2>ConfiguraciÃ³n</td>
 				</tr>
 			</thead>
 			<tbody>

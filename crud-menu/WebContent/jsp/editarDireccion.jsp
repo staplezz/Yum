@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    if ((session.getAttribute("id") == null) ) {
+%>
+No se ha podido iniciar sesi贸n<br/>
+<a href="index.jsp">Por favor inicia sesi贸n</a>
+<%} else {
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +18,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-	<!-- Style CSS para lo dem醩 -->
+	<!-- Style CSS para lo dem谩s -->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style.css">
 	<style type="text/css">
 		.title{
@@ -22,12 +29,56 @@
 		}
 	</style>
 	<title>Editar</title>
-	<!-- Icono del t韙ulo de la p醙ina -->
+	<!-- Icono del t铆tulo de la p谩gina -->
     <link rel = "icon" href = "${pageContext.request.contextPath}/Icons/Logo.svg" type = "image/x-icon">
 </head>
 <body>
+		<!-- Barra de navegaci锟絥 -->
+	<nav class="navbar navbar-expand-lg navbar-dark" style = "background-color: #28536B">
+		<a class="navbar-brand mr-5" href="#">
+    	<img src="${pageContext.request.contextPath}/Icons/bear.svg" width="35" height="35" class="d-inline-block align-top mr-2" alt="">
+    	Yum
+  		</a>
+  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#barraNavegacion" aria-controls="barraNavegacion" aria-expanded="true" aria-label="Toggle navigation">
+	   		<span class="navbar-toggler-icon"></span>
+	  	</button>
+	  	
+	  	  <div class="collapse navbar-collapse" id="barraNavegacion">
+		    <ul class="navbar-nav mr-auto">
+		    	<li>
+		    		<img src="${pageContext.request.contextPath}/Icons/menu.svg" width="35" height="35" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item active">
+		        <a class="nav-link mr-3" href="#">Men煤 <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li>
+		    		<img src="${pageContext.request.contextPath}/Icons/orden.svg" width="40" height="40" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item">
+		        <a class="nav-link mr-3" href="#">脫rdenes</a>
+		      </li>
+		      <li>
+		    		<img src="${pageContext.request.contextPath}/Icons/carro.svg" width="35" height="35" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item mr-3">
+		        <a class="nav-link" href="#">Carrito</a>
+		      </li>
+		      <li>
+		    		<img src="${pageContext.request.contextPath}/Icons/orden.svg" width="40" height="40" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">Cuenta</a>
+		      </li>
+		    </ul>
+		    <span class="navbar-text">
+		    	<img src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg" width="30" height="30" class="d-inline-block align-top mr-2" alt="cerrar sesi锟絥">
+		      <a href="./../crud-menu/logout.jsp">Cerrar Sesi贸n</a>
+		    </span>
+		  </div>
+	</nav>
+	
 	<div class="container">
-			<h1 class="text-center title">Editar direcci髇</h1>
+			<h1 class="text-center title">Editar direcci贸n</h1>
 	</div>
 	<div class="container final">
 		<div class="row">
@@ -35,13 +86,13 @@
 				<form action="modificadorCliente?action=editarDireccion&idDireccion=<c:out value='${direccion.getIdDireccion()}'/>"  method="post"> 
 					<table class="table w-55  lg-8">
 						<tr>
-							<td>Delegaci髇</td>
+							<td>Delegaci贸n</td>
 							<td>Colonia</td>
 							<td>Calle</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="text" name="delegacion"  class="form-control" placeholder="Delegaci髇" value = "<c:out value="${direccion.getDelegacion()}"></c:out>" required >
+								<input type="text" name="delegacion"  class="form-control" placeholder="Delegaci贸n" value = "<c:out value="${direccion.getDelegacion()}"></c:out>" required >
 							</td>
 							<td>
 								<input type="text" name="colonia" class="form-control" placeholder="Colonia"  value = "<c:out value="${direccion.getColonia()}"></c:out>" required >
@@ -51,15 +102,15 @@
 							</td>
 						</tr>
 						<tr>
-							<td>N鷐ero interior</td>
-							<td>N鷐ero exterior</td>
+							<td>N煤mero interior</td>
+							<td>N煤mero exterior</td>
 						</tr>
 						<tr>
 							<td>
-								<input type="number" name="numInt" class="form-control" placeholder="N鷐ero interior" value = "<c:out value="${direccion.getNumInterior()}"></c:out>" > 
+								<input type="number" name="numInt" class="form-control" placeholder="N煤mero interior" value = "<c:out value="${direccion.getNumInterior()}"></c:out>" > 
 							</td>
 							<td>
-								<input type="number" name="numExt" class="form-control"  placeholder="N鷐ero exterior" value = "<c:out value="${direccion.getNumExterior()}"></c:out>" >
+								<input type="number" name="numExt" class="form-control"  placeholder="N煤mero exterior" value = "<c:out value="${direccion.getNumExterior()}"></c:out>" >
 							</td>
 						</tr>
 			
@@ -92,3 +143,6 @@
 		<!-- Footer -->
 </body>
 </html>
+<%
+    }
+%>
