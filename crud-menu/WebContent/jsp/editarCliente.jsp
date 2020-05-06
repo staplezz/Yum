@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    if ((session.getAttribute("id") == null) ) {
+%>
+No se ha podido iniciar sesión<br/>
+<a href="index.jsp">Por favor inicia sesión</a>
+<%} else {
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +38,7 @@
 
 	<div class="container">
 			<h1 class="text-center title">Modifica tu perfil, ${cliente.getNombre()}</h1>
+			<a href='./../logout.jsp'>Cerrar sesión</a>
 	</div>
 		<div class="container" >
 	  <div class="row">
@@ -108,3 +118,6 @@
 		<!-- Footer -->
 </body>
 </html>
+<%
+    }
+%>
