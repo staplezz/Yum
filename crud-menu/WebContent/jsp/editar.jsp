@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    if ((session.getAttribute("id") == null) ) {
+%>
+No se ha podido iniciar sesión<br/>
+<a href="index.jsp">Por favor inicia sesión</a>
+<%} else {
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +23,9 @@
 	<style type="text/css">
 		.title{
 			margin-top: 70px;
+		}
+		.final{
+			margin-bottom: 60px;
 		}
 	</style>
 	<title>Categoría</title>
@@ -38,7 +48,7 @@
 		      </div>
 	     </div>
 		 <div class="navbar-brand" id="cerrar-sesion">
-			<a class="nav-item" href="#">Cerrar sesión</a>
+			<a class="nav-item" href="./../crud-menu/logout.jsp">Cerrar sesión</a>
 			<img src="C:/Users/Alma/eclipse-workspace/crud-menu/WebContent/Icons/cerrar-sesion.svg" width="30" height="40" class="ml-3" alt="">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="	Toggle navigation">
   				<span class="navbar-toggler-icon"></span>
@@ -121,3 +131,6 @@
 		<!-- Footer -->
 </body>
 </html>
+<%
+    }
+%>

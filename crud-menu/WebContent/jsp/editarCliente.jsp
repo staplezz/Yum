@@ -30,15 +30,58 @@ No se ha podido iniciar sesión<br/>
 			margin-bottom: 60px;
 		}
 	</style>
+	<meta charset="ISO-8859-1">
 	<title>Editar perfil</title>
 	<!-- Icono del título de la página -->
     <link rel = "icon" href = "${pageContext.request.contextPath}/Icons/Logo.svg" type = "image/x-icon"> 
 </head>
 <body>
+		<!-- Barra de navegaci�n -->
+	<nav class="navbar navbar-expand-lg navbar-dark" style = "background-color: #28536B">
+		<a class="navbar-brand mr-5" href="#">
+    	<img src="${pageContext.request.contextPath}/Icons/bear.svg" width="35" height="35" class="d-inline-block align-top mr-2" alt="">
+    	Yum
+  		</a>
+  		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#barraNavegacion" aria-controls="barraNavegacion" aria-expanded="true" aria-label="Toggle navigation">
+	   		<span class="navbar-toggler-icon"></span>
+	  	</button>
+	  	
+	  	  <div class="collapse navbar-collapse" id="barraNavegacion">
+		    <ul class="navbar-nav mr-auto">
+		    	<li>
+		    		<img src="${pageContext.request.contextPath}/Icons/menu.svg" width="35" height="35" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item active">
+		        <a class="nav-link mr-3" href="#">Menú <span class="sr-only">(current)</span></a>
+		      </li>
+		      <li>
+		    		<img src="${pageContext.request.contextPath}/Icons/orden.svg" width="40" height="40" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item">
+		        <a class="nav-link mr-3" href="#">Órdenes</a>
+		      </li>
+		      <li>
+		    		<img src="${pageContext.request.contextPath}/Icons/carro.svg" width="35" height="35" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item mr-3">
+		        <a class="nav-link" href="#">Carrito</a>
+		      </li>
+		      <li>
+		    		<img src="${pageContext.request.contextPath}/Icons/orden.svg" width="40" height="40" class="d-inline-block align-top mr-2" alt="">
+		    	</li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">Cuenta</a>
+		      </li>
+		    </ul>
+		    <span class="navbar-text">
+		    	<img src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg" width="30" height="30" class="d-inline-block align-top mr-2" alt="cerrar sesi�n">
+		      <a href="./../crud-menu/logout.jsp">Cerrar Sesión</a>
+		    </span>
+		  </div>
+	</nav>
 
 	<div class="container">
 			<h1 class="text-center title">Modifica tu perfil, ${cliente.getNombre()}</h1>
-			<a href='./../logout.jsp'>Cerrar sesión</a>
 	</div>
 		<div class="container" >
 	  <div class="row">
