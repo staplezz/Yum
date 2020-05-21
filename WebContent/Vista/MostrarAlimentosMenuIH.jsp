@@ -115,8 +115,12 @@
 						<td><c:out value="${alimento.nombre}" /></td>
 						<td><c:out value="${alimento.getPrecio()}" /></td>
 						<td><c:out value="${alimento.getDescripcion()}" /></td>
-						<td><a
-							href="adminMenu?action=agregarAlimento&id=<c:out value="${alimento.id}" />&idCat=<c:out value="${idCat}" />">Elegir</a></td>
+						
+						<td>
+							<a href="adminMenu?action=agregarAlimento&id=<c:out value="${alimento.id}" />&idCat=<c:out value='${idCat}' />">
+								Elegir
+							</a>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

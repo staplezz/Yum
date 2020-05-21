@@ -130,8 +130,10 @@ public class ModificadorMenu extends HttpServlet {
 		if (alimentos != null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/MostrarAlimentosMenuIH.jsp");
 			request.setAttribute("alimentos", alimentos);
-			int idCategoria =Integer.parseInt(request.getParameter("idCat"));
-			request.setAttribute("idCat", idCategoria);
+			if(request.getParameter("idCat")!= null) {
+				int idCategoria =Integer.parseInt(request.getParameter("idCat"));
+				request.setAttribute("idCat", idCategoria);
+			}
 			dispatcher.forward(request, response);
 		}else {
 			mostrarMenu(request,response);
@@ -141,7 +143,10 @@ public class ModificadorMenu extends HttpServlet {
 	
 	private void agregarAlimento(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		menuDAO.agregarAlimento(Integer.parseInt(request.getParameter("id")), Integer.parseInt(request.getParameter("idCat")));
-		request.setAttribute("categoria", request.getParameter("idCat"));
+		String error = "''";
+		if(request.getParameter("idCat")!= null || request.getParameter("idCat").equals(error)) {
+			request.setAttribute("categoria", request.getParameter("idCat"));
+		}
 		mostrarAlimentos(request,response);
 	}
 	
@@ -156,7 +161,7 @@ public class ModificadorMenu extends HttpServlet {
 		
 		Categoria categoria = menuDAO.crearCategoria(nombre); 
 		
-		request.setAttribute("categoria", categoria.getId());
+		request.setAttribute("idCat", categoria.getId());
 		System.out.println("CATEGORIA"+categoria.getNombre());
 		
 		mostrarAlimentos(request,response);
