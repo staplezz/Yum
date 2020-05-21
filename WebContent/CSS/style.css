@@ -1,0 +1,47 @@
+@charset "ISO-8859-1";
+
+.navbar {
+	background-color: #253237;
+}
+
+#nav-select {
+	color: #FFFFFF;
+}
+
+.nav-item {
+	color: #b5c7c9;
+}
+
+.navbar-brand {
+	color: #c05746;
+}
+
+#menu-CRUD {
+	color: black;
+}
+
+.footer {
+	width: 100%;
+	background-color: white;
+}
+
+.table-image {td , th,img{ vertical-align:middle;
+	align-content: center;
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 120px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}

@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//WebContent/Vista/AdminRepartidor/RepartidorAdminIH.jsp=UTF-8
+encoding//WebContent/index.jsp=UTF-8
+encoding//src/control/ModificadorMenu.java=UTF-8
+encoding//src/control/ModificadorRepartidor.java=UTF-8
+encoding//src/dao/ClienteDAO.java=UTF-8
+encoding//src/dao/MenuDAO.java=UTF-8
+encoding//src/dao/RepartidorDAO.java=UTF-8
+encoding//src/modelo/Repartidor.java=UTF-8
