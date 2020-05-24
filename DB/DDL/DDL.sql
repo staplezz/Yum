@@ -86,7 +86,7 @@ CREATE TABLE `Categoria`(
 CREATE TABLE `Alimento`(
 	`idAlimento` int NOT NULL AUTO_INCREMENT,
 	`nombre` varchar(30) NOT NULL,
-	`precio` decimal(4,2) NOT NULL CHECK (`precio` >= 0),
+	`precio` decimal(6,2) NOT NULL CHECK (`precio` >= 0.0),
 	`descripcion` varchar(100) NOT NULL,
 	`idCategoria` int NOT NULL,
 	`path` varchar(50),
