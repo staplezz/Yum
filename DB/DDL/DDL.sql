@@ -1,11 +1,11 @@
-/*
+*
 ********************************************************
 Base de datos para la empresa 'YUM', que representa
 un restaurante manejado por un solo administrador y que
 puede contratar a empleados para repartir las órdenadministradores.
 ********************************************************
 DBMS: MySQL 8.0
-Versión 1.3
+Versión 1.4
 ********************************************************
 */
 
@@ -15,7 +15,7 @@ USE `yum_db`;
 /* Tabla para representar a una persona dentro de la BDD, en
 este caso serían los clientes y los repartidores que comparten
 como atributo nombre, apellidos y correo electrónico. */
-CREATE TABLE `Persona`(
+CREATE TABLE `persona`(
 	`idPersona` int NOT NULL AUTO_INCREMENT,
 	`nombre` varchar(30) NOT NULL,
 	`apellidoPaterno` varchar(20) NOT NULL,
@@ -28,35 +28,35 @@ CREATE TABLE `Persona`(
 /* Tabla para representar al administrador,
 usamos un cifrado SHA1 para almacenar la contraseña del
 administrador con un valor 'salt'. */
-CREATE TABLE `Administrador`(
+CREATE TABLE `administrador`(
 	`idAdministrador` int NOT NULL AUTO_INCREMENT,
 	`idPersona` int NOT NULL,
 	PRIMARY KEY (`idAdministrador`),
-	FOREIGN KEY (`idPersona`) REFERENCES `Persona`(`idPersona`)
+	FOREIGN KEY (`idPersona`) REFERENCES `persona`(`idPersona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 /* Tabla para representar un cliente en nuestro sistema,
 un cliente tendrá dirección, teléfono, email y otra información básica.
 Se usará cifrado SHA1 junto con un valor salt, generado aleatoriamente. */
-CREATE TABLE `Cliente`(
+CREATE TABLE `cliente`(
 	`idCliente` int NOT NULL AUTO_INCREMENT,
 	`telefono` varchar(10) NOT NULL,
 	`idPersona` int NOT NULL,
 	PRIMARY KEY (`idCliente`),
-	FOREIGN KEY (`idPersona`) REFERENCES `Persona` (`idPersona`)
+	FOREIGN KEY (`idPersona`) REFERENCES `persona` (`idPersona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 /* Tabla para representar a un repartidor dentro del sistema. */
-CREATE TABLE `Repartidor`(
+CREATE TABLE `repartidor`(
 	`idRepartidor` int NOT NULL AUTO_INCREMENT,
 	`idPersona` int NOT NULL,
 	PRIMARY KEY (`idRepartidor`),
-	FOREIGN KEY (`idPersona`) REFERENCES `Persona`(`idPersona`)
+	FOREIGN KEY (`idPersona`) REFERENCES `persona`(`idPersona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 /*Tabla para representar la dirección del cliente, cada cliente
 puede tener una o más direcciones registradas */
-CREATE TABLE `Direccion`(
+CREATE TABLE `direccion`(
 	`idDireccion` int NOT NULL AUTO_INCREMENT,
     `delegacion` varchar(50) NOT NULL,
     `colonia` varchar(50) NOT NULL,
@@ -66,24 +66,24 @@ CREATE TABLE `Direccion`(
     PRIMARY KEY(`idDireccion`)
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
-CREATE TABLE `DireccionesCliente`(
+CREATE TABLE `direccionescliente`(
 	`idDireccionCliente` int NOT NULL AUTO_INCREMENT,
 	`idDireccion` int NOT NULL ,
     `idCliente`   int NOT NULL ,
     PRIMARY KEY(`idDireccionCliente`),
-    FOREIGN KEY(`idDireccion`) REFERENCES `Direccion`(`idDireccion`),
-    FOREIGN KEY(`idCliente`)   REFERENCES  `Cliente`(`idCliente`)
+    FOREIGN KEY(`idDireccion`) REFERENCES `direccion`(`idDireccion`),
+    FOREIGN KEY(`idCliente`)   REFERENCES  `cliente`(`idCliente`)
 )ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 /* Tabla para representar la categoría de un alimento */
-CREATE TABLE `Categoria`(
+CREATE TABLE `categoria`(
 	`idCategoria` int NOT NULL AUTO_INCREMENT,
 	`nombre` varchar(30) NOT NULL,
 	PRIMARY KEY (`idCategoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 /* Tabla para representar un alimento con sus características.*/
-CREATE TABLE `Alimento`(
+CREATE TABLE `alimento`(
 	`idAlimento` int NOT NULL AUTO_INCREMENT,
 	`nombre` varchar(30) NOT NULL,
 	`precio` decimal(6,2) NOT NULL CHECK (`precio` >= 0.0),
@@ -91,27 +91,27 @@ CREATE TABLE `Alimento`(
 	`idCategoria` int NOT NULL,
 	`path` varchar(50),
 	PRIMARY KEY (`idAlimento`),
-	FOREIGN KEY (`idCategoria`) REFERENCES `Categoria` (`idCategoria`)
+	FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 /* Tabla para representar el carrito de un cliente. */
-CREATE TABLE `Carrito`(
+CREATE TABLE `carrito`(
 	`idCarrito` int NOT NULL AUTO_INCREMENT,
 	`idCliente` int NOT NULL,
 	PRIMARY KEY (`idCarrito`),
-	FOREIGN KEY (`idCliente`) REFERENCES `Cliente` (`idCliente`)
+	FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 /* Tabla para representar los alimentos que estarán dentro del carrito. */
-CREATE TABLE `AlimentosCarrito`(
+CREATE TABLE `alimentoscarrito`(
 	`idCarrito` int NOT NULL,
 	`idAlimento` int NOT NULL,
-	FOREIGN KEY(`idCarrito`) REFERENCES `Carrito` (`idCarrito`),
-	FOREIGN KEY(`idAlimento`) REFERENCES `Alimento` (`idAlimento`)
+	FOREIGN KEY(`idCarrito`) REFERENCES `carrito` (`idCarrito`),
+	FOREIGN KEY(`idAlimento`) REFERENCES `alimento` (`idAlimento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 /* Tabla para representar una órden de un cliente con sus características. */
-CREATE TABLE `Orden`(
+CREATE TABLE `orden`(
     `idOrden` int NOT NULL AUTO_INCREMENT,
     `fecha` date NOT NULL,
     `estado` tinyint NOT NULL CHECK (`estado` > 0 AND `estado` < 5),
@@ -120,15 +120,15 @@ CREATE TABLE `Orden`(
     `idCarrito` int NOT NULL,
     `idRepartidor` int NOT NULL,
     PRIMARY KEY (`idOrden`),
-    FOREIGN KEY(`idCliente`) REFERENCES `Cliente` (`idCliente`),
+    FOREIGN KEY(`idCliente`) REFERENCES `cliente` (`idCliente`),
     FOREIGN KEY(`idCarrito`) REFERENCES `Carrito` (`idCarrito`),
-    FOREIGN KEY(`idRepartidor`) REFERENCES `Repartidor` (`idRepartidor`)
+    FOREIGN KEY(`idRepartidor`) REFERENCES `repartidor` (`idRepartidor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
  
  /* Tabla para representar todas las órdenes de un cliente */
-CREATE TABLE `OrdenesCliente`(
+CREATE TABLE `ordenescliente`(
 	`idCliente` int NOT NULL,
 	`idOrden` int NOT NULL,
-	FOREIGN KEY (`idCliente`) REFERENCES `Cliente` (`idCliente`),
-	FOREIGN KEY (`idOrden`) REFERENCES `Orden` (`idOrden`)
+	FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`),
+	FOREIGN KEY (`idOrden`) REFERENCES `orden` (`idOrden`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
