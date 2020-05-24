@@ -121,7 +121,7 @@ CREATE TABLE `orden`(
     `idRepartidor` int NOT NULL,
     PRIMARY KEY (`idOrden`),
     FOREIGN KEY(`idCliente`) REFERENCES `cliente` (`idCliente`),
-    FOREIGN KEY(`idCarrito`) REFERENCES `Carrito` (`idCarrito`),
+    FOREIGN KEY(`idCarrito`) REFERENCES `carrito` (`idCarrito`),
     FOREIGN KEY(`idRepartidor`) REFERENCES `repartidor` (`idRepartidor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
  
