@@ -5,13 +5,21 @@ public class Alimento {
 	private String nombre; 
 	private double precio; 
 	private String descripcion; 
-	private int idCategoria; 
+	private int idCategoria;
+	// Donde se guardará la imágen del alimento.
+	private String path;
+	private String nombreCategoria;
 	
-	public Alimento( String nombre, double precio, String descripcion, int idCategoria){ 
+	public Alimento(int id, String nombre, double precio, 
+			String descripcion, int idCategoria, String path,
+			String nombreCategoria){
+		this.id = id;
 		this.nombre = nombre; 
 		this.precio = precio; 
 		this.descripcion = descripcion; 
 		this.idCategoria = idCategoria;
+		this.path = path;
+		this.nombreCategoria = nombreCategoria;
 	}
 	
 	//getters and setters 
@@ -53,6 +61,22 @@ public class Alimento {
 	
 	public void setCategoria(int categoria) {
 		this.idCategoria = categoria;
+	}
+	
+	public String getPath() {
+		return path;
+	}
+	
+	public void setPath(String path) {
+		this.path = path;
+	}
+	
+	public String getNombreCategoria() {
+		return nombreCategoria;
+	}
+	
+	public void setNombreCategoria(String nombreCategoria) {
+		this.nombreCategoria = nombreCategoria;
 	}
 
 }

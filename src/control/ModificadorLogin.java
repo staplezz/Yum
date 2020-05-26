@@ -9,12 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession; 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -55,7 +50,6 @@ public class ModificadorLogin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
 		try {
 			String correo = request.getParameter("email");
 			String rawPassword = request.getParameter("password"); 
@@ -68,7 +62,7 @@ public class ModificadorLogin extends HttpServlet {
 			
 			cliente = personaDAO.buscaCliente(correo); 
 			administrador = personaDAO.buscaAdministrador(correo);
-			System.out.println("AQUíiii");
+			System.out.println("AQUï¿½iii");
 			System.out.println(administrador);
 			repartidor = personaDAO.buscaRepartidor(correo);
 			
@@ -91,7 +85,7 @@ public class ModificadorLogin extends HttpServlet {
 				response.sendRedirect("jsp/successRepartidor.jsp");
 			}else {
 				PrintWriter out = response.getWriter();
-				out.println("Contraseña o correo incorrectos <a href='index.jsp'>intenta de nuevo.</a>");
+				out.println("Contraseï¿½a o correo incorrectos <a href='index.jsp'>intenta de nuevo.</a>");
 				out.close();
 			}
 			

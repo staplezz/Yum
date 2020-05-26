@@ -154,7 +154,7 @@ public class MenuDAO {
 			String nombre = resultSet.getString("nombre"); 
 			Double precio = resultSet.getDouble("precio");
 			String descripcion = resultSet.getString("descripcion");
-			Alimento alimento = new Alimento(nombre, precio, descripcion, 100);
+			Alimento alimento = new Alimento(0,nombre, precio, descripcion, 100, "" ,"");
 			alimento.setId(id);
 			alimentos.add(alimento);
 		}
@@ -191,7 +191,8 @@ public class MenuDAO {
 				String nombreA = resultAlimentos.getString("nombre"); 
 				double precio = resultAlimentos.getDouble("precio"); 
 				String descripcion = resultAlimentos.getString("descripcion");
-				Alimento alimento = new Alimento(nombreA, precio, descripcion, res.getInt("idCategoria"));
+				Alimento alimento = new Alimento(0,nombreA, precio, descripcion, 
+						res.getInt("idCategoria"), "", "");
 				alimento.setId(idAlimento);
 				
 				lista.add(alimento); 
@@ -237,7 +238,8 @@ public class MenuDAO {
 				String nombreA = resultAlimentos.getString("nombre"); 
 				double precio = resultAlimentos.getDouble("precio"); 
 				String descripcion = resultAlimentos.getString("descripcion");
-				Alimento alimento = new Alimento(nombreA, precio, descripcion, res.getInt("idCategoria"));
+				Alimento alimento = new Alimento(0,nombreA, precio, descripcion, 
+						res.getInt("idCategoria"), "", "");
 				alimento.setId(idAlimento);
 				
 				lista.add(alimento); 
@@ -281,7 +283,8 @@ public class MenuDAO {
 				Double precio = alimentos.getDouble("precio"); 
 				String descripcion = alimentos.getString("descripcion"); 
 				
-				Alimento alimento = new Alimento(nombre, precio, descripcion, idCategoria); 
+				Alimento alimento = new Alimento(0,nombre, precio, descripcion,
+						idCategoria, "", ""); 
 				alimento.setId(idAlimento);
 				listaAlimentos.add(alimento); 
 			}

@@ -20,12 +20,20 @@ public class Conexion {
 	public void conectar() throws SQLException {
         if (jdbcConnection == null || jdbcConnection.isClosed()) {
             try {
+            	
                 Class.forName("com.mysql.jdbc.Driver");
+               
             } catch (ClassNotFoundException e) {
                 throw new SQLException(e);
             }
+            System.out.println("intentando conectar DB");
+            try {
             jdbcConnection = DriverManager.getConnection(
                                         jdbcURL, jdbcUsername, jdbcPassword);
+            } catch(Exception e) {
+            	System.out.println("Ocurrio un error" + e);
+            }
+            System.out.println("logre conectar DB");
         }
     }
      
