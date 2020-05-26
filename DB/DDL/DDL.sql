@@ -1,4 +1,4 @@
-*
+/*
 ********************************************************
 Base de datos para la empresa 'YUM', que representa
 un restaurante manejado por un solo administrador y que
