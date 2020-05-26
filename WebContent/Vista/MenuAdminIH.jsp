@@ -34,7 +34,7 @@
 		margin-bottom: 60px;
 	}
 	</style>
-	<title>Menú</title>
+	<title>Administración Yum</title>
 	<!-- Icono del título de la página -->
 	<link rel="icon"
 		href="${pageContext.request.contextPath}/Icons/admin-icon.svg"
@@ -52,9 +52,9 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a class="nav-item nav-link" href="#" id="nav-select">Órdenes</a> 
-				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
-				<a class="nav-item nav-link" href="#">Alimentos</a> 
+				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu" id="nav-select">Menú</a>
+				<a class="nav-item nav-link" href="#">Órdenes</a> 
+				<a class="nav-item nav-link" href="adminAlimento">Alimentos</a> 
 				<a class="nav-item nav-link" href="modificadorRepartidor?action=mostrar">Repartidores</a>
 			</div>
 		</div>
@@ -75,16 +75,15 @@
 
 
 	<div class="container">
-		<h1 class="text-center title">Menú</h1>
+		<h1 class="display-4 text-center title">Menú</h1>
 	</div>
 
 	<div class="container">
-		<div class="row">
+		<div class="row pb-2">
 			<div class="col-sm-3 col-md-3 col-lg-3 offset-sm-6 offset-md-6 offset-lg-6">
 				<div class="card">
 					<button type="button" class="btn btn-outline-info"
-						data-toggle="collapse" data-target="#buscar">
-						Crear categoría. <img class="icon"
+						data-toggle="collapse" data-target="#buscar"> Crear categoría. <img class="icon"
 							src="${pageContext.request.contextPath}/Icons/anadir.svg"
 							class="img-fluid img-thumbnail" alt="Editar" width="30"
 							height="30">
@@ -93,8 +92,8 @@
 						<div class="card-body">
 							<form action="adminMenu?action=agregarCategoria" method="post">
 								<div class="form-group">
-									<input class="form-control" type="text" name="nombre"
-										value="Nombre">
+									<input class="form-control" id="validationCustom01" type="text" name="nombre"
+										placeholder="Nombre de categoría." required>
 								</div>
 								<button class="btn btn-outline-primary" type="submit">Agregar</button>
 							</form>
@@ -115,8 +114,8 @@
 						<div class="card-body">
 							<form action="adminMenu?action=buscarPorCategoria" method="post">
 								<div class="form-group">
-									<input class="form-control" type="text" name="nombre"
-										value="Nombre">
+									<input class="form-control" id="validationCustom01" type="text" name="nombre"
+										placeholder="Nombre de categoría." required>
 								</div>
 								<button class="btn btn-outline-primary" type="submit">Buscar</button>
 							</form>

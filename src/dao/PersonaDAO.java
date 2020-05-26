@@ -28,11 +28,13 @@ public class PersonaDAO {
 	    con.conectar();
 	    connection = con.getJdbcConnection();
 	    
+	    
 	    PreparedStatement statement = connection.prepareStatement(sqlCliente);
 	    statement.setString(1, email);
 	  
 	    
 	    ResultSet result = statement.executeQuery();
+	    System.out.println("ejecuta query");
 	    if (result.next()) {
 	    	String nombre = result.getString("nombre");
 	    	String apellidoPaterno = result.getString("apellidoPaterno");

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="es">
 
 <head>
@@ -54,10 +53,10 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a class="nav-item nav-link" href="#" id="nav-select">Órdenes</a> 
 				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
-				<a class="nav-item nav-link" href="#">Alimentos</a> 
-				<a class="nav-item nav-link" href="modificadorRepartidor?action=mostrar">Repartidores</a>
+				<a class="nav-item nav-link" href="#">Órdenes</a> 
+				<a class="nav-item nav-link" href="adminAlimento">Alimentos</a> 
+				<a class="nav-item nav-link active" href="modificadorRepartidor?action=mostrar">Repartidores</a>
 			</div>
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
@@ -78,12 +77,10 @@
 		<h1 class="text-center title">Editar Repartidor</h1>
 	</div>
 
-	</div>
 
 
 	<form action="final modificadorRepartidor?action=editar" method="post">
-		<div
-			class="  text-center form schedule-assessment col-sm-6 col-md-6 col-lg-6 offset-sm-3 offset-md-3 offset-lg-3"">
+		<div class="text-center form schedule-assessment col-sm-6 col-md-6 col-lg-6 offset-sm-3 offset-md-3 offset-lg-3">
 			<div class="form-group ">
 				<label for="nombre">Nombre</label> <input type="text"
 					class="form-control" id="nombre" name="nombre"

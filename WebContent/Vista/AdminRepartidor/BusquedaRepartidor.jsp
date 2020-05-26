@@ -2,8 +2,6 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="es">
 <head>
 	<meta charset="utf-8">
@@ -48,30 +46,29 @@
 	<!-- Barra de navegación -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 		id="top-bar">
-	<div class="navbar-brand">
-		<img src="${pageContext.request.contextPath}/Icons/admin.svg"
-			width="30" height="30" class="" alt=""> <a
-			class="navbar-brand text-white">Administración Yum</a>
-	</div>
-	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-		<div class="navbar-nav">
-			<a class="nav-item nav-link" href="#">órdenes</a> <a
-				class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Men�</a>
-			<a class="nav-item nav-link" href="#">Alimentos</a> <a
-				class="nav-item nav-link" id="nav-select"
-				href="modificadorRepartidor?action=mostrar">Repartidores</a>
+		<div class="navbar-brand">
+			<img src="${pageContext.request.contextPath}/Icons/admin.svg"
+				width="30" height="30" class="" alt=""> <a
+				class="navbar-brand text-white">Administración Yum</a>
 		</div>
-	</div>
-	<div class="navbar-brand" id="cerrar-sesion">
-		<a class="nav-item" href="logout?">Cerrar Sesión</a> <img
-			src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
-			width="30" height="30" class="ml-3" alt="">
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-			aria-expanded="false" aria-label="	Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-	</div>
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
+				<a class="nav-item nav-link" href="#">órdenes</a> 
+				<a class="nav-item nav-link" href="adminAlimento">Alimentos</a> 
+				<a class="nav-item nav-link active" id="nav-select" href="modificadorRepartidor?action=mostrar">Repartidores</a>
+			</div>
+		</div>
+		<div class="navbar-brand" id="cerrar-sesion">
+			<a class="nav-item" href="logout?">Cerrar Sesión</a> <img
+				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
+				width="30" height="30" class="ml-3" alt="">
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+				aria-expanded="false" aria-label="	Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
 	</nav>
 
 
