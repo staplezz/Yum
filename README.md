@@ -4,6 +4,5 @@ Pasos para correr correctamente el proyecto.
 - Actualizar dependencias de Maven.
 - Cambiar web.xml la contraseña de jdbc
 - Cambiar en web.xml la ruta donde se quieran guardar las imágenes de los alimentos.
-- Cambiar en la carpeta Servers el archivo server.xml y agregar después del contexto de Yum la línea:
-<Context docBase="path\a las\imagenes" path="/Yum/imagenes"/>
+- Cambiar en la carpeta Servers el archivo server.xml y agregar después del contexto de Yum la línea: <Context docBase="path\a las\imagenes" path="/Yum/imagenes"/>
 - Correr en tomcat 8.5
