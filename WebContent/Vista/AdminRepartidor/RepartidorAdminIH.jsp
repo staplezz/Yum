@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="es">
 <head>
@@ -45,7 +44,7 @@
 </head>
 
 <body>
-		<!-- Barra de navegación -->
+	<!-- Barra de navegación -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 		id="top-bar">
 		<div class="navbar-brand">
@@ -55,10 +54,10 @@
 		</div>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a class="nav-item nav-link" href="#" id="nav-select">Órdenes</a> 
 				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
-				<a class="nav-item nav-link" href="#">Alimentos</a> 
-				<a class="nav-item nav-link" href="modificadorRepartidor?action=mostrar">Repartidores</a>
+				<a class="nav-item nav-link" href="#">Órdenes</a> 
+				<a class="nav-item nav-link" href="adminAlimento">Alimentos</a> 
+				<a class="nav-item nav-link active" href="modificadorRepartidor?action=mostrar">Repartidores</a>
 			</div>
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
@@ -103,7 +102,7 @@
 						<form action="modificadorRepartidor?action=buscar" method="post">
 							<div class="form-group">
 								<input class="form-control" type="text" name="repartidorBuscado"
-									id="repartidorBuscado" value="Nombre">
+									id="repartidorBuscado" placeholder="Nombre del Repartidor" required>
 							</div>
 							<button class="btn btn-outline-primary" type="submit">Buscar</button>
 						</form>
