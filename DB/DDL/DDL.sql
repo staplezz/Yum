@@ -20,7 +20,7 @@ CREATE TABLE `persona`(
 	`nombre` varchar(30) NOT NULL,
 	`apellidoPaterno` varchar(20) NOT NULL,
 	`apellidoMaterno` varchar(20) NOT NULL,
-	`password` char(40) NOT NULL,
+	`password` char(60) NOT NULL,
 	`correoElectronico` varchar(50) NOT NULL,
 	PRIMARY KEY (`idPersona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
