@@ -40,6 +40,7 @@ un cliente tendrá dirección, teléfono, email y otra información básica.
 Se usará cifrado SHA1 junto con un valor salt, generado aleatoriamente. */
 CREATE TABLE `cliente`(
 	`idCliente` int NOT NULL AUTO_INCREMENT,
+	`salt` int NOT NULL,
 	`telefono` varchar(10) NOT NULL,
 	`idPersona` int NOT NULL,
 	PRIMARY KEY (`idCliente`),
