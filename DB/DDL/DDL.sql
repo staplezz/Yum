@@ -5,7 +5,7 @@ un restaurante manejado por un solo administrador y que
 puede contratar a empleados para repartir las órdenadministradores.
 ********************************************************
 DBMS: MySQL 8.0
-Versión 1.5
+Versión 1.6
 ********************************************************
 */
 
@@ -111,14 +111,22 @@ CREATE TABLE `alimentoscarrito`(
 	FOREIGN KEY(`idAlimento`) REFERENCES `alimento` (`idAlimento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
+ /* Tabla para representar todas las órdenes hechas por un cliente */
+CREATE TABLE `ordenescliente`(
+	`idOrdenesCliente` int NOT NULL AUTO_INCREMENT,
+	`idCliente` int NOT NULL,
+	PRIMARY KEY (`idOrdenesCliente`),
+	FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
 /* Tabla estática que sirve para almacenar los alimentos que pidió un cliente
 * de una órden. (Similar a alimentos carrito).
 */
 CREATE TABLE `alimentosorden`(
-	`idAlimentosOrden` int NOT NULL AUTO_INCREMENT,
+	`idOrdenesCliente` int NOT NULL,
 	`idAlimento` int NOT NULL,
 	`cantidad` int NOT NULL,
-	PRIMARY KEY (`idAlimentosOrden`),
+	FOREIGN KEY(`idOrdenesCliente`) REFERENCES `ordenescliente` (`idOrdenesCliente`),
 	FOREIGN KEY(`idAlimento`) REFERENCES `alimento` (`idAlimento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
@@ -127,12 +135,12 @@ CREATE TABLE `orden`(
     `idOrden` int NOT NULL AUTO_INCREMENT,
     `fecha` date NOT NULL,
     `estado` tinyint NOT NULL CHECK (`estado` > 0 AND `estado` < 5),
-    `calificacion` tinyint NOT NULL CHECK (`calificacion` >= 1 AND `calificacion` <= 5),
+    `calificacion` tinyint CHECK (`calificacion` >= 1 AND `calificacion` <= 5),
     `idCliente` int NOT NULL,
-    `idAlimentosOrden` int NOT NULL,
+    `idOrdenesCliente` int NOT NULL,
     `idRepartidor` int,
     PRIMARY KEY (`idOrden`),
     FOREIGN KEY(`idCliente`) REFERENCES `cliente` (`idCliente`),
-    FOREIGN KEY(`idAlimentosOrden`) REFERENCES `alimentosorden` (`idAlimentosOrden`),
+    FOREIGN KEY(`idOrdenesCliente`) REFERENCES `ordenescliente` (`idOrdenesCliente`),
     FOREIGN KEY(`idRepartidor`) REFERENCES `repartidor` (`idRepartidor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
