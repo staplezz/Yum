@@ -5,7 +5,7 @@ un restaurante manejado por un solo administrador y que
 puede contratar a empleados para repartir las órdenadministradores.
 ********************************************************
 DBMS: MySQL 8.0
-Versión 1.4
+Versión 1.5
 ********************************************************
 */
 
@@ -20,7 +20,7 @@ CREATE TABLE `persona`(
 	`nombre` varchar(30) NOT NULL,
 	`apellidoPaterno` varchar(20) NOT NULL,
 	`apellidoMaterno` varchar(20) NOT NULL,
-	`password` char(60) NOT NULL,
+	`password` char(40) NOT NULL,
 	`correoElectronico` varchar(50) NOT NULL,
 	PRIMARY KEY (`idPersona`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
@@ -40,7 +40,6 @@ un cliente tendrá dirección, teléfono, email y otra información básica.
 Se usará cifrado SHA1 junto con un valor salt, generado aleatoriamente. */
 CREATE TABLE `cliente`(
 	`idCliente` int NOT NULL AUTO_INCREMENT,
-	`salt` int NOT NULL,
 	`telefono` varchar(10) NOT NULL,
 	`idPersona` int NOT NULL,
 	PRIMARY KEY (`idCliente`),
@@ -107,7 +106,19 @@ CREATE TABLE `carrito`(
 CREATE TABLE `alimentoscarrito`(
 	`idCarrito` int NOT NULL,
 	`idAlimento` int NOT NULL,
+	`cantidad` int NOT NULL,
 	FOREIGN KEY(`idCarrito`) REFERENCES `carrito` (`idCarrito`),
+	FOREIGN KEY(`idAlimento`) REFERENCES `alimento` (`idAlimento`)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+/* Tabla estática que sirve para almacenar los alimentos que pidió un cliente
+* de una órden. (Similar a alimentos carrito).
+*/
+CREATE TABLE `alimentosorden`(
+	`idAlimentosOrden` int NOT NULL AUTO_INCREMENT,
+	`idAlimento` int NOT NULL,
+	`cantidad` int NOT NULL,
+	PRIMARY KEY (`idAlimentosOrden`),
 	FOREIGN KEY(`idAlimento`) REFERENCES `alimento` (`idAlimento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
@@ -118,18 +129,10 @@ CREATE TABLE `orden`(
     `estado` tinyint NOT NULL CHECK (`estado` > 0 AND `estado` < 5),
     `calificacion` tinyint NOT NULL CHECK (`calificacion` >= 1 AND `calificacion` <= 5),
     `idCliente` int NOT NULL,
-    `idCarrito` int NOT NULL,
-    `idRepartidor` int NOT NULL,
+    `idAlimentosOrden` int NOT NULL,
+    `idRepartidor` int,
     PRIMARY KEY (`idOrden`),
     FOREIGN KEY(`idCliente`) REFERENCES `cliente` (`idCliente`),
-    FOREIGN KEY(`idCarrito`) REFERENCES `carrito` (`idCarrito`),
+    FOREIGN KEY(`idAlimentosOrden`) REFERENCES `alimentosorden` (`idAlimentosOrden`),
     FOREIGN KEY(`idRepartidor`) REFERENCES `repartidor` (`idRepartidor`)
-) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
- 
- /* Tabla para representar todas las órdenes de un cliente */
-CREATE TABLE `ordenescliente`(
-	`idCliente` int NOT NULL,
-	`idOrden` int NOT NULL,
-	FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`),
-	FOREIGN KEY (`idOrden`) REFERENCES `orden` (`idOrden`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
