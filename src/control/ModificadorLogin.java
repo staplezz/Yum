@@ -1,7 +1,6 @@
 package control;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +17,7 @@ import dao.PersonaDAO;
 import modelo.Administrador;
 import modelo.Cliente;
 import modelo.Repartidor;
+
 /**
  * Servlet implementation class ModificadorLogin
  */
@@ -50,29 +50,36 @@ public class ModificadorLogin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
 		try {
+			// Obtenemos el correo del login.
 			String correo = request.getParameter("email");
 			String rawPassword = request.getParameter("password"); 
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			
 			
+			// Objetos para cada uno de los posibles usuarios.
 			Cliente cliente = null; 
 			Administrador administrador = null; 
 			Repartidor repartidor = null; 
 			
-			cliente = personaDAO.buscaCliente(correo); 
+			// Vemos si el correo es de cliente.
+			cliente = personaDAO.buscaCliente(correo);
+			
+			// Vemos si el correo es de administrador.
 			administrador = personaDAO.buscaAdministrador(correo);
-			System.out.println("AQU�iii");
-			System.out.println(administrador);
+			
+			// Vemos si el correo es de administrador.
 			repartidor = personaDAO.buscaRepartidor(correo);
+			
 			
 			if(cliente != null && passwordEncoder.matches(rawPassword, cliente.getPassword())) {
 				HttpSession session = request.getSession();
 				cliente.setPassword(rawPassword);
 				session.setAttribute("cliente", cliente);
+				
 				response.sendRedirect("modificadorCliente?action=mostrarEditarCliente");
 			}else if(administrador != null && rawPassword.equals(administrador.getPassword())) {
-				System.out.println(administrador.getNombre());
 				HttpSession session = request.getSession();
 				session.setAttribute("administrador", administrador);
 				
@@ -82,11 +89,12 @@ public class ModificadorLogin extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("repartidor", repartidor);
 				
-				response.sendRedirect("jsp/successRepartidor.jsp");
+				response.sendRedirect("Vista/Repartidor/MostrarOrdenesRepartidorIH.jsp");
 			}else {
-				PrintWriter out = response.getWriter();
-				out.println("Contrase�a o correo incorrectos <a href='index.jsp'>intenta de nuevo.</a>");
-				out.close();
+				// En caso de no encontrar un usuario válido, lo indicamos.
+				request.setAttribute("message", "El correo o contraseña ingresados son incorrectos"); // Will be available as ${message}
+				request.getRequestDispatcher("index.jsp").forward(request,response);
+				
 			}
 			
 			
