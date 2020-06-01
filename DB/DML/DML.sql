@@ -3,17 +3,21 @@ USE yum_db;
 /* DML para poblar la BDD con datos ficticios. */
 
 /* DML personas */
-INSERT INTO `persona` (`nombre`, `apellidoPaterno`, `apellidoMaterno`, `password`, `correoElectronico`) VALUES ('Alberto', 'ArÃ¡ndano', 'Álvarez', 'password', 'a@arandano.com');
-INSERT INTO `persona` (`nombre`, `apellidoPaterno`, `apellidoMaterno`, `password`, `correoElectronico`) VALUES ('Berta', 'Bolívar', 'Bolsa', 'password', 'b@bolivar.com');
+INSERT INTO `persona` (`nombre`, `apellidoPaterno`, `apellidoMaterno`, `password`, `correoElectronico`) VALUES ('Alberto', 'Arándano', 'Álvarez', 'password', 'a@arandano.com');
+INSERT INTO `persona` (`nombre`, `apellidoPaterno`, `apellidoMaterno`, `password`, `correoElectronico`) VALUES ('Berta', 'Bolívar', 'Bolsa', '$2a$10$BMD.aVwWA98TfUZHMyChaucuP9yyAfQQ2iU5ya1hfMizuZJ/PaQ/C', 'b@bolivar.com');
 INSERT INTO `persona` (`nombre`, `apellidoPaterno`, `apellidoMaterno`, `password`, `correoElectronico`) VALUES ('Carla', 'Cortes', 'Contreras', 'password', 'c@caldo.com');
 
 /* DML admin */
 INSERT INTO `administrador` (`idPersona`) VALUES ('1');
+
 /* DML cliente, su carrito y su dirección*/
-INSERT INTO `cliente` (`telefono`, `idPersona`) VALUES ('5565678960','2');
+INSERT INTO `cliente` (`salt`, `telefono`, `idPersona`) VALUES ('1', '5565678960','2');
 INSERT INTO `carrito` (`idCliente`) VALUES ('1');
 INSERT INTO `direccion` (`delegacion`, `colonia`, `calle`, `num_interior`, `num_exterior`) VALUES ('Benito Juarez', 'Portales', 'Saratoga', '87', null);
-INSERT INTO `direccionescliente` (`idDireccion`, `idCliente`) VALUES ('1', '1');
+/* Agregamos la dirección y ponemos 1 en default, ya que será la dirección por defecto que se use
+* para la repartación de la orden. Si no fuera default, ponemos 0.*/
+INSERT INTO `direccionescliente` (`idDireccion`, `idCliente`, `default`) VALUES ('1', '1', '1');
+
 /* DML repartidor */
 INSERT INTO `repartidor` (`idPersona`) VALUES ('3');
 
