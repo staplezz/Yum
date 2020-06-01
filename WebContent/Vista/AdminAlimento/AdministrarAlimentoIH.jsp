@@ -1,19 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 	
-<!DOCTYPE html lang="es">
+<!DOCTYPE html>
 <html>
 <head>
-	<!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	
-	<!-- Bootstrap -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<!-- Datatables. -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
-	
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<!-- Bootstrap & DataTables CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.css"/>
 	
 	<!-- Style CSS para lo demás -->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style.css">
@@ -161,7 +154,7 @@
 		</div>
 	</div>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 		id="top-bar">
 		<div class="navbar-brand">
 			<img src="${pageContext.request.contextPath}/Icons/admin.svg"
@@ -171,7 +164,7 @@
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
 				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
-				<a class="nav-item nav-link" href="#">Órdenes</a> 
+				<a class="nav-item nav-link" href="adminOrden?action=mostrarOrdenes">Órdenes</a> 
 				<a class="nav-item nav-link active" href="adminAlimento">Alimentos</a> 
 				<a class="nav-item nav-link" href="modificadorRepartidor?action=mostrar">Repartidores</a>
 			</div>
@@ -190,10 +183,9 @@
 	
 	<!--  Título de la tabla -->
 	<div class="container">
-		<h1 class="display-4 text-center title">Alimentos</h1>
+		<h1 class="display-4 text-center title mb-0">Alimentos</h1>
 	</div>
 	
-	<!-- Tabla de alimentos -->	
 	<div class="container">
 		<!-- Herramienta para agregar alimentos -->
 		<div class="container pb-2">
@@ -204,7 +196,8 @@
 				</div>
 			</div>
 		</div>
-		<table class="table mx-auto" id="tablaAlimentos">
+		<!-- Tabla de alimentos -->	
+		<table class="table mx-auto text-center table-striped table-bordered" id="tablaAlimentos">
 		  <thead class="thead-dark">
 		    <tr>
 		      <th scope="col">Imágen</th>
@@ -227,27 +220,18 @@
 		    		<td>${alimento.nombreCategoria}</td>
 		    		<td></td>
 	    		</tr>
-    		</c:forEach>
+	   		</c:forEach>
 		  </tbody>
 		</table>
 	</div>
 	
-	<!-- JQuery, Popper, Bootstrap y Datatables -->
-	<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
-	
-	<!-- Script que deshabilita input Agregar -->
-	<script src="js/script.js"></script>
-	
-		<!-- Footer -->
-	<footer class="page-footer font-small  pt-1 footer fixed-bottom footer">
+	<!-- Footer -->
+	<footer class="page-footer font-small  pt-1">
 
 		<!-- Footer Elements -->
 
 		<!-- Copyright -->
-		<div class="footer-copyright text-center py-2">
+		<div class="footer-copyright text-center py-1 fixed-bottom">
 			2020 Copyright: <a href="#"> Eff;cient organization <img
 				class="icon" src="${pageContext.request.contextPath}/Icons/Logo.svg"
 				class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
@@ -257,5 +241,18 @@
 
 	</footer>
 	<!-- Footer -->
+	
+	<!-- JS para bootstrap. -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	
+	<!-- JS para datatable. -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.js"></script>
+	
+	<!-- Script para DT y modals. -->
+	<script src="js/script.js"></script>
 </body>
 </html>
