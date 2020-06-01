@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -34,8 +34,8 @@
 		margin-bottom: 60px;
 	}
 	</style>
-	<meta charset="utf-8">
-	<title>Categoría</title>
+	<meta charset="ISO-8859-1">
+	<title>Menú</title>
 	<!-- Icono del título de la página -->
 	<link rel="icon"
 		href="${pageContext.request.contextPath}/Icons/admin-icon.svg"
@@ -53,8 +53,8 @@
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
 				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu" id="nav-select">Menú</a>
-				<a class="nav-item nav-link" href="#">Órdenes</a> 
-				<a class="nav-item nav-link" href="#">Alimentos</a> 
+				<a class="nav-item nav-link" href="adminOrden?action=mostrarOrdenes">Órdenes</a> 
+				<a class="nav-item nav-link" href="adminAlimento">Alimentos</a> 
 				<a class="nav-item nav-link" href="modificadorRepartidor?action=mostrar">Repartidores</a>
 			</div>
 		</div>
@@ -71,10 +71,10 @@
 			</button>
 		</div>
 	</nav>
-
-
+	
 	<div class="container">
-		<h1 class="text-center title">${categoria.nombre}:</h1>
+		<h1 class="text-center title">Es posible que quieras agregar
+			algunos elementos sin clasificar...</h1>
 	</div>
 
 	<div class="container">
@@ -84,12 +84,11 @@
 				<div class="accordion">
 					<div class="card">
 						<div class="card-header">
-							<a
-								href="adminMenu?action=showEditar&id=<c:out value="${categoria.id }"/>">
-								Editar categoría <img class="icon"
+							<a href="adminMenu?action=mostrarMenu"> Listo <img
+								class="icon"
 								src="${pageContext.request.contextPath}/Icons/editar.svg"
-								class="img-fluid img-thumbnail" alt="Editar" width="30"
-								height="30">
+								class="img-fluid img-thumbnail" alt="Editar" width="40"
+								height="40">
 							</a>
 						</div>
 					</div>
@@ -97,23 +96,31 @@
 			</div>
 		</div>
 	</div>
-	<div class="container">
+
+	<div class="container final">
 		<table class="table w-55 mx-auto table-striped table-bordered lg-8">
-			<thead class="thead-dark">
+			<thead>
 				<tr>
 					<td>Id</td>
 					<td>Nombre</td>
 					<td>Precio</td>
-					<td>Descripción</td>
+					<td>Descripcion</td>
+					<td>Agregar</td>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="alimento" items="${categoria.listaAlimentos}">
+				<c:forEach var="alimento" items="${alimentos}">
 					<tr>
 						<td><c:out value="${alimento.id}" /></td>
 						<td><c:out value="${alimento.nombre}" /></td>
 						<td><c:out value="${alimento.getPrecio()}" /></td>
 						<td><c:out value="${alimento.getDescripcion()}" /></td>
+						
+						<td>
+							<a href="adminMenu?action=agregarAlimento&id=<c:out value="${alimento.id}" />&idCat=<c:out value='${idCat}' />">
+								Elegir
+							</a>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

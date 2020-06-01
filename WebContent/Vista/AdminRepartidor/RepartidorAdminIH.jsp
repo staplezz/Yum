@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
-<html lang="es">
+<!DOCTYPE html lang="es">
+<html>
 <head>
 	<meta charset="utf-8">
 	<!-- Bootstrap CSS -->
@@ -11,19 +10,8 @@
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 		crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-		crossorigin="anonymous"></script>
 	
-	<!-- Style CSS para lo demï¿½s -->
+	<!-- Style CSS para lo demás -->
 	<link rel="stylesheet" type="text/css"
 		href="${pageContext.request.contextPath}/CSS/style.css">
 	<style type="text/css">
@@ -36,7 +24,7 @@
 	}
 	</style>
 	<title>Repartidor</title>
-	<!-- Icono del tÃ­tulo de la pÃ¡gina -->
+	<!-- Icono del título de la página -->
 	<link rel="icon"
 		href="${pageContext.request.contextPath}/Icons/admin-icon.svg"
 		type="image/x-icon">
@@ -44,25 +32,25 @@
 </head>
 
 <body>
-	<!-- Barra de navegaciÃ³n -->
+	<!-- Barra de navegación -->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 		id="top-bar">
 		<div class="navbar-brand">
 			<img src="${pageContext.request.contextPath}/Icons/admin.svg"
 				width="30" height="30" class="" alt=""> <a
-				class="navbar-brand text-white">AdministraciÃ³n Yum</a>
+				class="navbar-brand text-white">Administración Yum</a>
 		</div>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">MenÃº</a>
-				<a class="nav-item nav-link" href="#">Ã“rdenes</a> 
+				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
+				<a class="nav-item nav-link" href="adminOrden?action=mostrarOrdenes">Órdenes</a> 
 				<a class="nav-item nav-link" href="adminAlimento">Alimentos</a> 
 				<a class="nav-item nav-link active" href="modificadorRepartidor?action=mostrar">Repartidores</a>
 			</div>
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
 			<a class="nav-item" href="logout?">Cerrar
-				SesiÃ³n</a> <img
+				Sesión</a> <img
 				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
 				width="30" height="30" class="ml-3" alt="">
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -78,25 +66,23 @@
 	</div>
 
 
-	<div class="container py-2 min-vw-50">
-		<div class="row py-1 justify-content-center" id="menu-CRUD">
-			<div class="col-">
-				<img src="${pageContext.request.contextPath}/Icons/anadir.svg"
-					width="30" height="30" class="ml-3" alt=""> <a
+	<div class="container">
+		<div class="container text-center" id="menu-CRUD">
+			<div class="row justify-content-end pb-3">
+			<div class="col- pr-2"> 
+					<a
 					class="btn btn-primary"
-					href="modificadorRepartidor?action=registrarRepartidor">Registrar
-					nuevo Repartidor</a>
+					href="modificadorRepartidor?action=registrarRepartidor">
+					<img src="${pageContext.request.contextPath}/Icons/anadir.svg"
+					width="30" height="30" class="ml-3" alt="">
+					Registrar nuevo Repartidor</a>
 			</div>
 			<div class="card">
-				<div class="col-">
-					<img class="icon"
-						src="${pageContext.request.contextPath}/Icons/editar.svg"
-						class="img-fluid img-thumbnail" alt="Editar" width="40"
-						height="40">
-					<button type="button" class="btn btn-primary"
-						data-toggle="collapse" data-target="#buscar">Buscar
-						Repartidor</button>
-				</div>
+					<button type="button" class="btn btn-primary pr-3"
+						data-toggle="collapse" data-target="#buscar">
+						<img src="${pageContext.request.contextPath}/Icons/buscar.svg"
+					width="30" height="30" class="ml-3" alt="">
+						Buscar Repartidor</button>
 				<div id="buscar" class="collapse">
 					<div class="card-body">
 						<form action="modificadorRepartidor?action=buscar" method="post">
@@ -108,18 +94,19 @@
 						</form>
 					</div>
 				</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<table class=" final table w-50 mx-auto table-striped table-bordered">
+	
+	<table class=" final table w-100 mx-auto table-striped table-bordered">
 
 		<thead class="thead-dark">
 			<tr>
 				<th class="text-center" scope="col">Nombre</th>
 				<th class="text-center" scope="col">Apellido Paterno</th>
 				<th class="text-center" scope="col">Apellido Materno</th>
-				<th class="text-center" scope="col">Correo electrÃ³nico</th>
-				<th class="text-center" scope="col"></th>
+				<th class="text-center" scope="col">Correo electrónico</th>
+				<th class="text-center" scope="col">Acciones</th>
 
 			</tr>
 		</thead>
@@ -127,27 +114,21 @@
 		<tbody>
 			<c:forEach var="repartidor" items="${lista}">
 				<tr>
-					<td><c:out value="${repartidor.nombre}" /></td>
-					<td><c:out value="${repartidor.apellidoPaterno}" /></td>
-					<td><c:out value="${repartidor.apellidoMaterno}" /></td>
-					<td><c:out value="${repartidor.correoElectronico}" /></td>
-					<td>
-						<div class="col-2">
+					<td style='text-align:center;vertical-align:middle'><c:out value="${repartidor.nombre}" /></td>
+					<td style='text-align:center;vertical-align:middle'><c:out value="${repartidor.apellidoPaterno}" /></td>
+					<td style='text-align:center;vertical-align:middle'><c:out value="${repartidor.apellidoMaterno}" /></td>
+					<td style='text-align:center;vertical-align:middle'><c:out value="${repartidor.correoElectronico}" /></td>
+					<td style='text-align:center;vertical-align:middle'>
 							<a class="btn btn-primary"
 								href="modificadorRepartidor?action=showedit&idPersona=<c:out value="${repartidor.idPersona}" />">Editar</a>
-							<img src="${pageContext.request.contextPath}/Icons/editar.svg"
-								width="30" height="30" class="ml-3" alt=""> <a
-								class="btn btn-danger"
+							 <a class="btn btn-danger"
 								href="modificadorRepartidor?action=eliminar&idPersona=<c:out value="${repartidor.idPersona}" />">Borrar</a>
-							<img src="${pageContext.request.contextPath}/Icons/borrar.svg"
-								width="30" height="30" class="ml-3" alt="">
-
-						</div>
 					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	</div>
 
 	<!-- Footer -->
 	<footer class="page-footer font-small  pt-1 footer fixed-bottom">

@@ -53,7 +53,7 @@
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
 				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu" id="nav-select">Menú</a>
-				<a class="nav-item nav-link" href="#">Órdenes</a> 
+				<a class="nav-item nav-link" href="adminOrden?action=mostrarOrdenes">Órdenes</a> 
 				<a class="nav-item nav-link" href="adminAlimento">Alimentos</a> 
 				<a class="nav-item nav-link" href="modificadorRepartidor?action=mostrar">Repartidores</a>
 			</div>

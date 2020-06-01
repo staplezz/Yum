@@ -25,7 +25,7 @@
 	
 	<!-- Style CSS para lo demás -->
 	<link rel="stylesheet" type="text/css"
-		href="${pageContext.request.contextPath}/CSS/style.css">
+		href="${pageContext.request.contextPath}/CSS/yum.css">
 	<style type="text/css">
 	.title {
 		margin-top: 70px;
@@ -38,19 +38,15 @@
 	<title>Registro</title>
 	<!-- Icono del título de la página -->
 	<link rel="icon"
-		href="${pageContext.request.contextPath}/Icons/Logo.svg"
+		href="${pageContext.request.contextPath}/Icons/yum.svg"
 		type="image/x-icon">
 </head>
 <body>
 	<div class="container">
-		<h1 class="text-center title">Registrarse</h1>
+		<h1 class="text-center title">Registrate en Yum</h1>
 	</div>
 	<form action="modificadorCliente?action=agregaCliente" method="post" class="final">
 		<table class="table  lg-8">
-			<tr>
-				<td><h3 style="color: black;">Ingresa los datos</h3></td>
-			</tr>
-
 			<tr>
 				<td>Nombre:</td>
 				<td><input type="text" name="nombre" required
@@ -111,10 +107,12 @@
 					placeholder="Número exterior"></td>
 			</tr>
 
-			<tr>
-				<td><input type="submit" name="submit" value="Registrar"></td>
-			</tr>
 		</table>
+		<div class="text-center">
+		<input class="btn btn-primary" type="submit" name="submit" value="Registrarse">
+		<button class="btn btn-light" onclick="location.href='./'" type="button">
+         Iniciar Sesión</button>
+		</div>
 	</form>
 
 	<!-- Footer -->

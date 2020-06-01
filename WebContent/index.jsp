@@ -22,7 +22,7 @@
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
 	
-	<!-- Style CSS para lo dem�s -->
+	<!-- Style CSS para lo demás -->
 	<link rel="stylesheet" type="text/css"
 		href="${pageContext.request.contextPath}/CSS/style.css">
 	<style type="text/css">
@@ -37,46 +37,51 @@
 	<title>Yum</title>
 	<!-- Icono del título de la página -->
 	<link rel="icon"
-		href="${pageContext.request.contextPath}/Icons/admin-icon.svg" type="image/x-icon">
+		href="${pageContext.request.contextPath}/Icons/yum.svg" type="image/x-icon">
 	</head>
 <body>
+	<div class="d-flex flex-column justify-content-center min-vh-100 bg-light pb-0">
 	<div class="container">
-		<h3 class="text-center">Inicio de sesión de Yum</h3>
+		<div class="text-center pb-4"><img src="${pageContext.request.contextPath}/Icons/yum.svg" width="100" height="100" alt="YUM"></div>
+		<div class="col"><h3 class="text-center">Iniciar sesión en Yum</h3></div>
 	</div>
-	<div class="container final">
+	<div class="container">
 		<div class="row">
 			<div
-				class="col-sm-6 col-md-6 col-lg-6  offset-sm-3 offset-md-3 offset-lg-3">
+				class="container align-items-center w-50">
 				<form method="post" action="login?">
-					<table class="table w-55 mx-auto lg-8">
+					<table class="table">
 						<tr>
 							<td>Correo electrónico:</td>
 							<td><input type="text" name="email" required
-								class="form-control" placeholder="email"></td>
+								class="form-control" placeholder="Email"></td>
 						</tr>
 						<tr>
 							<td>Contraseña:</td>
 							<td><input type="password" name="password" required
-								class="form-control" placeholder="password"></td>
+								class="form-control" placeholder="Contraseña"></td>
 						</tr>
 						<tr>
-							<td><input type="submit" value="Ingresar"
-								class="form-control"></td>
-							<td><a href="modificadorCliente?action=registraCliente"
-								class="form-control">Regístrate aquí</a></td>
+							<td colspan="2"><input type="submit" value="Ingresar" class="form-control"></td>
+						</tr>
+						<tr>
+							<td colspan="2"><a href="modificadorCliente?action=registraCliente" class="form-control text-center">Regístrate aquí</a></td>
 						</tr>
 					</table>
 				</form>
+				<!-- Mensaje en caso de inicio de sesión incorrecto. -->
+				<p class="text-center text-danger">${message}</p>
 			</div>
 		</div>
 	</div>
+	</div>
 	<!-- Footer -->
-	<footer class="page-footer font-small  pt-1 footer fixed-bottom footer">
+	<footer class="page-footer font-small footer fixed-bottom footer">
 
 		<!-- Footer Elements -->
 
 		<!-- Copyright -->
-		<div class="footer-copyright text-center py-2">
+		<div class="footer-copyright text-center py-2 bg-light">
 			2020 Copyright: <a href="#"> Eff;cient organization <img
 				class="icon" src="${pageContext.request.contextPath}/Icons/Logo.svg"
 				class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">

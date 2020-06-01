@@ -37,18 +37,16 @@ $(document).ready( function () {
 	    var data = table.row( $(this).parents('tr') ).data();
 	    $('#inputAlimentoDel').val(data[1]);
 	});
-	
-	/**
-	 //No sé que hace
-	$('#mydatatable tbody').on( 'click', '#buttonAgregar', function () {
-	    var data = table.row( $(this).parents('tr') ).data();
-	    $('#inputAlimento').val(placeholder);
-	});
-	 */
 });
 
 // Quita los datos del modal al hacer data dismiss para evitar bugs
 // al recargar la página.
 $('#modalRegistro').on('hidden.bs.modal', function () {
+    $(this).find('form').trigger('reset');
+})
+
+// Quita los datos del modal al hacer data dismiss para evitar bugs
+// al recargar la página.
+$('#modalEditar').on('hidden.bs.modal', function () {
     $(this).find('form').trigger('reset');
 })
