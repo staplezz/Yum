@@ -5,7 +5,7 @@ un restaurante manejado por un solo administrador y que
 puede contratar a empleados para repartir las órdenadministradores.
 ********************************************************
 DBMS: MySQL 8.0
-Versión 1.7
+Versión 1.8
 ********************************************************
 */
 
@@ -71,7 +71,6 @@ CREATE TABLE `direccionescliente`(
 	`idDireccionCliente` int NOT NULL AUTO_INCREMENT,
 	`idDireccion` int NOT NULL ,
     `idCliente`   int NOT NULL ,
-	`default` bool NOT NULL,
     PRIMARY KEY(`idDireccionCliente`),
     FOREIGN KEY(`idDireccion`) REFERENCES `direccion`(`idDireccion`),
     FOREIGN KEY(`idCliente`)   REFERENCES  `cliente`(`idCliente`)
@@ -140,9 +139,11 @@ CREATE TABLE `orden`(
     `calificacion` tinyint CHECK (`calificacion` >= 1 AND `calificacion` <= 5),
     `idCliente` int NOT NULL,
     `idOrdenesCliente` int NOT NULL,
+    `idDireccionCliente` int NOT NULL,
     `idRepartidor` int,
     PRIMARY KEY (`idOrden`),
     FOREIGN KEY(`idCliente`) REFERENCES `cliente` (`idCliente`),
+    FOREIGN KEY(`idDireccionCliente`) REFERENCES `direccionescliente`(`idDireccionCliente`),
     FOREIGN KEY(`idOrdenesCliente`) REFERENCES `ordenescliente` (`idOrdenesCliente`),
     FOREIGN KEY(`idRepartidor`) REFERENCES `repartidor` (`idRepartidor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
