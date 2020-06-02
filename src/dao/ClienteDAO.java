@@ -28,7 +28,7 @@ public class ClienteDAO {
 		String sqlPersona = "INSERT INTO persona(nombre, apellidoPaterno, apellidoMaterno, password, correoElectronico) VALUES(?,?,?,?,?) ";
 		String sqlCliente = "INSERT INTO cliente(salt, telefono, idPersona) VALUES(1, ?, ?)";
 		String sqlDireccion;
-		String sqlDireccionCliente = "INSERT INTO direccionescliente(idDireccion, idCliente, default) VALUES (?,?,?)";
+		String sqlDireccionCliente = "INSERT INTO direccionescliente(idDireccion, idCliente) VALUES (?,?)";
 		PreparedStatement direccionStatement;
 		
 		con.conectar();
@@ -40,8 +40,6 @@ public class ClienteDAO {
 		personaStatement.setString(3, cliente.getApellidoMaterno());
 		personaStatement.setString(4, cliente.getPassword());
 		personaStatement.setString(5, cliente.getCorreoElectronico());
-		//Aquí ponemos si la dirección es default
-		personaStatement.setInt(6, 1);
 		
 		personInserted = personaStatement.executeUpdate() > 0;
 		
