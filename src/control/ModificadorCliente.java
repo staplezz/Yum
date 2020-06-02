@@ -100,7 +100,7 @@ public class ModificadorCliente extends HttpServlet {
 	}
 	
 	private void infoCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/CreaClienteIH.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/CreaClienteIH.jsp");
 		dispatcher.forward(request, response);
 	}
 	
@@ -126,7 +126,7 @@ public class ModificadorCliente extends HttpServlet {
 			out.println("<div class=\"alert alert-danger\" role=\"alert\">\r\n" + 
 					"  Correo ya registrado, intenta con otro\r\n" + 
 					"</div>"); 
-			request.getRequestDispatcher("/Vista/CreaClienteIH.jsp").include(request, response);
+			request.getRequestDispatcher("/Vista/Cliente/CreaClienteIH.jsp").include(request, response);
 			out.close();
 		}else {
 			Cliente cliente = new Cliente(nombre, apePat, apeMat, email, telefono,password);
@@ -143,9 +143,9 @@ public class ModificadorCliente extends HttpServlet {
 				direccion.setNumExterior(numExterior);
 
 			}
-						
-			clienteDAO.crearCliente(cliente, direccion); 
 			
+			clienteDAO.crearCliente(cliente, direccion); 
+			System.out.println("registro cliente:");
 			
 			dispatcher.forward(request, response);
 		}
@@ -155,7 +155,7 @@ public class ModificadorCliente extends HttpServlet {
 	private void mostrarEditarCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
 		HttpSession session = request.getSession(false); 
 		if(session!= null) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/EditaClienteIH.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/EditaClienteIH.jsp");
 			
 			Cliente clienteUno =(Cliente)session.getAttribute("cliente");
 			String password = clienteUno.getPassword();
@@ -201,7 +201,7 @@ public class ModificadorCliente extends HttpServlet {
 					"    <span aria-hidden=\"true\">&times;</span>\r\n" + 
 					"  </button>\r\n" + 
 					"</div>"); 
-			request.getRequestDispatcher("/Vista/EditaClienteIH.jsp").include(request, response);
+			request.getRequestDispatcher("/Vista/Cliente/EditaClienteIH.jsp").include(request, response);
 			out.close();
 			
 		}else {
@@ -215,7 +215,7 @@ public class ModificadorCliente extends HttpServlet {
 			Cliente cliente = (Cliente)session.getAttribute("cliente");
 			int idCliente = cliente.getIdCliente();
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/MostrarDireccionesIH.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/MostrarDireccionesIH.jsp");
 			List<Direccion> direcciones = clienteDAO.mostrarDireccionesCliente(idCliente);
 			cliente.setDirecciones(direcciones);
 			
@@ -234,7 +234,7 @@ public class ModificadorCliente extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if(session != null) {
 			Cliente cliente = (Cliente)session.getAttribute("cliente");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/EditarDireccionClienteIH.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/EditarDireccionClienteIH.jsp");
 			Direccion direccion = clienteDAO.mostrarDireccionId(Integer.parseInt(request.getParameter("idDireccion")));
 			request.setAttribute("direccion", direccion);
 			session.setAttribute("cliente", cliente);
@@ -280,7 +280,7 @@ public class ModificadorCliente extends HttpServlet {
 					"  </button>\r\n" + 
 					"</div>"); 
 			
-			request.getRequestDispatcher("/Vista/EditarDireccionClienteIH.jsp").include(request, response);
+			request.getRequestDispatcher("/Vista/Cliente/EditarDireccionClienteIH.jsp").include(request, response);
 			
 			out.close();
 			
