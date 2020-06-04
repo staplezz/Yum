@@ -24,12 +24,14 @@ public class ClienteDAO {
 	public boolean crearCliente(Cliente cliente, Direccion direccion)throws SQLException{
 		boolean personInserted = false; 
 		boolean direccionInserted = false;
+		boolean carritoInserted = false;
 		
 		String sqlPersona = "INSERT INTO persona(nombre, apellidoPaterno, apellidoMaterno, password, correoElectronico) VALUES(?,?,?,?,?) ";
 		String sqlCliente = "INSERT INTO cliente(salt, telefono, idPersona) VALUES(1, ?, ?)";
 		String sqlDireccion;
 		String sqlDireccionCliente = "INSERT INTO direccionescliente(idDireccion, idCliente) VALUES (?,?)";
-		PreparedStatement direccionStatement;
+		String sqlCarrito = "INSERT INTO carrito(idCliente) VALUES(?)";
+		PreparedStatement direccionStatement, carritoStatement;
 		
 		con.conectar();
 		connection = con.getJdbcConnection();
@@ -133,8 +135,22 @@ public class ClienteDAO {
 		direccionStatement.setInt(2, cliente.getIdCliente());
 		direccionInserted = direccionStatement.executeUpdate() > 0;
 		
+		//asociar carrito a cliente
+		carritoStatement = connection.prepareStatement(sqlCarrito);
+		carritoStatement.setInt(1, cliente.getIdCliente());
+		
+		carritoInserted = carritoStatement.executeUpdate()> 0; 
+		
+		if(!carritoInserted) {
+			throw new SQLException("Carrito has not created, no rows affected"); 
+		}else {
+			System.out.println("Carrito has created successfully "); 
+		}
+		
+		
 		personaStatement.close();
 		direccionStatement.close();
+		carritoStatement.close();
 		con.desconectar();
 		
 		
@@ -369,6 +385,84 @@ public class ClienteDAO {
 		
 		return rowEliminar;
 		
+	}
+	
+	public boolean agregarDireccion(Direccion direccion, int idCliente)throws SQLException {
+		boolean direccionInserted = false; 
+		
+		String sqlDireccion; 
+		String sqlDireccionCliente = "INSERT INTO direccionescliente(idDireccion, idCliente) VALUES(?, ?)";
+		PreparedStatement direccionStatement;
+		
+		System.out.println("pasa");
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		
+		//Insertar primero en la tabla "Direccion"
+		
+		if(direccion.getNumInterior() != -1 && direccion.getNumExterior() != -1) {
+			//tiene ambos números
+			sqlDireccion = "INSERT INTO direccion (delegacion, colonia, calle, num_interior, num_exterior) VALUES(?, ?, ?, ?, ?)";
+			direccionStatement = connection.prepareStatement(sqlDireccion, Statement.RETURN_GENERATED_KEYS);
+			direccionStatement.setString(1, direccion.getDelegacion());
+			direccionStatement.setString(2, direccion.getColonia());
+			direccionStatement.setString(3, direccion.getCalle());
+			direccionStatement.setInt(4, direccion.getNumInterior());
+			direccionStatement.setInt(5, direccion.getNumExterior());
+			System.out.println(direccionStatement);
+			
+		}else if (direccion.getNumInterior() == -1 && direccion.getNumExterior() != -1) {
+			//no tiene n�mero interior pero sí exterior
+			sqlDireccion= "INSERT INTO direccion (delegacion, colonia, calle, num_exterior) VALUES (?,?,?,?)";
+			direccionStatement = connection.prepareStatement(sqlDireccion, Statement.RETURN_GENERATED_KEYS);
+			direccionStatement.setString(1, direccion.getDelegacion());
+			direccionStatement.setString(2, direccion.getColonia());
+			direccionStatement.setString(3, direccion.getCalle());
+			direccionStatement.setInt(4, direccion.getNumExterior());
+		}else if(direccion.getNumInterior() != -1 && direccion.getNumExterior() == 1) {
+			//tiene n�mero interior y no tiene número exterior
+			sqlDireccion= "INSERT INTO direccion (delegacion, colonia, calle, num_interior) VALUES (?,?,?,?)";
+			direccionStatement = connection.prepareStatement(sqlDireccion, Statement.RETURN_GENERATED_KEYS);
+			direccionStatement.setString(1, direccion.getDelegacion());
+			direccionStatement.setString(2, direccion.getColonia());
+			direccionStatement.setString(3, direccion.getCalle());
+			direccionStatement.setInt(4, direccion.getNumInterior());
+		}else {
+			sqlDireccion= "INSERT INTO direccion (delegacion, colonia, calle) VALUES(?,?,?)";
+			direccionStatement = connection.prepareStatement(sqlDireccion, Statement.RETURN_GENERATED_KEYS);
+			direccionStatement.setString(1, direccion.getDelegacion());
+			direccionStatement.setString(2, direccion.getColonia());
+			direccionStatement.setString(3, direccion.getCalle());
+			
+		}
+		
+		direccionInserted = direccionStatement.executeUpdate() > 0;
+		
+		if(!direccionInserted) {
+			throw new SQLException("Address has not created, no rows affected"); 
+		}else {
+			System.out.println("direccion con calle "+ direccion.getCalle()+ " creada con �xito");
+		}
+		
+		try(ResultSet generatedKeys = direccionStatement.getGeneratedKeys()){
+			if(generatedKeys.next()) {
+				direccion.setIdDireccion(generatedKeys.getInt(1));
+			}else {
+				throw new SQLException("No ID obtained");
+			}
+		}
+		
+		
+		direccionStatement = connection.prepareStatement(sqlDireccionCliente);
+		direccionStatement.setInt(1, direccion.getIdDireccion());
+		direccionStatement.setInt(2, idCliente);
+		direccionInserted = direccionStatement.executeUpdate() > 0;
+		
+		direccionStatement.close();
+		con.desconectar();
+		
+		return direccionInserted;
 	}
 
 }

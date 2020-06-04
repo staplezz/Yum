@@ -31,7 +31,7 @@
 		margin-top: 70px;
 	}
 	</style>
-	<title>Categoría</title>
+	<title>Direcciones</title>
 	<!-- Icono del título de la página -->
 	<link rel="icon"
 		href="${pageContext.request.contextPath}/Icons/admin-icon.svg"
@@ -90,6 +90,60 @@
 
 	<div class="container">
 		<h1 class="text-center title">Tus direcciones guardadas :</h1>
+	</div>
+	
+	<div class="container">
+		<div class="row pb-2">
+			<div class="col-sm-3 col-md-3 col-lg-3 offset-sm-9 offset-md-9 offset-lg-9">
+				<button type="button" class="btn btn-outline-info"
+						data-toggle="modal" data-target="#agregar">Agregar dirección <img class="icon"
+							src="${pageContext.request.contextPath}/Icons/anadir.svg"
+							class="img-fluid img-thumbnail" alt="Editar" width="30"
+							height="30">
+				</button>
+				<div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLongTitle">Agregar dirección</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				       <form action="modificadorCliente?action=agregarDireccion" method="post">
+				         <div class="modal-body">
+				        	<div class="form-group">
+				        		<label for="delegacion">Delegación</label>
+				        		<input type="text" class="form-control" name="delegacion" placeholder="Delegación" required>
+				        	</div>
+				        	<div class="form-group">
+				        		<label for="colonia">Colonia</label>
+				        		<input type="text" class="form-control" name="colonia" placeholder="Colonia" required>
+				        	</div>
+				        	<div class="form-group">
+				        		<label for="calle">Calle</label>
+				        		<input type="text" class="form-control" name="calle" placeholder="Calle" required>
+				        	</div>
+				        	<div class="form-group">
+				        		<label for="numInt">Número interior</label>
+				        		<input type="number" class="form-control" name="numInt" placeholder="Número interior" required>
+				        	</div>
+				        	<div class="form-group">
+				        		<label for="numExt">Número exterior</label>
+				        		<input type="number" class="form-control" name="numExt" placeholder="Número interior" required>
+				        	</div>
+				          </div>
+				          <div class="modal-footer">
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					        <button type="submit" class="btn btn-primary">Guardar</button>
+					      </div>
+				        </form>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			
+		</div>
 	</div>
 
 	<div class="container final">

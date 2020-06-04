@@ -60,9 +60,6 @@ public class ModificadorCliente extends HttpServlet {
 			case "agregaCliente": 
 				agregarCliente(request, response); 
 				break;
-			case "principalCliente": 
-				principalCliente(request, response);
-				break;
 			case "mostrarEditarCliente": 
 				System.out.println("PFFFF"+request.getParameter("idCliente"));
 				mostrarEditarCliente(request, response);
@@ -82,6 +79,9 @@ public class ModificadorCliente extends HttpServlet {
 			case "eliminarDireccion": 
 				eliminarDireccionCliente(request, response);
 				break;	
+			case "agregarDireccion": 
+				agregarDireccion(request, response); 
+				break;
 			default: 
 				break;
 			}
@@ -309,9 +309,48 @@ public class ModificadorCliente extends HttpServlet {
 				
 	}
 	
-	private void principalCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-		dispatcher.forward(request, response);
-	}
+	private void agregarDireccion(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		HttpSession session = request.getSession(false);
+		if(session != null) {
+			Cliente cliente = (Cliente)session.getAttribute("cliente");
+			int idCliente = cliente.getIdCliente();
+			System.out.println("id"+idCliente);
+			
+			String delegacion = request.getParameter("delegacion"); 
+			String colonia = request.getParameter("colonia"); 
+			String calle = request.getParameter("calle"); 
+			System.out.println("holia"+delegacion);
+			
+			Direccion direccion = new Direccion(delegacion, colonia, calle);
+			
+			
+			if (request.getParameter("numInt") != null) {
+				int numInterior = Integer.parseInt(request.getParameter("numInt"));
+				direccion.setNumInterior(numInterior);
+			}
+				
+			
+			if (request.getParameter("numExt") != null) {
+				int numExterior = Integer.parseInt(request.getParameter("numExt"));
+				direccion.setNumExterior(numExterior);
 
+			}
+			
+			clienteDAO.agregarDireccion(direccion, idCliente);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/MostrarDireccionesIH.jsp");
+			List<Direccion> direcciones = clienteDAO.mostrarDireccionesCliente(idCliente);
+			cliente.setDirecciones(direcciones);
+			
+			request.setAttribute("direcciones", direcciones);
+			session.setAttribute("cliente", cliente);
+			
+			dispatcher.forward(request, response);
+		}else {
+			request.getRequestDispatcher("index.jsp").include(request, response);
+		}
+		
+	}
+	
+	
 }
