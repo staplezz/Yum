@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet"
@@ -20,7 +19,7 @@
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
 	
-	<!-- Style CSS para lo demÃ¡s -->
+	<!-- Style CSS para lo demás -->
 	<link rel="stylesheet" type="text/css"
 		href="${pageContext.request.contextPath}/CSS/style.css">
 	<style type="text/css">
@@ -29,13 +28,12 @@
 	}
 	</style>
 	<title>Direcciones</title>
-	<!-- Icono del tÃ­tulo de la pÃ¡gina -->
+	<!-- Icono del título de la página -->
 	<link rel="icon"
 		href="${pageContext.request.contextPath}/Icons/yum.svg"
 		type="image/x-icon">
 </head>
 <body>
-
 	<!-- Barra de navegación -->
 	<nav class="navbar navbar-expand-lg navbar-dark"
 		style="background-color: #28536B">
@@ -65,23 +63,24 @@
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/carro.svg" width="30"
 					height="30" class="d-inline-block align-top mr-2" alt=""></li>
-				<li class="nav-item mr-3"><a class="nav-link" href="modificadorCarrito?action=verCarrito">Carrito</a>
+				<li class="nav-item mr-3 active"><a class="nav-link" href="modificadorCarrito?action=verCarrito">Carrito</a>
 				</li>
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/cuenta.svg" width="30"
 					height="30" class="d-inline-block align-top mr-2" alt=""></li>
-				<li class="nav-item active"><a class="nav-link" href="modificadorCliente?action=mostrarEditarCliente">Cuenta</a></li>
+				<li class="nav-item"><a class="nav-link" href="modificadorCliente?action=mostrarEditarCliente">Cuenta</a></li>
 			</ul>
 			<span class="navbar-text"> <a href="logout?">Cerrar
 					Sesión</a>
 			</span>
 		</div>
 	</nav>
-
+	
 	<div class="container">
-		<h1 class="text-center title">Tus direcciones guardadas :</h1>
+		<h1 class="text-center title">Selecciona una dirección para confirmar tu orden:</h1>
 	</div>
 	
+	<!--  Por si el cliente quiere agregar otra dirección. -->	
 	<div class="container">
 		<div class="row pb-2">
 			<div class="col-sm-3 col-md-3 col-lg-3 offset-sm-9 offset-md-9 offset-lg-9">
@@ -135,7 +134,8 @@
 			
 		</div>
 	</div>
-
+	
+	<!--  Para seleccionar la dirección. -->
 	<div class="container final">
 		<table
 			class="table table-image w-55 mx-auto table-striped table-bordered lg-8 text-center">
@@ -145,7 +145,7 @@
 					<th>Colonia</th>
 					<th>Calle</th>
 					<th>Número exterior</th>
-					<th colspan=2>Configuración</th>
+					<th colspan=2>Seleccionar</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -155,13 +155,9 @@
 						<td><c:out value="${direccion.getColonia()}" /></td>
 						<td><c:out value="${direccion.getCalle()}" /></td>
 						<td><c:out value="${direccion.getNumExterior()}" /></td>
-						<td><a class="btn btn-primary"
-							href="modificadorCliente?action=mostrarEditarDireccion&idDireccion=<c:out value="${direccion.getIdDireccion()}"/>">
-								Editar 
-						</a></td>
-						<td><a class="btn btn-danger"
-							href="modificadorCliente?action=eliminarDireccion&idDireccion=<c:out value="${direccion.getIdDireccion()}"/>">
-								Eliminar 
+						<td><a class="btn btn-success"
+							href="creaOrden?action=crearOrden&idDir=<c:out value="${direccion.getIdDireccion()}"/>">
+								Entregar a esta dirección 
 						</a></td>
 					</tr>
 				</c:forEach>
@@ -169,21 +165,5 @@
 		</table>
 	</div>
 
-	<!-- Footer -->
-	<footer class="page-footer font-small  pt-1 footer fixed-bottom footer">
-
-		<!-- Footer Elements -->
-
-		<!-- Copyright -->
-		<div class="footer-copyright text-center py-2">
-			2020 Copyright: <a href="#"> Eff;cient organization <img
-				class="icon" src="${pageContext.request.contextPath}/Icons/Logo.svg"
-				class="img-fluid img-thumbnail" alt="Editar" width="40" height="40">
-			</a>
-		</div>
-		<!-- Copyright -->
-
-	</footer>
-	<!-- Footer -->
 </body>
 </html>

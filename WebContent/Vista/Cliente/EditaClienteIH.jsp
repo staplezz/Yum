@@ -58,7 +58,7 @@
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/menu.svg" width="30"
 					height="30" class="d-inline-block align-top mr-2" alt=""></li>
-				<li class="nav-item"><a class="nav-link mr-3" href="#">Menú
+				<li class="nav-item"><a class="nav-link mr-3" href="muestraMenu?action=mostrarAlimentos&idCategoria=1">Menú
 						<span class="sr-only">(current)</span>
 				</a></li>
 				<li><img
@@ -69,7 +69,7 @@
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/carro.svg" width="30"
 					height="30" class="d-inline-block align-top mr-2" alt=""></li>
-				<li class="nav-item mr-3"><a class="nav-link" href="#">Carrito</a>
+				<li class="nav-item mr-3"><a class="nav-link" href="modificadorCarrito?action=verCarrito">Carrito</a>
 				</li>
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/cuenta.svg" width="30"
@@ -86,23 +86,11 @@
 		<h1 class="text-center title">Modifica tu perfil,
 			${cliente.getNombre()}</h1>
 	</div>
-	<div class="container">
-		<div class="row">
-			<div
-				class="col-sm-3 col-md-3 col-lg-3 offset-sm-9 offset-md-9 offset-lg-9">
-				<div class="accordion">
-					<div class="card">
-
-						<button type="button" class="btn btn-outline-info"
-							onclick="window.location.href='modificadorCliente?action=mostrarDirecciones';">
-							Editar direcciones
-						</button>
-
-					</div>
-				</div>
-			</div>
-		</div>
+	
+	<div class="container-fluid text-center my-2">
+		<a class="btn btn-outline-info" href="modificadorCliente?action=mostrarDirecciones">Editar direcciones</a>
 	</div>
+
 	<div class="container final">
 		<div class="row">
 			<div

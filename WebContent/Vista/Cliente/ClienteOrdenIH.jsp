@@ -60,7 +60,7 @@
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/menu.svg" width="30"
 					height="30" class="d-inline-block align-top mr-2" alt=""></li>
-				<li class="nav-item"><a class="nav-link mr-3" href="#">Menú
+				<li class="nav-item"><a class="nav-link mr-3" href="muestraMenu?action=mostrarAlimentos&idCategoria=1">Menú
 						<span class="sr-only">(current)</span>
 				</a></li>
 				<li><img
@@ -72,7 +72,7 @@
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/carro.svg" width="30"
 					height="30" class="d-inline-block align-top mr-2" alt=""></li>
-				<li class="nav-item mr-3"><a class="nav-link" href="#">Carrito</a>
+				<li class="nav-item mr-3"><a class="nav-link" href="modificadorCarrito?action=verCarrito">Carrito</a>
 				</li>
 				<li><img
 					src="${pageContext.request.contextPath}/Icons/cuenta.svg" width="30"
@@ -109,13 +109,25 @@
 		</thead>
 		
 		<tbody>
+			<!--  órdenes con repartidor -->
 			<c:forEach var="orden" items="${ordenesActuales}">
 				<tr>
 				<td><a class="btn btn-primary"  href="modificadorCliente?action=verOrden&idOrden=${orden.getId()}">
 					Ver orden</a></td>
 					<td><c:out value="${orden.fecha}" /></td>
 					<td><c:out value="${orden.getNombreEstado()}" /></td>
-					<td ><c:out value="${orden.repartidor}" /></td>
+					<td ><c:out value="${orden.getRepartidor()}" /></td>
+				</tr>
+			</c:forEach>
+			
+			<!--  órdenes sin repartidor -->
+			<c:forEach var="orden" items="${ordenesSinRep}">
+				<tr>
+				<td><a class="btn btn-primary"  href="modificadorCliente?action=verOrden&idOrden=${orden.getId()}">
+					Ver orden</a></td>
+					<td><c:out value="${orden.fecha}" /></td>
+					<td><c:out value="${orden.getNombreEstado()}" /></td>
+					<td ><c:out value="${orden.getRepartidor()}" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>
