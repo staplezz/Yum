@@ -1,11 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-	<meta charset="utf-8">
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet"
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -34,16 +31,17 @@
 	<title>Direcciones</title>
 	<!-- Icono del tÃ­tulo de la pÃ¡gina -->
 	<link rel="icon"
-		href="${pageContext.request.contextPath}/Icons/admin-icon.svg"
+		href="${pageContext.request.contextPath}/Icons/yum.svg"
 		type="image/x-icon">
 </head>
 <body>
-	<!-- Barra de navegaciï¿½n -->
+
+	<!-- Barra de navegación -->
 	<nav class="navbar navbar-expand-lg navbar-dark"
 		style="background-color: #28536B">
 		<a class="navbar-brand mr-5" href="#"> <img
-			src="${pageContext.request.contextPath}/Icons/bear.svg" width="30"
-			height="30" class="d-inline-block align-top mr-2" alt=""> Yum
+			src="${pageContext.request.contextPath}/Icons/yum.svg" width="35"
+			height="35" class="d-inline-block align-top mr-2" alt=""> Yum
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#barraNavegacion" aria-controls="barraNavegacion"
@@ -54,36 +52,28 @@
 		<div class="collapse navbar-collapse" id="barraNavegacion">
 			<ul class="navbar-nav mr-auto">
 				<li><img
-					src="${pageContext.request.contextPath}/Icons/menu.svg" width="30" height="30" 
-					class="d-inline-block align-top mr-2" alt="">
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link mr-3" href="#">MenÃº
+					src="${pageContext.request.contextPath}/Icons/menu.svg" width="30"
+					height="30" class="d-inline-block align-top mr-2" alt=""></li>
+				<li class="nav-item"><a class="nav-link mr-3" href="#">Menú
 						<span class="sr-only">(current)</span>
-					</a>
+				</a></li>
+				<li><img
+					src="${pageContext.request.contextPath}/Icons/orden.svg" width="30"
+					height="30" class="d-inline-block align-top mr-2" alt=""></li>
+				<li class="nav-item"><a class="nav-link mr-3" href="modificadorCliente?action=mostrarOrdenesActuales">Órdenes</a>
 				</li>
 				<li><img
-					src="${pageContext.request.contextPath}/Icons/orden.svg" width="30" height="30" 
-					class="d-inline-block align-top mr-2" alt="">
-				</li>
-				<li class="nav-item"><a class="nav-link mr-3" href="#">Ã“rdenes</a>
-				</li>
-				<li><img
-					src="${pageContext.request.contextPath}/Icons/carro.svg" width="30" height="30"
-					class="d-inline-block align-top mr-2" alt=""></li>
+					src="${pageContext.request.contextPath}/Icons/carro.svg" width="30"
+					height="30" class="d-inline-block align-top mr-2" alt=""></li>
 				<li class="nav-item mr-3"><a class="nav-link" href="#">Carrito</a>
 				</li>
 				<li><img
-					src="${pageContext.request.contextPath}/Icons/orden.svg" width="30" height="40" 
-					class="d-inline-block align-top mr-2" alt=""></li>
-				<li class="nav-item"><a class="nav-link" href="modificadorCliente?action=mostrarEditarCliente">Cuenta</a></li>
+					src="${pageContext.request.contextPath}/Icons/cuenta.svg" width="30"
+					height="30" class="d-inline-block align-top mr-2" alt=""></li>
+				<li class="nav-item active"><a class="nav-link" href="modificadorCliente?action=mostrarEditarCliente">Cuenta</a></li>
 			</ul>
-			<span class="navbar-text"> 
-				<img
-				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg" width="30" height="30"
-				 class="d-inline-block align-top mr-2"
-				alt="cerrar sesiÃ³n"> 
-				<a href="logout?">Cerrar SesiÃ³n</a>
+			<span class="navbar-text"> <a href="logout?">Cerrar
+					Sesión</a>
 			</span>
 		</div>
 	</nav>
@@ -96,7 +86,7 @@
 		<div class="row pb-2">
 			<div class="col-sm-3 col-md-3 col-lg-3 offset-sm-9 offset-md-9 offset-lg-9">
 				<button type="button" class="btn btn-outline-info"
-						data-toggle="modal" data-target="#agregar">Agregar direcciÃ³n <img class="icon"
+						data-toggle="modal" data-target="#agregar">Agregar dirección <img class="icon"
 							src="${pageContext.request.contextPath}/Icons/anadir.svg"
 							class="img-fluid img-thumbnail" alt="Editar" width="30"
 							height="30">
@@ -105,7 +95,7 @@
 				  <div class="modal-dialog modal-dialog-centered" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLongTitle">Agregar direcciÃ³n</h5>
+				        <h5 class="modal-title" id="exampleModalLongTitle">Agregar dirección</h5>
 				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          <span aria-hidden="true">&times;</span>
 				        </button>
@@ -113,8 +103,8 @@
 				       <form action="modificadorCliente?action=agregarDireccion" method="post">
 				         <div class="modal-body">
 				        	<div class="form-group">
-				        		<label for="delegacion">DelegaciÃ³n</label>
-				        		<input type="text" class="form-control" name="delegacion" placeholder="DelegaciÃ³n" required>
+				        		<label for="delegacion">Delegación</label>
+				        		<input type="text" class="form-control" name="delegacion" placeholder="Delegación" required>
 				        	</div>
 				        	<div class="form-group">
 				        		<label for="colonia">Colonia</label>
@@ -125,12 +115,12 @@
 				        		<input type="text" class="form-control" name="calle" placeholder="Calle" required>
 				        	</div>
 				        	<div class="form-group">
-				        		<label for="numInt">NÃºmero interior</label>
-				        		<input type="number" class="form-control" name="numInt" placeholder="NÃºmero interior" required>
+				        		<label for="numInt">Número interior</label>
+				        		<input type="number" class="form-control" name="numInt" placeholder="Número interior" required>
 				        	</div>
 				        	<div class="form-group">
-				        		<label for="numExt">NÃºmero exterior</label>
-				        		<input type="number" class="form-control" name="numExt" placeholder="NÃºmero interior" required>
+				        		<label for="numExt">Número exterior</label>
+				        		<input type="number" class="form-control" name="numExt" placeholder="Número interior" required>
 				        	</div>
 				          </div>
 				          <div class="modal-footer">
@@ -148,14 +138,14 @@
 
 	<div class="container final">
 		<table
-			class="table table-image w-55 mx-auto table-striped table-bordered lg-8">
-			<thead class="thead-dark">
+			class="table table-image w-55 mx-auto table-striped table-bordered lg-8 text-center">
+			<thead class="thead-light">
 				<tr>
-					<td>DelegaciÃ³n</td>
-					<td>Colonia</td>
-					<td>Calle</td>
-					<td>NÃºmero exterior</td>
-					<td colspan=2>ConfiguraciÃ³n</td>
+					<th>Delegación</th>
+					<th>Colonia</th>
+					<th>Calle</th>
+					<th>Número exterior</th>
+					<th colspan=2>Configuración</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -165,19 +155,13 @@
 						<td><c:out value="${direccion.getColonia()}" /></td>
 						<td><c:out value="${direccion.getCalle()}" /></td>
 						<td><c:out value="${direccion.getNumExterior()}" /></td>
-						<td><a
+						<td><a class="btn btn-primary"
 							href="modificadorCliente?action=mostrarEditarDireccion&idDireccion=<c:out value="${direccion.getIdDireccion()}"/>">
-								Editar <img class="icon"
-								src="${pageContext.request.contextPath}/Icons/editar.svg"
-								class="img-fluid img-thumbnail" alt="Editar" width="30"
-								height="30">
+								Editar 
 						</a></td>
-						<td><a
+						<td><a class="btn btn-danger"
 							href="modificadorCliente?action=eliminarDireccion&idDireccion=<c:out value="${direccion.getIdDireccion()}"/>">
-								Eliminar <img class="icon"
-								src="${pageContext.request.contextPath}/Icons/borrar.svg"
-								class="img-fluid img-thumbnail" alt="Editar" width="30"
-								height="30">
+								Eliminar 
 						</a></td>
 					</tr>
 				</c:forEach>
