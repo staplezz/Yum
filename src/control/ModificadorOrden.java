@@ -123,7 +123,7 @@ public class ModificadorOrden extends HttpServlet {
 		List<OrdenAdmin> ordenesConRep = ordenDAO.getOrdenesConRep();
 		
 		//Mandamos las órdenes al jsp.
-		request.setAttribute("ordenesSinRep", ordenesSinRep);
+		request.setAttribute("ordenesListas", ordenesSinRep);
 		request.setAttribute("ordenesConRep", ordenesConRep);
 		
 		//Mostramos vista.

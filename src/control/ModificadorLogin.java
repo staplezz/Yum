@@ -17,7 +17,6 @@ import dao.PersonaDAO;
 import modelo.Administrador;
 import modelo.Cliente;
 import modelo.Repartidor;
-
 /**
  * Servlet implementation class ModificadorLogin
  */
@@ -77,33 +76,26 @@ public class ModificadorLogin extends HttpServlet {
 				HttpSession session = request.getSession();
 				cliente.setPassword(rawPassword);
 				session.setAttribute("cliente", cliente);
+				response.sendRedirect("muestraMenu?action=mostrarAlimentos&idCategoria=1");
 				
-				response.sendRedirect("modificadorCliente?action=mostrarEditarCliente");
 			}else if(administrador != null && rawPassword.equals(administrador.getPassword())) {
 				HttpSession session = request.getSession();
 				session.setAttribute("administrador", administrador);
-				
 				response.sendRedirect("adminMenu?action=mostrarMenu");
-			}else if(repartidor != null && rawPassword.equals(repartidor.getPassword())) {
 				
+			}else if(repartidor != null && rawPassword.equals(repartidor.getPassword())) {
 				HttpSession session = request.getSession();
 				session.setAttribute("repartidor", repartidor);
+				response.sendRedirect("ordenRepartidor?action=mostrarOrdenes");
 				
-				response.sendRedirect("Vista/Repartidor/MostrarOrdenesRepartidorIH.jsp");
 			}else {
-				// En caso de no encontrar un usuario v√°lido, lo indicamos.
-				request.setAttribute("message", "El correo o contrase√±a ingresados son incorrectos"); // Will be available as ${message}
+				// En caso de no encontrar un usuario v·lido, lo indicamos.
+				request.setAttribute("message", "El correo o contraseÒa ingresados son incorrectos"); // Will be available as ${message}
 				request.getRequestDispatcher("index.jsp").forward(request,response);
-				
 			}
-			
-			
 		}catch(SQLException e) {
 			e.getStackTrace();
 		}
-
-		
-		
 	}
 
 	/**
@@ -113,5 +105,4 @@ public class ModificadorLogin extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }
