@@ -44,7 +44,7 @@ public class OrdenDAO {
 	}
 	
 	/*
-	* Obtiene la lista de los alimentos de una órden.
+	* Obtiene la lista de los alimentos de una Ã³rden.
 	*/
 	public List<AlimentoOrden> obtenAlimentosOrden(int idOrden) throws SQLException {
 		// La lista de alimentos.
@@ -88,7 +88,7 @@ public class OrdenDAO {
 	}
 	
 	/*
-	* Obtiene la suma total de los alimentos de la órden.
+	* Obtiene la suma total de los alimentos de la Ã³rden.
 	*/
 	public int totalOrden(int idOrden) throws SQLException {
 		int total = 0;
@@ -124,7 +124,7 @@ public class OrdenDAO {
 	}
 	
 	/*
-	 * Obtiene las órdenes para el administrador que acaban
+	 * Obtiene las Ã³rdenes para el administrador que acaban
 	 * de ser creadas y listas para entregar.
 	 */
 	public List<OrdenAdmin> getOrdenesSinRep() throws SQLException {
@@ -268,7 +268,7 @@ public class OrdenDAO {
 	}
 	
 	/*
-	 * Obtiene las órdenes del cliente sin repartidor asignado.
+	 * Obtiene las Ã³rdenes del cliente sin repartidor asignado.
 	 */
 	public List<OrdenAdmin> getOrdenesClienteSinRep(int idCliente) throws SQLException {
 		ResultSet res = null;
@@ -433,7 +433,7 @@ public class OrdenDAO {
 		return calificado;
 	}
 	
-	// Hacemos la creación de una nueva orden.
+	// Hacemos la creaciÃ³n de una nueva orden.
 	public void creaOrden(int idCliente, int idDireccionCliente) throws SQLException {
 		//Primero creamos registro de la orden que queremos almacenar.
 		String insertaROrden = "INSERT INTO ordenescliente (idCliente) VALUES (?)";
@@ -480,7 +480,7 @@ public class OrdenDAO {
 		statement.setString(1, idOrdCl);
 		statement.setInt(2, idCarrito);
 		
-		//Aquí se copia el carrito.
+		//AquÃ­ se copia el carrito.
 		try {
 			statement.executeUpdate();
 			System.out.println("copiar alimentos ");
@@ -493,7 +493,7 @@ public class OrdenDAO {
 		PreparedStatement delStatement = connection.prepareStatement(borraCarrito);
 		delStatement.setInt(1, idCarrito);
 		
-		//Aquí se borra el carrito.
+		//AquÃ­ se borra el carrito.
 		delStatement.executeUpdate();
 		delStatement.close();
 		
@@ -538,12 +538,12 @@ public class OrdenDAO {
 		}
 				
 		statement.close();
-		con.desconectar();
+		//con.desconectar();
 		
 		return idCarrito;
 	}
 	
-	//Obtiene el id dirección cliente.
+	//Obtiene el id direcciÃ³n cliente.
 	public int getIdDireccionCliente(int idDireccion) throws SQLException {
 		int idDireccionCliente = 0;
 		String sql = "SELECT idDireccionCliente\r\n" + 
