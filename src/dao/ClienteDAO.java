@@ -11,6 +11,7 @@ import java.util.List;
 import modelo.Cliente;
 import modelo.Direccion;
 import modelo.Conexion;
+
 public class ClienteDAO {
 	private Conexion con;
 	private Connection connection;
@@ -322,7 +323,7 @@ public class ClienteDAO {
 			}
 			
 			if(numExterior != -1) {
-				direccion.setNumInterior(numExterior);
+				direccion.setNumExterior(numExterior);
 			}
 		}
 		
