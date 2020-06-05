@@ -465,5 +465,90 @@ public class ClienteDAO {
 		
 		return direccionInserted;
 	}
+	
+	//Obtiene el id del carrito de un cliente.
+	public int getIdCarrito(int idCliente) throws SQLException {
+		int idCarrito = 0;
+		String sql = "SELECT idCarrito\n" + 
+				"FROM carrito\n" + 
+				"WHERE idCliente = ?";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setInt(1, idCliente);
+		
+		ResultSet res = statement.executeQuery();
+		
+		// Obtenemos el resultado.
+		if(res.next()) {
+			idCarrito = res.getInt("idCarrito");
+		}
+				
+		statement.close();
+		con.desconectar();
+		
+		return idCarrito;
 
+	}
+	
+	//Inserta un alimento en el carrito.
+	public boolean insertaAlimento(int idAlimento, int idCarrito) throws SQLException {
+		boolean actualizo;
+		// Nueva cantidad del alimento
+		int nuevaCantidad = 1;
+		
+		//Revisamos si no existe el alimento en el carrito.
+		String consultaCantidad = "SELECT cantidad\n" + 
+				"FROM alimentoscarrito\n" + 
+				"WHERE idCarrito = ? and idAlimento = ?";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(consultaCantidad);
+		
+		statement.setInt(1, idCarrito);
+		statement.setInt(2, idAlimento);
+		
+		ResultSet res = statement.executeQuery();
+		
+		if(res.next()) {
+			// Si ya existe le agregamos en uno.
+			nuevaCantidad = res.getInt("cantidad") + 1;
+		}
+		statement.close();
+		
+		// Ahora insertamos o actualizamo el carrito.
+		String insertaCarrito = "INSERT INTO alimentoscarrito (idCarrito, idAlimento, cantidad) VALUES (?, ?, ?)";
+		String actualizaCarrito = "UPDATE alimentoscarrito SET cantidad = ? WHERE idCarrito = ? AND idAlimento = ?";
+		
+		
+		//Dependiendo de si es actualización o inserción.
+		if (nuevaCantidad == 1) {
+			PreparedStatement statementCarrito = connection.prepareStatement(insertaCarrito);
+			
+			statementCarrito.setInt(1, idCarrito);
+			statementCarrito.setInt(2, idAlimento);
+			statementCarrito.setInt(3, nuevaCantidad);
+			
+			actualizo = statementCarrito.executeUpdate() > 0;
+			statementCarrito.close();
+		} else {
+			PreparedStatement statementCarrito = connection.prepareStatement(actualizaCarrito);
+			
+			statementCarrito.setInt(1, nuevaCantidad);
+			statementCarrito.setInt(2, idCarrito);
+			statementCarrito.setInt(3, idAlimento);
+			
+			actualizo = statementCarrito.executeUpdate() > 0;
+			statementCarrito.close();
+		}
+		
+		con.desconectar();
+		return actualizo;	
+		
+	}
 }
