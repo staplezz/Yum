@@ -60,9 +60,7 @@
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
 			<a class="nav-item" href="logout?">Cerrar
-				Sesión</a> <img
-				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
-				width="30" height="30" class="ml-3" alt="">
+				Sesión</a> 
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="	#navbarNavAltMarkup"
 				aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -82,11 +80,8 @@
 		<div class="row pb-2">
 			<div class="col-sm-3 col-md-3 col-lg-3 offset-sm-6 offset-md-6 offset-lg-6">
 				<div class="card">
-					<button type="button" class="btn btn-outline-info"
-						data-toggle="collapse" data-target="#buscar"> Crear categoría. <img class="icon"
-							src="${pageContext.request.contextPath}/Icons/anadir.svg"
-							class="img-fluid img-thumbnail" alt="Editar" width="30"
-							height="30">
+					<button type="button" class="btn btn-secondary"
+						data-toggle="collapse" data-target="#buscar"> Crear categoría.
 					</button>
 					<div id="buscar" class="collapse">
 						<div class="card-body">
@@ -103,12 +98,9 @@
 			</div>
 			<div class="col-sm-3 col-md-3 col-lg-3">
 				<div class="card">
-					<button type="button" class="btn btn-outline-info"
+					<button type="button" class="btn btn-secondary"
 						data-toggle="collapse" data-target="#buscar">
-						Buscar por categoría. <img class="icon"
-							src="${pageContext.request.contextPath}/Icons/editar.svg"
-							class="img-fluid img-thumbnail" alt="Editar" width="30"
-							height="30">
+						Buscar por categoría.
 					</button>
 					<div id="buscar" class="collapse">
 						<div class="card-body">
@@ -127,36 +119,27 @@
 	</div>
 	<div class="container final">
 		<table
-			class="table table-image w-55 mx-auto table-striped table-bordered lg-8">
-			<thead class="thead-dark">
+			class="table table-image w-60 mx-auto table-striped table-bordered lg-8">
+			<thead class="thead-dark text-center">
 				<tr>
-					<td>Categoría</td>
-					<td colspan=2>Configuración</td>
-					<td>Alimentos</td>
+					<th style="width: 40%">Categoría</th>
+					<th style="width: 30%">Configuración</th>
+					<th style="width: 30%">Alimentos</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="categoria" items="${lista}">
 					<tr>
-						<td rowspan="${categoria.listaAlimentos.size()+1}"><c:out
+						<td rowspan="${categoria.listaAlimentos.size()+1}" class="text-center align-middle"><c:out
 								value="${categoria.nombre}" /></td>
-						<td rowspan="${categoria.listaAlimentos.size()+1}"><a
-							href="adminMenu?action=showEditar&id=<c:out value="${categoria.id}" />">
-								Editar <img class="icon"
-								src="${pageContext.request.contextPath}/Icons/editar.svg"
-								class="img-fluid img-thumbnail" alt="Editar" width="30"
-								height="30">
-						</a></td>
-						<td rowspan="${categoria.listaAlimentos.size()+1}"><a
-							href="adminMenu?action=eliminarCategoria&id=<c:out value="${categoria.id}"/>">
-								Eliminar <img class="icon"
-								src="${pageContext.request.contextPath}/Icons/borrar.svg"
-								class="img-fluid img-thumbnail" alt="Editar" width="30"
-								height="30">
-						</a></td>
+						
+						<td rowspan="${categoria.listaAlimentos.size()+1}" class="text-center align-middle">
+						<a href="adminMenu?action=showEditar&id=${categoria.id}" class="btn btn-primary"> Editar</a>
+						<a href="adminMenu?action=eliminarCategoria&id=${categoria.id}" class="btn btn-danger">Eliminar</a>
+						</td>
 						<c:forEach var="alimento" items="${categoria.listaAlimentos}">
 							<tr>
-								<td><c:out value="${alimento.nombre}" /></td>
+								<td>${alimento.nombre}</td>
 							</tr>
 						</c:forEach>
 					</tr>

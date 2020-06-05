@@ -60,9 +60,7 @@
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
 			<a class="nav-item" href="logout?">Cerrar
-				Sesión</a> <img
-				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
-				width="30" height="30" class="ml-3" alt="">
+				Sesión</a> 
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="	#navbarNavAltMarkup"
 				aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -76,16 +74,13 @@
 	<div class="container">
 		<h1 class="text-center title">${categoria.nombre}</h1>
 	</div>
-	<div class="container">
+	<div class="container pb-2">
 		<div class="row">
 			<div class="col-sm-3 col-md-3 col-lg-3 offset-sm-6 offset-md-6 offset-lg-6">
 				<div class="card">
-					<button type="button" class="btn btn-outline-info"
+					<button type="button" class="btn btn-secondary"
 						data-toggle="collapse" data-target="#buscar">
-						Cambiar nombre <img class="icon"
-							src="${pageContext.request.contextPath}/Icons/editar.svg"
-							class="img-fluid img-thumbnail" alt="Editar" width="30"
-							height="30">
+						Cambiar nombre
 					</button>
 
 					<div id="buscar" class="collapse">
@@ -107,12 +102,9 @@
 				<div class="accordion">
 					<div class="card">
 
-						<button type="button" class="btn btn-outline-info"
+						<button type="button" class="btn btn-secondary"
 							onclick="window.location.href='adminMenu?action=mostrarAlimentos&idCat=<c:out value='${categoria.id}'/>';">
-							Agregar alimentos <img class="icon"
-								src="${pageContext.request.contextPath}/Icons/anadir.svg"
-								class="img-fluid img-thumbnail" alt="Editar" width="30"
-								height="30">
+							Agregar alimentos
 						</button>
 
 					</div>
@@ -121,14 +113,14 @@
 		</div>
 	</div>
 	<div class="container">
-		<table class="table w-55 mx-auto table-striped table-bordered lg-8">
-			<thead>
+		<table class="table w-55 mx-auto table-striped table-bordered lg-8 text-center">
+			<thead class="thead-dark">
 				<tr>
-					<td>Id</td>
-					<td>Nombre</td>
-					<td>Precio</td>
-					<td>Descripción</td>
-					<td>Acción</td>
+					<th>Id</th>
+					<th>Nombre</th>
+					<th>Precio</th>
+					<th>Descripción</th>
+					<th>Acción</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -138,12 +130,9 @@
 						<td><c:out value="${alimento.nombre}" /></td>
 						<td><c:out value="${alimento.getPrecio()}" /></td>
 						<td><c:out value="${alimento.getDescripcion()}" /></td>
-						<td><a
+						<td><a class= "btn btn-danger"
 							href="adminMenu?action=eliminarAlimentoCategoria&idAlimento=<c:out value="${alimento.id}" />&idCategoria=<c:out value="${categoria.id}" />">
-								Eliminar <img class="icon"
-								src="${pageContext.request.contextPath}/Icons/borrar.svg"
-								class="img-fluid img-thumbnail" alt="Editar" width="30"
-								height="30">
+								Eliminar
 						</a></td>
 					</tr>
 				</c:forEach>

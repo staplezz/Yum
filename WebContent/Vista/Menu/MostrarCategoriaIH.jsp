@@ -60,9 +60,7 @@
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
 			<a class="nav-item" href="logout?">Cerrar
-				Sesión</a> <img
-				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
-				width="30" height="30" class="ml-3" alt="">
+				Sesión</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="	#navbarNavAltMarkup"
 				aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -77,19 +75,16 @@
 		<h1 class="text-center title">${categoria.nombre}:</h1>
 	</div>
 
-	<div class="container">
+	<div class="container text-center pb-2">
 		<div class="row">
 			<div
 				class="col-sm-3 col-md-3 col-lg-3 offset-sm-9 offset-md-9 offset-lg-9">
 				<div class="accordion">
-					<div class="card">
-						<div class="card-header">
-							<a
+					<div >
+						<div>
+							<a class="btn btn-secondary"
 								href="adminMenu?action=showEditar&id=<c:out value="${categoria.id }"/>">
-								Editar categoría <img class="icon"
-								src="${pageContext.request.contextPath}/Icons/editar.svg"
-								class="img-fluid img-thumbnail" alt="Editar" width="30"
-								height="30">
+								Editar categoría
 							</a>
 						</div>
 					</div>
@@ -101,10 +96,10 @@
 		<table class="table w-55 mx-auto table-striped table-bordered lg-8">
 			<thead class="thead-dark">
 				<tr>
-					<td>Id</td>
-					<td>Nombre</td>
-					<td>Precio</td>
-					<td>Descripción</td>
+					<th>Id</th>
+					<th>Nombre</th>
+					<th>Precio</th>
+					<th>Descripción</th>
 				</tr>
 			</thead>
 			<tbody>
