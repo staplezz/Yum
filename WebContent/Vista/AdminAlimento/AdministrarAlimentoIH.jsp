@@ -170,9 +170,7 @@
 			</div>
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
-			<a class="nav-item" href="logout?">Cerrar Sesión</a> <img
-				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
-				width="30" height="30" class="ml-3" alt="">
+			<a class="nav-item" href="logout?">Cerrar Sesión</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
 				aria-expanded="false" aria-label="	Toggle navigation">
@@ -191,7 +189,7 @@
 		<div class="container pb-2">
 			<div class="row justify-content-end">
 				<div class="col-sm-auto px-2">
-					<button type="button" class="btn btn-primary" data-toggle="modal" 
+					<button type="button" class="btn btn-secondary" data-toggle="modal" 
 					data-target="#modalRegistro" id="buttonAgregar">Agregar Alimento</button>
 				</div>
 			</div>
