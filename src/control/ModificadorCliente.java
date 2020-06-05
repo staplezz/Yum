@@ -16,8 +16,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import dao.ClienteDAO;
+import modelo.AlimentoOrden;
 import modelo.Cliente;
 import modelo.Direccion;
+import modelo.OrdenAdmin;
+import dao.OrdenDAO;
+
 /**
  * Servlet implementation class ModificadorCliente
  */
@@ -26,13 +30,14 @@ public class ModificadorCliente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	ClienteDAO clienteDAO;
+	OrdenDAO ordenDAO;
 	
 	public void init() {
 		String jdbcURL = getServletContext().getInitParameter("jdbcURL");
 		String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
 		String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
 		try {
-
+			ordenDAO = new OrdenDAO(jdbcURL, jdbcUsername, jdbcPassword);
 			clienteDAO = new ClienteDAO(jdbcURL, jdbcUsername, jdbcPassword);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -78,7 +83,17 @@ public class ModificadorCliente extends HttpServlet {
 				break; 
 			case "eliminarDireccion": 
 				eliminarDireccionCliente(request, response);
-				break;	
+				break;
+			case "mostrarOrdenesActuales":
+				System.out.println("entro mostrar órdenes");
+				mostrarOrdenesActuales(request, response);
+				break;
+			case "verOrden":
+				verOrden(request, response);
+				break;
+			case "mostrarHistorialOrdenes":
+				mostrarHistorialOrdenes(request,response);
+				break;
 			case "agregarDireccion": 
 				agregarDireccion(request, response); 
 				break;
@@ -155,6 +170,7 @@ public class ModificadorCliente extends HttpServlet {
 	private void mostrarEditarCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
 		HttpSession session = request.getSession(false); 
 		if(session!= null) {
+			//response.setContentType("text/html;charset=UTF-8");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/EditaClienteIH.jsp");
 			
 			Cliente clienteUno =(Cliente)session.getAttribute("cliente");
@@ -175,7 +191,8 @@ public class ModificadorCliente extends HttpServlet {
 		HttpSession session = request.getSession(false); 
 		if(session!= null) {
 			Cliente nuevo = (Cliente)session.getAttribute("cliente");
-			String nombre = request.getParameter("nombre"); 
+			String nombre = request.getParameter("nombre");
+			System.out.println("Edito nombre cliente: " + nombre);
 			String apePat = request.getParameter("apePat"); 
 			String apeMat = request.getParameter("apeMat");
 			String rawPassword = request.getParameter("password");
@@ -203,6 +220,7 @@ public class ModificadorCliente extends HttpServlet {
 					"</div>"); 
 			request.getRequestDispatcher("/Vista/Cliente/EditaClienteIH.jsp").include(request, response);
 			out.close();
+			
 			
 		}else {
 			request.getRequestDispatcher("index.jsp").include(request, response);
@@ -251,18 +269,18 @@ public class ModificadorCliente extends HttpServlet {
 			int idDireccion = Integer.parseInt(request.getParameter("idDireccion"));
 			String delegacion = request.getParameter("delegacion"); 
 			String colonia = request.getParameter("colonia"); 
-			String calle = request.getParameter("calle"); 
+			String calle = request.getParameter("calle");
 			
 			Direccion direccion = new Direccion(delegacion, colonia, calle);
 			direccion.setIdDireccion(idDireccion);
 			
-			if (request.getParameter("numInt") != null) {
+			if (request.getParameter("numInt") != "") {
 				int numInterior = Integer.parseInt(request.getParameter("numInt"));
 				direccion.setNumInterior(numInterior);
 			}
 				
 			
-			if (request.getParameter("numExt") != null) {
+			if (request.getParameter("numExt") != "") {
 				int numExterior = Integer.parseInt(request.getParameter("numExt"));
 				direccion.setNumExterior(numExterior);
 
@@ -291,13 +309,12 @@ public class ModificadorCliente extends HttpServlet {
 		
 	}
 	
-	
 	private void eliminarDireccionCliente(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
 		HttpSession session = request.getSession(false);
 		if(session != null) {
 			Cliente cliente = (Cliente)session.getAttribute("cliente");
 			int idDireccion = Integer.parseInt(request.getParameter("idDireccion"));
-			int idCliente= Integer.parseInt(request.getParameter("idCliente"));
+			int idCliente = cliente.getIdCliente();
 			request.setAttribute("idCliente", idCliente);
 			
 			clienteDAO.eliminarDireccion(idDireccion); 
@@ -308,6 +325,7 @@ public class ModificadorCliente extends HttpServlet {
 		}
 				
 	}
+	
 	
 	private void agregarDireccion(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
 		HttpSession session = request.getSession(false);
@@ -352,5 +370,66 @@ public class ModificadorCliente extends HttpServlet {
 		
 	}
 	
+	/* Natalia */
+	private void mostrarOrdenesActuales(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		HttpSession session = request.getSession(false); 
+		if(session!= null) {
+			Cliente clienteUno =(Cliente)session.getAttribute("cliente");
+			
+			int idCliente = clienteUno.getIdCliente();
+			System.out.println("id Cliente: " + idCliente);
+			List<OrdenAdmin> ordenesActuales = ordenDAO.getOrdenesCliente(idCliente);
+			System.out.println("recibo órdenes");
+			request.setAttribute("ordenesActuales", ordenesActuales);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/ClienteOrdenIH.jsp");
+			dispatcher.forward(request, response);
+		}else {
+			request.getRequestDispatcher("index.jsp").include(request, response);
+		}
+	}
 	
+	/* Natalia */
+	private void verOrden(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		HttpSession session = request.getSession(false); 
+		if(session!= null) {
+			int idOrden = Integer.parseInt(request.getParameter("idOrden"));
+			
+			
+			List<AlimentoOrden> listaAlimentos = ordenDAO.obtenAlimentosOrden(idOrden);
+			System.out.println("obtengo Alimentos de orden con id: " + idOrden);
+			
+			//Obtenemos la suma total de costos.
+			int total = ordenDAO.totalOrden(idOrden);
+			
+			//Mandamos al jsp.
+			request.setAttribute("listaAlimentos", listaAlimentos);
+			//El id de la órden
+			request.setAttribute("ordenId", idOrden);
+			//Total de la órden.
+			request.setAttribute("total", total);
+			request.getRequestDispatcher("/Vista/Cliente/MostrarOrdenCliente.jsp").forward(request, response);
+			
+		}else {
+			request.getRequestDispatcher("index.jsp").include(request, response);
+		}
+	}
+	
+	/* Natalia */
+	private void mostrarHistorialOrdenes(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		HttpSession session = request.getSession(false); 
+		if(session!= null) {
+			
+			Cliente clienteUno =(Cliente)session.getAttribute("cliente");
+			
+			int idCliente = clienteUno.getIdCliente();
+			System.out.println(idCliente + clienteUno.getApellidoPaterno());
+			List<OrdenAdmin> ordenes = ordenDAO.getHistorialOrdenCliente(idCliente);
+			request.setAttribute("ordenes", ordenes);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/ClienteHistorialOrdenIH.jsp");
+			dispatcher.forward(request, response);
+		}else {
+			request.getRequestDispatcher("index.jsp").include(request, response);
+		}
+	}
+
 }
