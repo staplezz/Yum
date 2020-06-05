@@ -24,6 +24,8 @@ INSERT INTO `repartidor` (`idPersona`) VALUES ('3');
 /* DML categorias */
 INSERT INTO `categoria` (`nombre`) VALUES ('Botanas');
 INSERT INTO `categoria` (`nombre`) VALUES ('Carnes');
+/* Para alimentos sin categoria */
+INSERT INTO `categoria` (`idCategoria`, `nombre`) VALUES ('100', 'Sin categoria');
 
 /* DML alimentos */
 INSERT INTO `alimento` (`nombre`, `precio`, `descripcion`, `idCategoria`) VALUES ('Papas Fritas', '15', 'La papa perfecta para cuando tienes flojera', '1');
