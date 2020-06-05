@@ -22,9 +22,15 @@
 		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 		crossorigin="anonymous"></script>
 	
+	<!-- Para calificar -->
+	<script src="https://kit.fontawesome.com/cdcab3bf36.js" crossorigin="anonymous"></script>
+	<script data-search-pseudo-elements defer src="https://use.fontawesome.com/releases/latest/js/all.js" 
+		integrity="sha384-L469/ELG4Bg9sDQbl0hvjMq8pOcqFgkSpwhwnslzvVVGpDjYJ6wJJyYjvG3u8XW7" crossorigin="anonymous"></script>
+	
 	<!-- Style CSS para lo demás -->
 	<link rel="stylesheet" type="text/css"
 		href="${pageContext.request.contextPath}/CSS/style.css">
+	
 	<style type="text/css">
 	.title {
 		margin-top: 70px;
@@ -33,14 +39,47 @@
 	.final {
 		margin-bottom: 60px;
 	}
+			.icon::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+.stars-outer {
+  display: inline-block;
+  position: relative;
+  font-family: "Font Awesome 5 Free";
+}
+
+.stars-outer::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+}
+
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width : 0;
+}
+
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
 	</style>
 	<title>Historial órdenes</title>
 	<!-- Icono del título de la página -->
 	<link rel="icon"
 		href="${pageContext.request.contextPath}/Icons/yum.svg"
 		type="image/x-icon">
+	
 </head>
 <body>
+	
 	<!-- Barra de navegación -->
 	<nav class="navbar navbar-expand-lg navbar-dark"
 		style="background-color: #28536B">
@@ -96,20 +135,45 @@
 						<th class="text-center" scope="col">Estado</th>
 					 	<th class="text-center" scope="col">Repartidor</th>
 					 	<th class="text-center" scope="col">Calificación</th>
+					 	<th class="text-center" scope="col"><i class="far fa-star"></i></th>
 					 </tr>
 						 
 				</thead>
 				
 					<tbody>
 						<c:forEach var="orden" items="${ordenes}">
-							<tr>
+							<tr class="orden${orden.getId()}" id ="ref">
 							<td><a class="btn btn-primary"  href="modificadorCliente?action=verOrden&idOrden=${orden.getId()}">
 								Ver orden</a></td>
 								<td><c:out value="${orden.fecha}" /></td>
 								<td><c:out value="${orden.getNombreEstado()}" /></td>
 								<td ><c:out value="${orden.repartidor}" /></td>
-								<td ><c:out value="${orden.calificacion}" /></td>
+								<td>
+									<form action= "modificadorCliente?action=calificarOrden&idO=${orden.getId()}" method="post" class="form-inline">
+										<select  id="calificacion" class="custom-select my-1 mr-sm-2"  name="calificacion" >
+										    <option selected  ><c:out value="${orden.getCalificacion()}" /></option>
+										    <option value="1">1</option>
+										    <option value="2">2</option>
+										    <option value="3">3</option>
+										    <option value="4">4</option>
+										    <option value="5">5</option>
+										    <option value="6">6</option>
+										    <option value="7">7</option>
+										    <option value="8">8</option>
+										    <option value="9">9</option>
+										    <option value="10">10 </option>
+										  </select>
+										<button class="btn btn-outline-primary "   type="submit">Listo!</button>
+									</form>
+								</td>
+								<td>
+								<div class="stars-outer">
+									<div class="stars-inner">
+									</div>
+								</div>
+								</td>
 							</tr>
+							
 						</c:forEach>
 					</tbody>
 				</table>

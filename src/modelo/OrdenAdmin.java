@@ -56,6 +56,9 @@ public class OrdenAdmin {
 		return calificacion;
 	}
 	
+	public void setCalificacion(int calificacion) {
+		this.calificacion = calificacion;
+	}
 	//Auxiliar para los nombres de estados.
 	public String nombreEstado(int estado) {
 		if(estado == 1) {

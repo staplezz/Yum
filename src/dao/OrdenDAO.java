@@ -244,6 +244,7 @@ public class OrdenDAO {
 		PreparedStatement statement = connection.prepareStatement(consultaOrdenes);
 		
 		statement.setInt(1, 4);
+		System.out.println(statement);
 		
 		try {
 			res = statement.executeQuery();
@@ -259,7 +260,6 @@ public class OrdenDAO {
 			int calificacion = res.getInt("calificacion");
 			
 			OrdenAdmin ordenAdmin = new OrdenAdmin(idOrden, fecha, 4, calificacion, nombreRepartidor, nombreCliente);
-			
 			listaOrdenes.add(ordenAdmin);
 		}
 		
@@ -365,5 +365,29 @@ public class OrdenDAO {
 		}
 		
 		return listaOrdenes;
+	}
+	public boolean calificarOrden(int idOrden, int calificacion) throws SQLException{
+		boolean calificado = false; 
+		String sql = "UPDATE orden SET calificacion=? WHERE idOrden = ?";
+		
+		con.conectar();
+		connection = con.getJdbcConnection(); 
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, calificacion);
+		statement.setInt(2, idOrden);
+		
+		calificado = statement.executeUpdate()> 0; 
+		
+		if(!calificado) {
+			throw new SQLException("Orden no calificada, no rows affected");
+		}else {
+			System.out.println("Orden calificada"); 
+		}
+		
+		statement.close();
+		con.desconectar();
+		
+		return calificado;
 	}
 }

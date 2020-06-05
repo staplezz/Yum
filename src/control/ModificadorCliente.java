@@ -94,6 +94,9 @@ public class ModificadorCliente extends HttpServlet {
 			case "mostrarHistorialOrdenes":
 				mostrarHistorialOrdenes(request,response);
 				break;
+			case "calificarOrden":
+				calificarOrden(request, response); 
+				break;
 			case "agregarDireccion": 
 				agregarDireccion(request, response); 
 				break;
@@ -427,6 +430,35 @@ public class ModificadorCliente extends HttpServlet {
 			request.setAttribute("ordenes", ordenes);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Cliente/ClienteHistorialOrdenIH.jsp");
 			dispatcher.forward(request, response);
+		}else {
+			request.getRequestDispatcher("index.jsp").include(request, response);
+		}
+	}
+	/* Alma */
+	private void calificarOrden(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		HttpSession session = request.getSession(false); 
+		if(session!= null) {
+			int idOrden = Integer.parseInt(request.getParameter("idO")); 
+			int calificacion = Integer.parseInt(request.getParameter("calificacion"));
+			
+			Cliente clienteUno =(Cliente)session.getAttribute("cliente");
+			int idCliente = clienteUno.getIdCliente();
+			
+			ordenDAO.calificarOrden(idOrden, calificacion); 
+			PrintWriter out = response.getWriter(); 
+			
+			out.println("<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">\r\n" + 
+					"  <strong>Cambios guardados</strong> Orden calificada \r\n" + 
+					"  <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\r\n" + 
+					"    <span aria-hidden=\"true\">&times;</span>\r\n" + 
+					"  </button>\r\n" + 
+					"</div>"); 
+			
+			List<OrdenAdmin> ordenes = ordenDAO.getHistorialOrdenCliente(idCliente);
+			request.setAttribute("ordenes", ordenes);
+			request.getRequestDispatcher("/Vista/Cliente/ClienteHistorialOrdenIH.jsp").include(request, response);
+			out.close();
+			
 		}else {
 			request.getRequestDispatcher("index.jsp").include(request, response);
 		}
