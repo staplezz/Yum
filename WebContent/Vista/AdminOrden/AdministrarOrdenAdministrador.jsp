@@ -32,9 +32,7 @@
 			</div>
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
-			<a class="nav-item" href="logout?">Cerrar Sesión</a> <img
-				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
-				width="30" height="30" class="ml-3" alt="">
+			<a class="nav-item" href="logout?">Cerrar Sesión</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
 				aria-expanded="false" aria-label="	Toggle navigation">
@@ -73,7 +71,7 @@
 		  <tbody>
 		  
 		  	<!-- órdenes con estado 1 y 2 -->	
-		    <c:forEach var="orden" items="${ordenesSinRep}">
+		    <c:forEach var="orden" items="${ordenesListas}">
 		    	<tr>
 		    		<td><a class="btn btn-primary"  href="adminOrden?action=verOrden&id=${orden.getId()}">
 					Ver orden</a></td>
