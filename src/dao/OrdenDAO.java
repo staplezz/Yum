@@ -265,4 +265,105 @@ public class OrdenDAO {
 		
 		return listaOrdenes;
 	}
+	
+	/*
+	* Obtiene las ordenes actuales para el cliente.
+	*/
+	public List<OrdenAdmin> getOrdenesCliente(int idCliente) throws SQLException {
+		ResultSet res = null;
+		// La lista que contiene las ordenes.
+		List<OrdenAdmin> listaOrdenes = new ArrayList<OrdenAdmin>();
+		
+		String consultaOrdenes = "SELECT o.idOrden, o.fecha, o.estado, p.nombre nombrecliente, pr.nombre nombrerepartidor, o.calificacion\r\n" + 
+				"FROM ((orden o INNER JOIN cliente c\r\n" + 
+				"ON c.idCliente = o.idCliente)\r\n" + 
+				"INNER JOIN persona p\r\n" + 
+				"ON c.idPersona = p.idPersona) INNER JOIN\r\n" + 
+				"((orden q INNER JOIN repartidor r\r\n" + 
+				"ON r.idRepartidor = q.idRepartidor)\r\n" + 
+				"INNER JOIN persona pr\r\n" + 
+				"ON r.idPersona = pr.idPersona)\r\n" + 
+				"ON o.idOrden = q.idOrden\r\n" +
+				"WHERE o.estado != 4 AND o.idCliente = ?";
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		
+		
+		PreparedStatement statement = connection.prepareStatement(consultaOrdenes);
+		
+		statement.setInt(1, idCliente);
+		
+		try {
+			res = statement.executeQuery();
+		} catch(Exception e) {
+			System.out.println("ERRROR: " + e);
+		}
+		
+		while(res.next()) {
+			int idOrden = res.getInt("idOrden");
+			Date fecha = res.getDate("fecha");
+			String nombreCliente = res.getString("nombrecliente");
+			String nombreRepartidor = res.getString("nombrerepartidor");
+			int estado = res.getInt("estado");
+			int calificacion = res.getInt("calificacion");
+			
+			OrdenAdmin ordenCliente = new OrdenAdmin(idOrden, fecha, estado, calificacion, nombreRepartidor, nombreCliente);
+			System.out.println("orden"+ordenCliente.getNombreEstado());
+			listaOrdenes.add(ordenCliente);
+		}
+		
+		return listaOrdenes;
+	}
+	
+	/*
+	* Obtiene todas las ordenes del cliente.
+	* 3: entregada
+	*/
+	public List<OrdenAdmin> getHistorialOrdenCliente(int idCliente) throws SQLException {
+		ResultSet res = null;
+		// La lista que contiene las ordenes.
+		List<OrdenAdmin> listaOrdenes = new ArrayList<OrdenAdmin>();
+		
+		String consultaOrdenes = "SELECT o.idOrden, o.fecha, o.estado, p.nombre nombrecliente, pr.nombre nombrerepartidor, o.calificacion\r\n" + 
+				"FROM ((orden o INNER JOIN cliente c\r\n" + 
+				"ON c.idCliente = o.idCliente)\r\n" + 
+				"INNER JOIN persona p\r\n" + 
+				"ON c.idPersona = p.idPersona) INNER JOIN\r\n" + 
+				"((orden q INNER JOIN repartidor r\r\n" + 
+				"ON r.idRepartidor = q.idRepartidor)\r\n" + 
+				"INNER JOIN persona pr\r\n" + 
+				"ON r.idPersona = pr.idPersona)\r\n" + 
+				"ON o.idOrden = q.idOrden\r\n" +
+				"WHERE o.estado = 4 AND o.idCliente = ?";
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		
+		
+		PreparedStatement statement = connection.prepareStatement(consultaOrdenes);
+		
+		statement.setInt(1, idCliente);
+		
+		try {
+			res = statement.executeQuery();
+		} catch(Exception e) {
+			System.out.println("ERRROR: " + e);
+		}
+		
+		while(res.next()) {
+			int idOrden = res.getInt("idOrden");
+			Date fecha = res.getDate("fecha");
+			String nombreCliente = res.getString("nombrecliente");
+			String nombreRepartidor = res.getString("nombrerepartidor");
+			//int estado = res.getInt("estado");
+			int calificacion = res.getInt("calificacion");
+			
+			OrdenAdmin ordenCliente = new OrdenAdmin(idOrden, fecha, 4, calificacion, nombreRepartidor, nombreCliente);
+			System.out.println("orden"+ordenCliente.getNombreEstado());
+			listaOrdenes.add(ordenCliente);
+		}
+		
+		return listaOrdenes;
+	}
 }
