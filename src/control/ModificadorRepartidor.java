@@ -163,6 +163,8 @@ public class ModificadorRepartidor extends HttpServlet {
 		
 		
 		private void editar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+			System.out.println("EDITA REPARTIDOR");
+			System.out.println("apellido: " + request.getParameter("apellidoPaterno"));
 			int idPersona = Integer.parseInt(request.getParameter("idPersona"));
 			Repartidor repartidor = repartidorDAO.obtenerPorId(idPersona);
 			repartidor.setNombre(request.getParameter("nombre"));

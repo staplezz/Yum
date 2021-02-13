@@ -117,7 +117,7 @@ public class ModificadorMenu extends HttpServlet {
 	}
 	
 	private void mostrarCategoria(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/MostrarCategoriaIH.jsp"); 
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Menu/MostrarCategoriaIH.jsp"); 
 		String nombre = request.getParameter("nombre"); 
 		System.out.println("AQUII"+ nombre);
 		Categoria categoria = menuDAO.mostrarCategoriaNombre(nombre);
@@ -128,7 +128,7 @@ public class ModificadorMenu extends HttpServlet {
 		List<Alimento>alimentos = null; 
 		alimentos = menuDAO.mostrarAlimentosSinCategoria();
 		if (alimentos != null) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/MostrarAlimentosMenuIH.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Menu/MostrarAlimentosMenuIH.jsp");
 			request.setAttribute("alimentos", alimentos);
 			if(request.getParameter("idCat")!= null) {
 				int idCategoria =Integer.parseInt(request.getParameter("idCat"));
@@ -175,7 +175,7 @@ public class ModificadorMenu extends HttpServlet {
 	}
 	
 	private void showEditar(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/EditaCategoriaIH.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Menu/EditaCategoriaIH.jsp");
 		Categoria categoria = menuDAO.mostrarCategoriaId(Integer.parseInt(request.getParameter("id")));
 		request.setAttribute("categoria", categoria);
 		dispatcher.forward(request, response);
@@ -188,7 +188,7 @@ public class ModificadorMenu extends HttpServlet {
 	}
 	
 	private void mostrarMenu(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/MenuAdminIH.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Menu/MenuAdminIH.jsp");
 		
 		HttpSession session = request.getSession(false); 
 		if(session!= null) {
@@ -211,7 +211,7 @@ public class ModificadorMenu extends HttpServlet {
 	}
 	
 	private void eliminarAlimentoCategoria(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/EditaCategoriaIH.jsp"); 
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Vista/Menu/EditaCategoriaIH.jsp"); 
 		int idAlimento= Integer.parseInt(request.getParameter("idAlimento"));
 		Categoria categoria = menuDAO.mostrarCategoriaId(Integer.parseInt(request.getParameter("idCategoria")));
 		menuDAO.eliminarAlimentosCategoria(idAlimento);

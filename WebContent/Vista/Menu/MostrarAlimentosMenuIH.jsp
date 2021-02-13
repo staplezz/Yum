@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; utf-8" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
@@ -60,9 +59,7 @@
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
 			<a class="nav-item" href="logout?">Cerrar
-				Sesión</a> <img
-				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
-				width="30" height="30" class="ml-3" alt="">
+				Sesión</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="	#navbarNavAltMarkup"
 				aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -73,39 +70,28 @@
 	</nav>
 	
 	<div class="container">
-		<h1 class="text-center title">Es posible que quieras agregar
-			algunos elementos sin clasificar...</h1>
+		<h1 class="display-4 text-center title">Es posible que quieras agregar
+			algunos elementos sin clasificar</h1>
 	</div>
 
-	<div class="container">
-		<div class="row">
-			<div
-				class="col-sm-3 col-md-3 col-lg-3 offset-sm-9 offset-md-9 offset-lg-9">
-				<div class="accordion">
-					<div class="card">
-						<div class="card-header">
-							<a href="adminMenu?action=mostrarMenu"> Listo <img
-								class="icon"
-								src="${pageContext.request.contextPath}/Icons/editar.svg"
-								class="img-fluid img-thumbnail" alt="Editar" width="40"
-								height="40">
-							</a>
-						</div>
-					</div>
+	<div class="container">	
+		<!-- Herramienta para agregar alimentos -->
+		<div class="container pb-2">
+			<div class="row justify-content-end">
+				<div class="col-sm-auto px-2">
+					<a href="adminMenu?action=mostrarMenu" class="btn btn-secondary">Listo</a>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="container final">
 		<table class="table w-55 mx-auto table-striped table-bordered lg-8">
-			<thead>
+			<thead class="thead-dark">
 				<tr>
-					<td>Id</td>
-					<td>Nombre</td>
-					<td>Precio</td>
-					<td>Descripcion</td>
-					<td>Agregar</td>
+					<th>Id</th>
+					<th>Nombre</th>
+					<th>Precio</th>
+					<th>Descripcion</th>
+					<th>Agregar</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -125,7 +111,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-	</div>
+		</div>
 	<!-- Footer -->
 	<footer class="page-footer font-small  pt-1 footer fixed-bottom">
 

@@ -4,31 +4,29 @@
 <!DOCTYPE html lang="es">
 <html>
 <head>
-	<!-- Bootstrap & DataTables CSS -->
+<!-- Bootstrap & DataTables CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.css"/>
 	
 	<!-- Style CSS para lo demás -->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/CSS/style.css">
 	
-	<title>Administración Yum</title>
-	<link rel = "icon" href = "${pageContext.request.contextPath}/Icons/admin-icon.svg" type = "image/x-icon">
+	<title>Repartidor Yum</title>
+	<link rel = "icon" href = "${pageContext.request.contextPath}/Icons/repartidor.svg" type = "image/x-icon"> 
 </head>
 <body>
 	<!-- Barra de navegación. -->
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+	<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #364156;"
 	id="top-bar">
-		<div class="navbar-brand">
-			<img src="${pageContext.request.contextPath}/Icons/admin.svg"
-				width="30" height="30" class="" alt=""> <a
-				class="navbar-brand text-white">Administración Yum</a>
+		<div class="navbar-brand mr-0">
+			<img src="${pageContext.request.contextPath}/Icons/repartidor.svg"
+				width="30" height="30" class="" alt=""> 
+				<a class="navbar-brand text-black mx-2">Repartidor Yum</a>
 		</div>
 		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			<div class="navbar-nav">
-				<a class="nav-item nav-link" href="adminMenu?action=mostrarMenu">Menú</a>
-				<a class="nav-item nav-link active" href="adminOrden?action=mostrarOrdenes">Órdenes</a> 
-				<a class="nav-item nav-link" href="adminAlimento">Alimentos</a> 
-				<a class="nav-item nav-link" href="modificadorRepartidor?action=mostrar">Repartidores</a>
+				<a class="nav-item nav-link active" href="ordenRepartidor?action=mostrarOrdenes">Órdenes listas</a>
+				<a class="nav-item nav-link" href="#">Mis órdenes</a> 
 			</div>
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
@@ -46,7 +44,7 @@
 		<h1 class="display-4 text-center title mb-2 mt-2">Orden #${ordenId}</h1>
 	</div>
 	
-	<!--  Tabla con la información de la órden. -->
+		<!--  Tabla con la información de la órden. -->
 	<div class="container w-50">
 		<table class="table text-center">
 	  	<thead class="thead-dark">
@@ -75,13 +73,13 @@
 			<!-- Herramienta para regresar a órdenes -->
 			<div class="container">
 				<div class="row justify-content-end">
-					<h5><a href="adminOrden?action=mostrarOrdenes" class="btn btn-secondary">Regresar</a></h5>
+					<h5><a href="ordenRepartidor?action=mostrarOrdenes" class="btn btn-secondary">Regresar</a></h5>
 				</div>
 			</div>
 		</div>
 	</div>
 	
-		<!-- Footer -->
+	<!-- Footer -->
 	<footer class="page-footer font-small  pt-1">
 
 		<!-- Footer Elements -->
@@ -103,5 +101,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	
+
 </body>
 </html>

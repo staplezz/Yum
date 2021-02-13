@@ -10,26 +10,27 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import dao.OrdenDAO;
+import dao.OrdenRepartidorDAO;
 import modelo.AlimentoOrden;
-import modelo.OrdenAdmin;
+import modelo.OrdenRepartidor;
+import dao.OrdenDAO;
 
 /**
- * Servlet para la administración de las órdenes dentro del CRUD.
+ * Servlet implementation class ModificadorOrdenRepartidor
  */
-@WebServlet("/adminOrden")
-public class ModificadorOrden extends HttpServlet {
+@WebServlet("/ordenRepartidor")
+public class ModificadorOrdenRepartidor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	// Data access object para orden.
+	OrdenRepartidorDAO ordenRepartidorDAO;
 	OrdenDAO ordenDAO;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ModificadorOrden() {
+    public ModificadorOrdenRepartidor() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,6 +43,7 @@ public class ModificadorOrden extends HttpServlet {
 		String jdbcUsername = getServletContext().getInitParameter("jdbcUsername");
 		String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
 		try {
+			ordenRepartidorDAO = new OrdenRepartidorDAO(jdbcURL, jdbcUsername, jdbcPassword);
 			ordenDAO = new OrdenDAO(jdbcURL, jdbcUsername, jdbcPassword);
 		} catch(Exception e) {
 			System.out.println("Ocurrio un error al entrar a la BDD: " + e);
@@ -55,35 +57,29 @@ public class ModificadorOrden extends HttpServlet {
 		// Obtenemos la acción que quiere realizar el usuario.
 		String action = request.getParameter("action");
 		
-		HttpSession session = request.getSession(false);
-		
-		if(session!= null) {
-			try {
-				switch(action) {
-				case "mostrarOrdenes": 
-					mostrarOrdenes(request, response);
-					break;
+		try {
+			switch(action) {
+			case "mostrarOrdenes": 
+				mostrarOrdenes(request, response);
+				break;
 				
-				case "verOrden":
-					verOrden(request, response);
-					break;
-					
-				case "cambiaEstado":
-					cambiaEstado(request, response);
-					break;
-					
-				case "verHistorial":
-					verHistorial(request, response);
-					break;
-					
-				default: 
-					break;
-				}
-			}catch(SQLException e) {
-				e.getStackTrace();
+			case "verOrden":
+				verOrden(request, response);
+				break;
+				
+			case "cambiaEstado":
+				cambiaEstado(request, response);
+				break;
+			
+			case "misOrdenes":
+				mostrarMisOrdenes(request, response);
+				break;
+				
+			default: 
+				break;
 			}
-		}else {
-			request.getRequestDispatcher("index.jsp").include(request, response);
+		}catch(SQLException e) {
+			e.getStackTrace();
 		}
 	}
 
@@ -96,39 +92,39 @@ public class ModificadorOrden extends HttpServlet {
 	}
 	
 	/*
-	 * Muestra el historial de órdenes, es decir las que ya fueron entregadas y están
-	 * en un estado 4.
+	 * Obtiene las órdenes con estado 2 para que el repartidor las tome.
 	 */
-	private void verHistorial(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		// Obtenemos las órdenes.
-		List<OrdenAdmin> historialOrdenes = ordenDAO.getHistorialOrdenesAdmin();
+	private void mostrarOrdenes(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		// Obtenemos las órdenes en estado 2 (Sin repartidor asignado).
+		List<OrdenRepartidor> ordenesListas = ordenRepartidorDAO.getOrdenesListas();
+		System.out.println("obtengo Ordenes");
 		
-		//Mandamos lista al jsp.
-		request.setAttribute("historialOrdenes", historialOrdenes);
+		//Mandamos las órdenes al jsp.
+		request.setAttribute("ordenesListas", ordenesListas);
 		
 		//Mostramos vista.
-		request.getRequestDispatcher("/Vista/AdminOrden/historialOrdenes.jsp").forward(request, response);
+		request.getRequestDispatcher("/Vista/Repartidor/MostrarOrdenesRepartidorIH.jsp").forward(request, response);
 	}
 	
 	/*
-	 * Obtiene las órdenes con estado 1, 2 y 3 para que el administrador
-	 * las vea.
+	 * Obtiene las órdenes con estado 3 para que vea sus órdenes.
 	 */
-	private void mostrarOrdenes(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
-		// Obtenemos las órdenes en estado 1 y 2 (Sin repartidor asignado).
-		List<OrdenAdmin> ordenesSinRep = ordenDAO.getOrdenesSinRep();
+	private void mostrarMisOrdenes(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException{
+		//El id del repartidor.
+		int idRepartidor = Integer.parseInt(request.getParameter("idRepartidor"));
+		System.out.println("aqui entro");
+		// Obtenemos las órdenes en estado 2 (Sin repartidor asignado).
+		List<OrdenRepartidor> misOrdenes = ordenRepartidorDAO.getMisOrdenes(idRepartidor);
 		System.out.println("obtengo Ordenes");
 		
-		// Obtenemos las órdenes en estado 3. (Con repartidor asignado).
-		List<OrdenAdmin> ordenesConRep = ordenDAO.getOrdenesConRep();
-		
 		//Mandamos las órdenes al jsp.
-		request.setAttribute("ordenesListas", ordenesSinRep);
-		request.setAttribute("ordenesConRep", ordenesConRep);
+		request.setAttribute("misOrdenes", misOrdenes);
 		
 		//Mostramos vista.
-		request.getRequestDispatcher("/Vista/AdminOrden/AdministrarOrdenAdministrador.jsp").forward(request, response);
+		request.getRequestDispatcher("/Vista/Repartidor/misOrdenes.jsp").forward(request, response);
 	}
+	
+	
 	
 	/*
 	 * Obtiene los alimentos de la orden y el costo total que tendrá la orden.
@@ -150,7 +146,7 @@ public class ModificadorOrden extends HttpServlet {
 		request.setAttribute("ordenId", idOrden);
 		//Total de la órden.
 		request.setAttribute("total", total);
-		request.getRequestDispatcher("/Vista/AdminOrden/mostrarOrden.jsp").forward(request, response);
+		request.getRequestDispatcher("/Vista/Repartidor/mostrarOrden.jsp").forward(request, response);
 	}
 	
 	/*
@@ -163,9 +159,13 @@ public class ModificadorOrden extends HttpServlet {
 		// Obtenemos el estado actual de la órden.
 		int estado = Integer.parseInt(request.getParameter("estado"));
 		
-		//Hacemos la actualización
-		ordenDAO.actualizaOrden(idOrden, estado);
+		//El id del repartidor.
+		int idRepartidor = Integer.parseInt(request.getParameter("idRepartidor"));
 		
-		request.getRequestDispatcher("adminOrden?action=mostrarOrdenes").forward(request, response);
+		//Hacemos la actualización
+		ordenRepartidorDAO.actualizaOrden(idOrden, estado, idRepartidor);
+		
+		request.getRequestDispatcher("ordenRepartidor?action=mostrarOrdenes").forward(request, response);
 	}
+
 }

@@ -50,9 +50,7 @@
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
 			<a class="nav-item" href="logout?">Cerrar
-				Sesión</a> <img
-				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
-				width="30" height="30" class="ml-3" alt="">
+				Sesión</a> 
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="	#navbarNavAltMarkup"
 				aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -71,17 +69,13 @@
 			<div class="row justify-content-end pb-3">
 			<div class="col- pr-2"> 
 					<a
-					class="btn btn-primary"
+					class="btn btn-secondary"
 					href="modificadorRepartidor?action=registrarRepartidor">
-					<img src="${pageContext.request.contextPath}/Icons/anadir.svg"
-					width="30" height="30" class="ml-3" alt="">
 					Registrar nuevo Repartidor</a>
 			</div>
 			<div class="card">
-					<button type="button" class="btn btn-primary pr-3"
+					<button type="button" class="btn btn-secondary pr-3"
 						data-toggle="collapse" data-target="#buscar">
-						<img src="${pageContext.request.contextPath}/Icons/buscar.svg"
-					width="30" height="30" class="ml-3" alt="">
 						Buscar Repartidor</button>
 				<div id="buscar" class="collapse">
 					<div class="card-body">

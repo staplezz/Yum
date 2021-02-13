@@ -61,9 +61,7 @@
 			</div>
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
-			<a class="nav-item" href="logout?">Cerrar Sesión</a> <img
-				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
-				width="30" height="30" class="ml-3" alt="">
+			<a class="nav-item" href="logout?">Cerrar Sesión</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="	#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
 				aria-expanded="false" aria-label="	Toggle navigation">
@@ -77,21 +75,18 @@
 		<h1 class="display-4 text-center title">Repartidores</h1>
 	</div>
 
-
-	<div class="container py-2 min-vw-50">
-
-		<div class="row py-1 justify-content-center" id="menu-CRUD">
-
-
-			<div class="col-">
-				<img src="${pageContext.request.contextPath}/Icons/anadir.svg"
-					width="30" height="30" class="ml-3" alt=""> <a
-					class="btn btn-primary" href="modificadorRepartidor?action=mostrar">Registrar
+	<div class="container">
+			<!-- Herramienta para agregar alimentos -->
+		<div class="container pb-2">
+			<div class="row justify-content-end">
+				<div class="col-sm-auto px-2">
+					<a type="button" class="btn btn-secondary" href="modificadorRepartidor?action=mostrar">Registrar
 					nuevo Repartidor</a>
+				</div>
 			</div>
 		</div>
-	</div>
-	<table class="table w-50 mx-auto table-striped table-bordered final">
+	
+	<table class="table mx-auto table-striped table-bordered">
 		<thead class="thead-dark">
 			<tr>
 
@@ -99,7 +94,7 @@
 				<th class="text-center" scope="col">Apellido Paterno</th>
 				<th class="text-center" scope="col">Apellido Materno</th>
 				<th class="text-center" scope="col">Correo electrónico</th>
-				<th class="text-center" scope="col" />
+				<th class="text-center" scope="col">Acción </th>
 
 			</tr>
 		</thead>
@@ -107,25 +102,17 @@
 		<tbody>
 
 			<c:forEach var="repartidor" items="${lista}">
-				<tr>
+				<tr class="text-center">
 					<td><c:out value="${repartidor.nombre}" /></td>
 					<td><c:out value="${repartidor.apellidoPaterno}" /></td>
 					<td><c:out value="${repartidor.apellidoMaterno}" /></td>
 					<td><c:out value="${repartidor.correoElectronico}" /></td>
 					<td>
-						<div class="col-2">
 							<a class="btn btn-primary"
-								href="modificadorRepartidor?action=showedit&idPersona=<c:out value="${repartidor.idPersona}" />">Editar</a>
-							<img src="${pageContext.request.contextPath}/Icons/editar.svg"
-								width="30" height="30" class="ml-3" alt=""> <a
+								href="modificadorRepartidor?action=showedit&idPersona=<c:out value="${repartidor.idPersona}" />">Editar</a> 
+								<a
 								class="btn btn-danger"
 								href="modificadorRepartidor?action=eliminar&idPersona=<c:out value="${repartidor.idPersona}" />">Borrar</a>
-							<img src="${pageContext.request.contextPath}/Icons/borrar.svg"
-								width="30" height="30" class="ml-3" alt="">
-
-
-
-						</div>
 					</td>
 
 				</tr>
@@ -133,9 +120,10 @@
 		</tbody>
 	</table>
 
-	<div class="final container">
+	<div class="container text-center">
 		<a class="btn btn-secondary"
 			href="modificadorRepartidor?action=mostrar">Cancelar</a>
+	</div>
 	</div>
 
 	<footer class="page-footer font-small  pt-1 footer fixed-bottom">

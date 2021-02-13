@@ -64,9 +64,7 @@
 		</div>
 		<div class="navbar-brand" id="cerrar-sesion">
 			<a class="nav-item" href="logout?">Cerrar
-				Sesión</a> <img
-				src="${pageContext.request.contextPath}/Icons/cerrar-sesion.svg"
-				width="30" height="30" class="ml-3" alt="">
+				Sesión</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="	#navbarNavAltMarkup"
 				aria-controls="navbarNavAltMarkup" aria-expanded="false"
@@ -99,7 +97,7 @@
 					type="text" class="form-control" name="apellidoPaterno"
 					id="apellidoPaterno"
 					placeholder="Escribe el apellido paterno del repartidor"
-					required="required" data-error="Please enter your full name.">
+					required="required" data-error="Por favor llena este campo.">
 			</div>
 			<div class="help-block with-errors"></div>
 			<div class="form-group  ">
@@ -107,15 +105,15 @@
 					type="text" class="form-control" name="apellidoMaterno"
 					id="apellidoMaterno"
 					placeholder="Escribe el apellido materno del repartidor"
-					required="required" data-error="Please enter your full name.">
+					required="required" data-error="Por favor llena este campo.">
 			</div>
 			<div class="help-block with-errors"></div>
 			<div class="form-group ">
 				<label for="email">Correo electrónico</label> <input type="email"
 					class="form-control" name="correoElectronico"
 					id="correoElectronico"
-					placeholder="Escribe el correo electrÃ³nico del repartidor"
-					required="required" data-error="Please enter a valid email.">
+					placeholder="Escribe el correo electrónico del repartidor"
+					required="required" data-error="Por favor ingresa un email válido.">
 			</div>
 			<div class=" text-center ">
 				<button class="btn btn-primary" type="submit" name="agregar"

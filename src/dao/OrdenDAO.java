@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class OrdenDAO {
 	}
 	
 	/*
-	* Obtiene la lista de los alimentos de una 髍den.
+	* Obtiene la lista de los alimentos de una 贸rden.
 	*/
 	public List<AlimentoOrden> obtenAlimentosOrden(int idOrden) throws SQLException {
 		// La lista de alimentos.
@@ -87,7 +88,7 @@ public class OrdenDAO {
 	}
 	
 	/*
-	* Obtiene la suma total de los alimentos de la 髍den.
+	* Obtiene la suma total de los alimentos de la 贸rden.
 	*/
 	public int totalOrden(int idOrden) throws SQLException {
 		int total = 0;
@@ -123,7 +124,7 @@ public class OrdenDAO {
 	}
 	
 	/*
-	 * Obtiene las 髍denes para el administrador que acaban
+	 * Obtiene las 贸rdenes para el administrador que acaban
 	 * de ser creadas y listas para entregar.
 	 */
 	public List<OrdenAdmin> getOrdenesSinRep() throws SQLException {
@@ -264,5 +265,308 @@ public class OrdenDAO {
 		}
 		
 		return listaOrdenes;
+	}
+	
+	/*
+	 * Obtiene las 贸rdenes del cliente sin repartidor asignado.
+	 */
+	public List<OrdenAdmin> getOrdenesClienteSinRep(int idCliente) throws SQLException {
+		ResultSet res = null;
+		// La lista que contiene las ordenes.
+		List<OrdenAdmin> listaOrdenes = new ArrayList<OrdenAdmin>();
+		
+		String consultaOrdenes = "SELECT idOrden, fecha, estado\r\n" + 
+				"FROM orden\r\n" + 
+				"WHERE idCliente = ? AND (estado = 1 OR estado = 2)";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(consultaOrdenes);
+		
+		statement.setInt(1, idCliente);
+		
+		try {
+			res = statement.executeQuery();
+		} catch(Exception e) {
+			System.out.println("ERRROR: " + e);
+		}
+		
+		while(res.next()) {
+			int idOrden = res.getInt("idOrden");
+			Date fecha = res.getDate("fecha");
+			String nombreRepartidor = "Sin asignar";
+			int estado = res.getInt("estado");
+			
+			OrdenAdmin ordenAdmin = new OrdenAdmin(idOrden, fecha, estado, 1, nombreRepartidor, "");
+			
+			listaOrdenes.add(ordenAdmin);
+		}
+		
+		return listaOrdenes;
+	}
+	
+	
+	/*
+	* Obtiene las ordenes actuales para el cliente.
+	*/
+	public List<OrdenAdmin> getOrdenesCliente(int idCliente) throws SQLException {
+		ResultSet res = null;
+		// La lista que contiene las ordenes.
+		List<OrdenAdmin> listaOrdenes = new ArrayList<OrdenAdmin>();
+		
+		String consultaOrdenes = "SELECT o.idOrden, o.fecha, o.estado, p.nombre nombrecliente, pr.nombre nombrerepartidor\r\n" + 
+				"FROM ((orden o INNER JOIN cliente c\r\n" + 
+				"ON c.idCliente = o.idCliente)\r\n" + 
+				"INNER JOIN persona p\r\n" + 
+				"ON c.idPersona = p.idPersona) INNER JOIN\r\n" + 
+				"((orden q INNER JOIN repartidor r\r\n" + 
+				"ON r.idRepartidor = q.idRepartidor)\r\n" + 
+				"INNER JOIN persona pr\r\n" + 
+				"ON r.idPersona = pr.idPersona)\r\n" + 
+				"ON o.idOrden = q.idOrden\r\n" +
+				"WHERE o.estado != 4 AND o.idCliente = ?";
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		
+		
+		PreparedStatement statement = connection.prepareStatement(consultaOrdenes);
+		
+		statement.setInt(1, idCliente);
+		
+		try {
+			res = statement.executeQuery();
+		} catch(Exception e) {
+			System.out.println("ERRROR: " + e);
+		}
+		
+		while(res.next()) {
+			int idOrden = res.getInt("idOrden");
+			Date fecha = res.getDate("fecha");
+			String nombreCliente = res.getString("nombrecliente");
+			String nombreRepartidor = res.getString("nombrerepartidor");
+			int estado = res.getInt("estado");
+			int calificacion = 0;
+			
+			OrdenAdmin ordenCliente = new OrdenAdmin(idOrden, fecha, estado, calificacion, nombreRepartidor, nombreCliente);
+			System.out.println("orden"+ordenCliente.getNombreEstado());
+			listaOrdenes.add(ordenCliente);
+		}
+		
+		return listaOrdenes;
+	}
+	
+	/*
+	* Obtiene todas las ordenes del cliente.
+	* 3: entregada
+	*/
+	public List<OrdenAdmin> getHistorialOrdenCliente(int idCliente) throws SQLException {
+		ResultSet res = null;
+		// La lista que contiene las ordenes.
+		List<OrdenAdmin> listaOrdenes = new ArrayList<OrdenAdmin>();
+		
+		String consultaOrdenes = "SELECT o.idOrden, o.fecha, o.estado, p.nombre nombrecliente, pr.nombre nombrerepartidor, o.calificacion\r\n" + 
+				"FROM ((orden o INNER JOIN cliente c\r\n" + 
+				"ON c.idCliente = o.idCliente)\r\n" + 
+				"INNER JOIN persona p\r\n" + 
+				"ON c.idPersona = p.idPersona) INNER JOIN\r\n" + 
+				"((orden q INNER JOIN repartidor r\r\n" + 
+				"ON r.idRepartidor = q.idRepartidor)\r\n" + 
+				"INNER JOIN persona pr\r\n" + 
+				"ON r.idPersona = pr.idPersona)\r\n" + 
+				"ON o.idOrden = q.idOrden\r\n" +
+				"WHERE o.estado = 4 AND o.idCliente = ?";
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		
+		
+		PreparedStatement statement = connection.prepareStatement(consultaOrdenes);
+		
+		statement.setInt(1, idCliente);
+		
+		try {
+			res = statement.executeQuery();
+		} catch(Exception e) {
+			System.out.println("ERRROR: " + e);
+		}
+		
+		while(res.next()) {
+			int idOrden = res.getInt("idOrden");
+			Date fecha = res.getDate("fecha");
+			String nombreCliente = res.getString("nombrecliente");
+			String nombreRepartidor = res.getString("nombrerepartidor");
+			//int estado = res.getInt("estado");
+			int calificacion = res.getInt("calificacion");
+			
+			OrdenAdmin ordenCliente = new OrdenAdmin(idOrden, fecha, 4, calificacion, nombreRepartidor, nombreCliente);
+			System.out.println("orden"+ordenCliente.getNombreEstado());
+			listaOrdenes.add(ordenCliente);
+		}
+		
+		return listaOrdenes;
+	}
+	
+	public boolean calificarOrden(int idOrden, int calificacion) throws SQLException{
+		boolean calificado = false; 
+		String sql = "UPDATE orden SET calificacion=? WHERE idOrden = ?";
+
+		con.conectar();
+		connection = con.getJdbcConnection(); 
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, calificacion);
+		statement.setInt(2, idOrden);
+
+		calificado = statement.executeUpdate()> 0; 
+
+		if(!calificado) {
+			throw new SQLException("Orden no calificada, no rows affected");
+		}else {
+			System.out.println("Orden calificada"); 
+		}
+
+		statement.close();
+		con.desconectar();
+
+		return calificado;
+	}
+	
+	// Hacemos la creaci贸n de una nueva orden.
+	public void creaOrden(int idCliente, int idDireccionCliente) throws SQLException {
+		//Primero creamos registro de la orden que queremos almacenar.
+		String insertaROrden = "INSERT INTO ordenescliente (idCliente) VALUES (?)";
+		
+		String borraCarrito = "DELETE FROM alimentoscarrito WHERE idCarrito = ?";
+		
+		String creaOrden = "INSERT INTO orden (fecha, estado, calificacion, idCliente, idOrdenesCliente, idDireccionCliente, idRepartidor)\r\n" + 
+				"VALUES (?, '1', null, ?, ?, ?, null)";
+		
+		int idOrdenesCliente = 0;
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement regStatement = connection.prepareStatement(insertaROrden, Statement.RETURN_GENERATED_KEYS);
+		
+		regStatement.setInt(1, idCliente);
+		
+		regStatement.executeUpdate();
+		
+		//Obtenemos la llave.
+		try(ResultSet generatedKeys = regStatement.getGeneratedKeys()){
+			if(generatedKeys.next()) {
+				idOrdenesCliente = generatedKeys.getInt(1);
+				System.out.println("obtengo llave de orden: " + idOrdenesCliente);
+			}else {
+				throw new SQLException("No ID obtained");
+			}
+		}
+		regStatement.close();
+		String idOrdCl = String.valueOf(idOrdenesCliente);
+		
+		String copiaCarrito = "INSERT INTO alimentosorden (idOrdenesCliente, idAlimento, cantidad)\r\n" + 
+				"SELECT \' ? \', idAlimento, cantidad \r\n" + 
+				"FROM alimentoscarrito WHERE idCarrito = ?";
+		
+		
+		//Copiamos los alimentos del carrito.
+		int idCarrito = getIdCarrito(idCliente);
+		
+		
+		PreparedStatement statement = connection.prepareStatement(copiaCarrito);
+		
+		statement.setString(1, idOrdCl);
+		statement.setInt(2, idCarrito);
+		
+		//Aqu铆 se copia el carrito.
+		try {
+			statement.executeUpdate();
+			System.out.println("copiar alimentos ");
+		} catch (Exception e) {
+			System.out.println("error al copiar alimentos " + e);
+		}
+		statement.close();
+		
+		//Borramos los alimentos del carrito.
+		PreparedStatement delStatement = connection.prepareStatement(borraCarrito);
+		delStatement.setInt(1, idCarrito);
+		
+		//Aqu铆 se borra el carrito.
+		delStatement.executeUpdate();
+		delStatement.close();
+		
+		//Finalmente creamos la orden.
+		PreparedStatement ordStatement = connection.prepareStatement(creaOrden);
+		
+		//Obtenemos fecha.
+		java.util.Date date=new java.util.Date();
+		java.sql.Date sqlDate=new java.sql.Date(date.getTime());
+		
+		ordStatement.setDate(1, sqlDate);
+		ordStatement.setInt(2, idCliente);
+		ordStatement.setInt(3, idOrdenesCliente);
+		ordStatement.setInt(4, idDireccionCliente);
+		
+		//Insertamos
+		ordStatement.executeUpdate();
+		ordStatement.close();
+		
+		con.desconectar();
+	}
+	
+	//Obtiene el id del carrito de un cliente.
+	public int getIdCarrito(int idCliente) throws SQLException {
+		int idCarrito = 0;
+		String sql = "SELECT idCarrito\n" + 
+				"FROM carrito\n" + 
+				"WHERE idCliente = ?";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setInt(1, idCliente);
+		
+		ResultSet res = statement.executeQuery();
+		
+		// Obtenemos el resultado.
+		if(res.next()) {
+			idCarrito = res.getInt("idCarrito");
+		}
+				
+		statement.close();
+		//con.desconectar();
+		
+		return idCarrito;
+	}
+	
+	//Obtiene el id direcci贸n cliente.
+	public int getIdDireccionCliente(int idDireccion) throws SQLException {
+		int idDireccionCliente = 0;
+		String sql = "SELECT idDireccionCliente\r\n" + 
+				"from direccionescliente\r\n" + 
+				"WHERE idDireccion = ?";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setInt(1, idDireccion);
+		
+		ResultSet res = statement.executeQuery();
+		
+		// Obtenemos el resultado.
+		if(res.next()) {
+			idDireccionCliente = res.getInt("idDireccionCliente");
+		}
+				
+		statement.close();
+		con.desconectar();
+		
+		return idDireccionCliente;
 	}
 }

@@ -16,7 +16,7 @@ INSERT INTO `carrito` (`idCliente`) VALUES ('1');
 INSERT INTO `direccion` (`delegacion`, `colonia`, `calle`, `num_interior`, `num_exterior`) VALUES ('Benito Juarez', 'Portales', 'Saratoga', '87', null);
 /* Agregamos la dirección y ponemos 1 en default, ya que será la dirección por defecto que se use
 * para la repartación de la orden. Si no fuera default, ponemos 0.*/
-INSERT INTO `direccionescliente` (`idDireccion`, `idCliente`, `default`) VALUES ('1', '1', '1');
+INSERT INTO `direccionescliente` (`idDireccion`, `idCliente`) VALUES ('1', '1');
 
 /* DML repartidor */
 INSERT INTO `repartidor` (`idPersona`) VALUES ('3');
@@ -24,6 +24,8 @@ INSERT INTO `repartidor` (`idPersona`) VALUES ('3');
 /* DML categorias */
 INSERT INTO `categoria` (`nombre`) VALUES ('Botanas');
 INSERT INTO `categoria` (`nombre`) VALUES ('Carnes');
+/* Para alimentos sin categoria */
+INSERT INTO `categoria` (`idCategoria`, `nombre`) VALUES ('100', 'Sin categoria');
 
 /* DML alimentos */
 INSERT INTO `alimento` (`nombre`, `precio`, `descripcion`, `idCategoria`) VALUES ('Papas Fritas', '15', 'La papa perfecta para cuando tienes flojera', '1');
@@ -56,5 +58,5 @@ FROM `alimentoscarrito` WHERE `idCarrito` = '1';
 * (Nota: al incio una orden tendrá el repartidor vacío, porque aún nadie toma la órden hasta que el estado
 * sea: listo para entregar) 
 */
-INSERT INTO `orden` (`fecha`, `estado`, `calificacion`, `idCliente`, `idOrdenesCliente`, `idRepartidor`)
-VALUES ('2020-05-31', '1', null, '1', '1', null);
+INSERT INTO `orden` (`fecha`, `estado`, `calificacion`, `idCliente`, `idOrdenesCliente`, `idDireccionCliente`, `idRepartidor`)
+VALUES ('2020-05-31', '1', null, '1', '1', '1', null);

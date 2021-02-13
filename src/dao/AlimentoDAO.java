@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Alimento;
+import modelo.Categoria;
 import modelo.Conexion;
 
 public class AlimentoDAO {
@@ -47,7 +48,7 @@ public class AlimentoDAO {
 		return rowInserted;
 	}
 	
-	/* Mï¿½todo auxiliar que nos dice si ya existe una categorï¿½a
+	/* Método auxiliar que nos dice si ya existe una categorï¿½a
 	 * de alimentos en la BDD. Si ya existe, solo la almacenamos en
 	 * la variable global, si no, entonces la insertamos a la BDD 
 	 * y almacenamos en la variable global.
@@ -137,8 +138,69 @@ public class AlimentoDAO {
 		return listaAlimentos;
 	}
 	
+	/*
+	 * Método que muestra todos los alimentos de una cierta categoría.
+	 */
+	public List<Alimento> listarAlimentosPorCategoria(int idCategoria) throws SQLException {
+		List<Alimento> listaAlimentos = new ArrayList<Alimento>();
+		
+		//Consulta para obtener los alimentos con su categorï¿½a.
+		String sql = "SELECT idAlimento, a.Nombre Nombre, Precio, Descripcion, b.Nombre Catnombre, path \n" + 
+				"FROM alimento a INNER JOIN \n" + 
+				"categoria b \n" + 
+				"ON a.idCategoria = b.idCategoria\n" + 
+				"WHERE a.idCategoria = ?";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, idCategoria);
+		
+		ResultSet resultSet = statement.executeQuery();
+		
+		while(resultSet.next()) {
+			int id = resultSet.getInt("idAlimento");
+			String nombre = resultSet.getString("Nombre");
+			double precio = resultSet.getDouble("Precio");
+			String descripcion = resultSet.getString("Descripcion");
+			String categoria = resultSet.getString("Catnombre");
+			String path = resultSet.getString("path");
+			
+			Alimento alimento = new Alimento(id, nombre, precio, 
+					descripcion,idCategoria, path, categoria);
+			listaAlimentos.add(alimento);
+		}
+		con.desconectar();
+		return listaAlimentos;
+	}
+	
+	//Obtiene el nombre de la categoria por el id.
+	public String getNombreCategoria(int idCategoria) throws SQLException {
+		String nombreCategoria = "";
+		
+		String sql = "SELECT nombre\n" + 
+				"FROM categoria\n" + 
+				"WHERE idCategoria = ?";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, idCategoria);
+		
+		ResultSet resultSet = statement.executeQuery();
+		
+		if(resultSet.next()) {
+			 nombreCategoria = resultSet.getString("nombre");
+		}
+		 statement.close();
+		 con.desconectar();
+		 return nombreCategoria;
+	}
+	
 	/* 
-	 * MÃ©todo que actualiza un alimento de la BDD.
+	 * Método que actualiza un alimento de la BDD.
 	 */
 	public boolean actualizaAlimento(Alimento alimento) throws SQLException {
 		boolean rowActualizar = false;
@@ -207,4 +269,52 @@ public class AlimentoDAO {
 
 		return rowEliminar;
 	}
+	
+	//Obtiene una lista con el nombre de todas las categorías a excepción de la que
+	//es sin categoria.
+	public List<Categoria> getNombreCategorias() throws SQLException {
+		List<Categoria> categorias = new ArrayList<Categoria>();
+		
+		String sql = "SELECT nombre, idCategoria\n" + 
+				"FROM categoria\n" + 
+				"WHERE idCategoria != ?";
+		
+		con.conectar();
+		connection = con.getJdbcConnection();
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setInt(1, 100);
+		
+		ResultSet res = statement.executeQuery();
+		
+		while(res.next()) {
+			int idCategoria = res.getInt("idCategoria");
+			String nombreCategoria = res.getString("nombre");
+			
+			Categoria categoria = new Categoria(nombreCategoria);
+			categoria.setId(idCategoria);
+			
+			categorias.add(categoria);
+		}
+		
+		con.desconectar();
+		statement.close();
+		return categorias;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
