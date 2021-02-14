@@ -1,0 +1,7 @@
+INDEX VERSION 1.131
+C:\Users\Alma\Desktop\Yum\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1876705286.index
+\crud-menu\src
+C:\Users\Alma\Desktop\Yum\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4184501936.index
+\crud-menu\src
+C:\Users\Alma\Desktop\Yum\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2301075476.index
+\crud-menu\src

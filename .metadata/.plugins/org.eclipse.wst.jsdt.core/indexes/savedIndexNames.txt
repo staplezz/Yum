@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+C:\Users\Alma\Desktop\Yum\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3004826551.index
+2063100396.index
+2619091613.index
+420968971.index
+2199689670.index
+2254597116.index
